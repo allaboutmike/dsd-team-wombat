@@ -29,5 +29,3 @@ bin/
 
 ### VS Code ###
 .vscode/
-
-src/main/resources/application.local.properties
