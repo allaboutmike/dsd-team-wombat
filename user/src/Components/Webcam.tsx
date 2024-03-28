@@ -38,10 +38,16 @@ const WebcamCapture = () => {
   return (
     <>
       <form>
-        <div>
-          <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
+        <div className="flex">
+          <div>
+            <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
+          </div >
+          
+          <div>
           {imgSrc && <img src={imgSrc} />}
+          </div>
         </div>
+        
 
         <button onClick={capture} type="button">
           Capture photo
