@@ -1,6 +1,6 @@
-package com.backend.admin_server.image_verification.controller;
+package com.backend.admin_server.access_requests.controller;
 
-import com.backend.admin_server.image_verification.service.ImageRetrievalService;
+import com.backend.admin_server.access_requests.service.AccessRequestService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -8,18 +8,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
-public class ImageRetrievalController {
+public class AccessRequestController {
 
-    private final ImageRetrievalService imageRetrievalService;
+    private final AccessRequestService accessRequestService;
 
-    public ImageRetrievalController(ImageRetrievalService imageRetrievalService) {
-        this.imageRetrievalService = imageRetrievalService;
+    public AccessRequestController(AccessRequestService accessRequestService) {
+        this.accessRequestService = accessRequestService;
     }
 
-    @PostMapping("/verify-image")
+    @PostMapping("/access_request")
     public ResponseEntity<String> uploadImage(@RequestBody String base64Image) {
         try {
-            imageRetrievalService.processBase64Image(base64Image);
+            accessRequestService.processBase64Image(base64Image);
             return ResponseEntity.ok("Image processed");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
