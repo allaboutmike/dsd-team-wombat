@@ -23,6 +23,7 @@ const WebcamCapture = () => {
       method: "POST",
       body: JSON.stringify({
         image: imgSrc,
+        badgeId: badgeId,
       }),
     });
 
