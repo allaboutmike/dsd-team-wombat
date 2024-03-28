@@ -20,9 +20,10 @@ const WebcamCapture = () => {
     e.preventDefault();
 
     const res = await fetch("", {
-      method: "GET",
+      method: "POST",
       body: JSON.stringify({
         image: imgSrc,
+        badgeId: badgeId,
       }),
     });
 
@@ -40,14 +41,15 @@ const WebcamCapture = () => {
       <form>
         <div className="flex">
           <div>
-            <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
-          </div >
-          
-          <div>
-          {imgSrc && <img src={imgSrc} />}
+            <Webcam
+              audio={false}
+              ref={webcamRef}
+              screenshotFormat="image/jpeg"
+            />
           </div>
+
+          <div>{imgSrc && <img src={imgSrc} />}</div>
         </div>
-        
 
         <button onClick={capture} type="button">
           Capture photo
