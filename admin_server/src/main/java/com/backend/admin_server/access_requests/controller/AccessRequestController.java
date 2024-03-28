@@ -17,7 +17,7 @@ public class AccessRequestController {
     }
 
     @PostMapping("/access_request")
-    public ResponseEntity<String> uploadImage(@RequestBody String base64Image) {
+    public ResponseEntity<String> accessRequest(@RequestBody String base64Image) {
         try {
             accessRequestService.processBase64Image(base64Image);
             return ResponseEntity.ok("Image processed");
