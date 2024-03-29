@@ -1,6 +1,7 @@
-from flask import Flask
-
+from flask import Flask, jsonify, make_response, Response
 from deepface import DeepFace
+
+from helpers import *
 
 app = Flask(__name__)
 
@@ -10,9 +11,6 @@ def hello_world():
     return "<p>Team Wombat - Facial Recognition Service :) </p>"
 
 
-# TODO: Change to POST method and get the image as input
-# TODO: What if deepface fails ? - Handle error case
-# TODO: Any specific response format? - Status code, messages etc.
 @app.route("/verify")
 def verify_images():
     image1_url = "./static/Danny_1.jpeg"
@@ -20,11 +18,27 @@ def verify_images():
     image3_url = "./static/Mike_1.jpeg"
 
     key = "verified"
-    response = {"authorized": None}
+    json_response: Response
 
-    result = DeepFace.verify(image2_url, image3_url)
+    try:
+        result = DeepFace.verify(image2_url, image3_url)
+        response = handle_deepface_response(result, key)
 
-    if key in result:
-        response["authorized"] = result[key]
+        json_response = make_response(jsonify(response))
 
-    return response
+        if response["data"].keys() == 0:
+            json_response.status_code = 500
+        else:
+            json_response.status_code = 200
+
+        return json_response
+
+    except Exception as err:
+        print(f"Unexpected error: {err}, {type(err)=}")
+
+        response = handle_exceptions(str(err))
+        json_response = make_response(jsonify(response))
+
+        json_response.status_code = 500
+
+        return json_response
