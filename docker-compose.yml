@@ -5,7 +5,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - SPRING_PROFILE=production
+      - SPRING_PROFILES_ACTIVE=production
 
   facial_recognition:
     build:
@@ -13,4 +13,4 @@ services:
     ports:
       - "9090:9090"
     environment:
-      - PYTHON_PROFILE=production
+      - FLASK_ENV=production
