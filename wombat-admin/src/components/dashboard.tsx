@@ -3,18 +3,12 @@ import IncomingRequests from "./incoming_requests";
 import Statistics from "./statistics";
 
 
+type DashboardProps = {
+    toggleAddUserModal: () => void;
+};
 
+export default function Dashboard({ toggleAddUserModal }: DashboardProps) {
 
-export default function Dashboard() {
-
-    //       <!--
-    //       This example requires updating your template:
-
-    //       ```
-    //       <html className="h-full bg-gray-100">
-    //         <body className="h-full">
-    //           ```
-    // -->
     return (
         <div>
             <header className="bg-white shadow-sm">
@@ -24,7 +18,7 @@ export default function Dashboard() {
             </header>
 
             <div className=" mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4  sm:flex-none flex justify-end">
-                <button type="button" className="block rounded-md bg-teal-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600">Add user</button>
+                <button type="button" className="block rounded-md bg-teal-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600" onClick={toggleAddUserModal}>Add user</button>
             </div>
 
             <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
