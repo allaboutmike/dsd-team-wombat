@@ -1,23 +1,15 @@
-import { useState } from "react";
+// import { useState } from "react";
 import "./App.css";
+import WebcamCapture from "./Components/Webcam";
 
 function App() {
-  const [count, setCount] = useState(0);
 
   return (
     <>
-      <h1>Wombat Visage</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1 className="text-8xl bg-clip-text text-transparent bg-gradient-to-b from-gray-300 to-gray-700">Wombat Visage</h1>
+      <h1 className="text-3xl">center yourself - look into camera - capture</h1>
+      <WebcamCapture />
+
     </>
   );
 }
