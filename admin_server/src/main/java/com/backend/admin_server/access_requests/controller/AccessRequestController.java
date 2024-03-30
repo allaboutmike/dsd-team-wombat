@@ -1,5 +1,6 @@
 package com.backend.admin_server.access_requests.controller;
 
+import com.backend.admin_server.access_requests.dto.AccessRequestDTO;
 import com.backend.admin_server.access_requests.service.AccessRequestService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +18,13 @@ public class AccessRequestController {
     }
 
     @PostMapping("/access_request")
-    public ResponseEntity<String> accessRequest(@RequestBody String base64Image) {
+    public ResponseEntity<String> accessRequest(@RequestBody AccessRequestDTO accessRequestDTO) {
         try {
-            accessRequestService.processBase64Image(base64Image);
-            return ResponseEntity.ok("Image processed");
+            accessRequestService.processAccessRequest(accessRequestDTO);
+            return ResponseEntity.ok("Access request processed");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error processing the image");
+                    .body("Error processing the access request");
         }
     }
 }
