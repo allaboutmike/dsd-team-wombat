@@ -1,17 +1,24 @@
 package com.backend.admin_server.access_requests.service;
 
+import com.backend.admin_server.access_requests.dto.AccessRequestDTO;
+import com.backend.admin_server.access_requests.model.AccessRequestModel;
+import com.backend.admin_server.access_requests.repository.AccessRequestRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
-import java.util.Base64;
 
 @Service
 public class AccessRequestService {
+    private final AccessRequestRepository accessRequestRepository;
 
-    public void processBase64Image (String base64Image) {
+    public AccessRequestService(AccessRequestRepository accessRequestRepository) {
+        this.accessRequestRepository = accessRequestRepository;
+    }
 
-        byte[] imageBytes = Base64.getDecoder().decode(base64Image);
+    public void processAccessRequest(AccessRequestDTO accessRequestDTO) {
 
-        System.out.println(Arrays.toString(imageBytes));
+        AccessRequestModel accessRequestModel = new AccessRequestModel();
+        accessRequestModel.setBase64Image(accessRequestDTO.getBase64Image());
+        accessRequestModel.setBadgeID(accessRequestDTO.getBadgeID());
+
+        accessRequestRepository.save(accessRequestModel);
     }
 }
