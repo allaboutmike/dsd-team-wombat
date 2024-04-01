@@ -1,12 +1,8 @@
-import Statistics from "./statistics";
 import Image from "next/image";
-
 
 type RequestProps = {
     toggleViewImageModal: () => void;
-    // imageSrc: string | null;
 };
-
 
 export default function IncomingRequests({ toggleViewImageModal }: RequestProps) {
     return (
