@@ -2,13 +2,13 @@ import Image from "next/image";
 
 import wombat from "../../public/david-clode-BSXdD5MawH4-unsplash.jpg"
 
-type DashboardProps = {
+type AddUserProps = {
     toggleAddUserModal: () => void;
     handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     imageSrc: string | null;
 };
 
-export default function AddUser({ toggleAddUserModal, handleFileChange, imageSrc }: DashboardProps) {
+export default function AddUser({ toggleAddUserModal, handleFileChange, imageSrc }: AddUserProps) {
     return (
         <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
 
@@ -107,16 +107,16 @@ export default function AddUser({ toggleAddUserModal, handleFileChange, imageSrc
 
 
                                 <div className="sm:col-span-2 sm:col-start-1">
-                                    <label htmlFor="city" className="block text-sm font-medium leading-6 text-zinc-800">Registered by Admin</label>
+                                    <label htmlFor="registeredByAdmin" className="block text-sm font-medium leading-6 text-zinc-800">Registered by Admin</label>
                                     <div className="mt-2">
-                                        <input type="text" name="city" id="city" autoComplete="address-level2" className="block w-full rounded-md border-0 py-1.5 text-zinc-800 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6" />
+                                        <input type="text" name="registeredByAdmin" id="registeredByAdmin" autoComplete="registeredByAdmin" className="block w-full rounded-md border-0 py-1.5 text-zinc-800 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6" />
                                     </div>
                                 </div>
 
                                 <div className="sm:col-span-2">
-                                    <label htmlFor="region" className="block text-sm font-medium leading-6 text-zinc-800">Registered at</label>
+                                    <label htmlFor="registerTime" className="block text-sm font-medium leading-6 text-zinc-800">Registered at</label>
                                     <div className="mt-2">
-                                        <input type="text" name="region" id="region" autoComplete="address-level1" className="block w-full rounded-md border-0 py-1.5 text-zinc-800 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6" />
+                                        <input type="text" name="registerTime" id="registerTime" autoComplete="registerTime" className="block w-full rounded-md border-0 py-1.5 text-zinc-800 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6" disabled />
                                     </div>
                                 </div>
 
@@ -125,7 +125,7 @@ export default function AddUser({ toggleAddUserModal, handleFileChange, imageSrc
 
                             </div>
                         </div>
-                        <div className="flex items-center justify-end gap-x-6 border-t border-zinc-800/10 px-4 py-4 sm:px-8">
+                        <div className="flex items-center justify-end gap-x-4 border-t border-zinc-800/10 px-4 py-4 sm:px-8">
                             <button type="button" className="rounded-md bg-zinc-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400" onClick={toggleAddUserModal}>Cancel</button>
                             <button type="submit" className="rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600">Save</button>
                         </div>
