@@ -1,7 +1,14 @@
 import Statistics from "./statistics";
+import Image from "next/image";
 
 
-export default function IncomingRequests() {
+type RequestProps = {
+    toggleViewImageModal: () => void;
+    // imageSrc: string | null;
+};
+
+
+export default function IncomingRequests({ toggleViewImageModal }: RequestProps) {
     return (
         <div>
             <h2 className="text-lg font-semibold leading-6 text-zinc-700 mb-8">Requests</h2>
@@ -27,13 +34,8 @@ export default function IncomingRequests() {
                                         <td className="whitespace-nowrap px-3 py-4 text-sm text-zinc-500">Front-end Developer</td>
                                         <td className="whitespace-nowrap px-3 py-4 text-sm text-zinc-500"><span className="date">3/6/2024</span><span className="time">  5:19</span> <span className="PM/AM">PM</span></td>
                                         <td className="whitespace-nowrap px-3 py-4 text-sm text-zinc-500">
-                                            <button className="text-teal-500 hover:text-red-400">View img</button>
+                                            <button className="text-teal-500 hover:text-red-400" onClick={toggleViewImageModal}>View img</button>
                                         </td>
-
-                                        {/* <td className="flex whitespace-nowrap py-4 px-3 sm:pr-0 gap-2">
-                                            <button className="bg-red-300 hover:bg-red-400 text-sm text-white py-1 px-3 rounded-md">Allow</button>
-                                            <button className="bg-teal-700 hover:bg-teal-600 text-sm text-white py-1 px-3 rounded-md">Deny</button>
-                                        </td> */}
                                     </tr>
 
                                     <tr>
@@ -42,7 +44,7 @@ export default function IncomingRequests() {
                                         <td className="whitespace-nowrap px-3 py-4 text-sm text-zinc-500">Front-end Developer</td>
                                         <td className="whitespace-nowrap px-3 py-4 text-sm text-zinc-500"><span className="date">3/6/2024</span><span className="time">  5:19</span> <span className="PM/AM">PM</span></td>
                                         <td className="whitespace-nowrap px-3 py-4 text-sm text-zinc-500">
-                                            <button className="text-teal-500 hover:text-red-500">View img</button>
+                                            <button className="text-teal-500 hover:text-red-500" onClick={toggleViewImageModal}>View img</button>
                                         </td>
                                     </tr>
 
@@ -52,7 +54,7 @@ export default function IncomingRequests() {
                                         <td className="whitespace-nowrap px-3 py-4 text-sm text-zinc-500">Software Engineer</td>
                                         <td className="whitespace-nowrap px-3 py-4 text-sm text-zinc-500"><span className="date">3/6/2024</span><span className="time">  5:19</span> <span className="PM/AM">PM</span></td>
                                         <td className="whitespace-nowrap px-3 py-4 text-sm text-zinc-500">
-                                            <button className="text-teal-500 hover:text-red-400">View img</button>
+                                            <button className="text-teal-500 hover:text-red-400" onClick={toggleViewImageModal}>View img</button>
                                         </td>
                                     </tr>
 

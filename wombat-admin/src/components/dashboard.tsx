@@ -5,9 +5,10 @@ import Statistics from "./statistics";
 
 type DashboardProps = {
     toggleAddUserModal: () => void;
+    toggleViewImageModal: () => void;
 };
 
-export default function Dashboard({ toggleAddUserModal }: DashboardProps) {
+export default function Dashboard({ toggleAddUserModal, toggleViewImageModal }: DashboardProps) {
 
     return (
         <div>
@@ -24,7 +25,7 @@ export default function Dashboard({ toggleAddUserModal }: DashboardProps) {
             <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-3 gap-4">
                     <div className="col-span-2">
-                        <IncomingRequests />
+                        <IncomingRequests toggleViewImageModal={toggleViewImageModal} />
                     </div>
                     <Statistics />
                 </div>
