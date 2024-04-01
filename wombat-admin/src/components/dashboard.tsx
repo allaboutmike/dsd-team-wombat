@@ -44,7 +44,6 @@ export default function Dashboard({ toggleAddUserModal, toggleViewImageModal }: 
                 <div className="hidden sm:block">
                     <div className="">
                         <nav className="-mb-px flex space-x-8" aria-label="Tabs">
-                            {/* <!-- Current: "border-indigo-500 text-indigo-600", Default: "border-transparent text-zinc-500 hover:border-zinc-300 hover:text-zinc-700" --> */}
                             <a href="#" className=" border-teal-500 text-teal-600  hover:border-zinc-300 hover:text-zinc-700 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">Daily Visits</a>
                             <a href="#" className="border-transparent text-zinc-500 hover:border-zinc-300 hover:text-zinc-700 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">User Audit Trail</a>
                         </nav>
