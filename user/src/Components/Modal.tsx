@@ -12,7 +12,7 @@ export const hideModal = id =>{
 const VerifyModal = ({children, id}) => {
 
   return (
-    <div id={id} className='fixed top-0 left-0 w-full h-full bg-[#0f172a] bg-opacity-70 z-10 overflow-hidden overflow-y-auto '>
+    <div id={id} className='hidden fixed top-0 left-0 w-full h-full bg-[#0f172a] bg-opacity-70 z-10 overflow-hidden overflow-y-auto '>
       <div className='max-w-full max-h-full w-auto h-auto absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 rounded p-5 z-20 bg-[#374151]'>
         {children}
 
