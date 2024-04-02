@@ -31,33 +31,47 @@ public class AccessRequestService {
 
     public boolean processAccessRequest(AccessRequestDTO requestDTO) {
         try {
-            AccessRequestModel model = createRequestModel(requestDTO);
-            boolean verificationResult = sendForExternalVerification(requestDTO.getBase64Image());
+            String userBase64Image = retrieveUserImage(requestDTO.getUserId());
 
-            String status = mapVerificationResultToStatus(verificationResult);
-            model.setApprovalStatus(status);
-            accessRequestRepository.save(model);
-            return verificationResult;
+            if (userBase64Image != null && requestDTO.getBase64Image() != null) {
+                boolean verificationResult = sendForExternalVerification(requestDTO.getBase64Image(), userBase64Image);
+                String status = mapVerificationResultToStatus(verificationResult);
+
+                AccessRequestModel model = createRequestModel(requestDTO, status);
+                accessRequestRepository.save(model);
+
+                return verificationResult;
+            } else {
+                return false;
+            }
         } catch (Exception e) {
             return false;
         }
     }
 
-    private AccessRequestModel createRequestModel(AccessRequestDTO dto) {
+    private String retrieveUserImage(Integer userId) {
+        AccessRequestModel userRequest = accessRequestRepository.findByUserId(userId);
+        return userRequest != null ? userRequest.getBase64Image() : null;
+    }
+
+    private AccessRequestModel createRequestModel(AccessRequestDTO dto, String status) {
         AccessRequestModel model = new AccessRequestModel();
         model.setUserId(dto.getUserId());
         model.setBase64Image(dto.getBase64Image());
         model.setDate(new Date());
-        model.setApprovalStatus("Pending");
+        model.setApprovalStatus(status);
         return model;
     }
 
-    private boolean sendForExternalVerification(String base64Image) {
+    private boolean sendForExternalVerification(String clientBase64Image, String userBase64Image) {
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            HttpEntity<String> request = new HttpEntity<>(base64Image, headers);
 
+            String jsonBody = String.format("{\"clientImage\": \"%s\", \"userImage\": \"%s\"}",
+                    clientBase64Image, userBase64Image);
+
+            HttpEntity<String> request = new HttpEntity<>(jsonBody, headers);
             ResponseEntity<Boolean> response = restTemplate.postForEntity(externalApiUrl, request, Boolean.class);
             return response.getBody() != null && response.getBody();
         } catch (Exception e) {
