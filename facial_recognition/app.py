@@ -3,6 +3,8 @@ from werkzeug.exceptions import BadRequest, UnsupportedMediaType
 from deepface import DeepFace
 
 from helpers import *
+from facial_verification import *
+from image_handler import get_image_url_for_base64 as get_image_path
 
 app = Flask(__name__)
 
@@ -19,30 +21,40 @@ def hello_world():
 #   }
 @app.route("/verify", methods=['POST'])
 def verify_images():
-    image1_url = "./static/Danny_1.jpeg"
-    image2_url = "./static/Danny_2.png"
-    image3_url = "./static/Mike_1.jpeg"
-
     key = "verified"
     json_response: Response
 
-    # Retrieve json body parameters
+    # Retrieve json body parameters and validate it
+    # Sends 400 Bad Request response if request body is invalid
     try:
         request_body = request.get_json()
 
         # Validate request body
         error_msg = validate_request_body(request_body)
 
+        # If request body is valid
         if not error_msg:
-            pass
+
+            # Decode and save the base64 encoded image strings
+            decoding_errors = handle_encoded_images(request_body)
+
+            if decoding_errors:
+                return send_error_response(decoding_errors, 500)
+
         else:
-            return send_error_response(error_msg, 400)  # Denotes Bad Request
+            # Denotes Bad Request
+            return send_error_response(error_msg, 400)
     except (BadRequest, UnsupportedMediaType) as err:
         print(f"Request Body error: {err}, {type(err)=}")
         return send_error_response(str(err), 400)
 
+    # Invoke Deepface's verify method to compare the images and handle exceptions
     try:
-        result = DeepFace.verify(image2_url, image3_url)
+
+        image1_url = get_image_path(request_body.get("captured"))
+        image2_url = get_image_path(request_body.get("reference"))
+
+        result = DeepFace.verify(image1_url, image2_url)
         response = handle_deepface_response(result, key)
 
         json_response = make_response(jsonify(response))
@@ -57,4 +69,5 @@ def verify_images():
     except Exception as err:
         print(f"Unexpected error: {err}, {type(err)=}")
 
-        return send_error_response(str(err), 500)  # Denotes Internal Server Error
+        # Denotes Internal Server Error
+        return send_error_response(str(err), 500)
