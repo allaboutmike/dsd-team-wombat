@@ -3,6 +3,7 @@ package com.backend.admin_server.access_requests.service;
 import com.backend.admin_server.access_requests.dto.AccessRequestDTO;
 import com.backend.admin_server.access_requests.model.AccessRequestModel;
 import com.backend.admin_server.access_requests.repository.AccessRequestRepository;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -19,6 +20,8 @@ public class AccessRequestService {
     private final RestTemplate restTemplate;
     private final AccessRequestRepository accessRequestRepository;
     private final String externalApiUrl;
+    private static final Logger LOGGER = Logger.getLogger(AccessRequestService.class.getName());
+
 
     @Autowired
     public AccessRequestService(RestTemplate restTemplate,
@@ -29,25 +32,55 @@ public class AccessRequestService {
         this.externalApiUrl = externalApiUrl;
     }
 
+//    public boolean processAccessRequest(AccessRequestDTO requestDTO) {
+//        try {
+//            String userBase64Image = retrieveUserImage(requestDTO.getUserId());
+//
+//            if (userBase64Image != null && requestDTO.getBase64Image() != null) {
+//                boolean verificationResult = sendForExternalVerification(requestDTO.getBase64Image(), userBase64Image);
+//                String status = mapVerificationResultToStatus(verificationResult);
+//
+//                AccessRequestModel model = createRequestModel(requestDTO, status);
+//                accessRequestRepository.save(model);
+//
+//                return verificationResult;
+//            } else {
+//                return false;
+//            }
+//        } catch (Exception e) {
+//            return false;
+//        }
+//    }
+
     public boolean processAccessRequest(AccessRequestDTO requestDTO) {
         try {
+            LOGGER.info("Processing access request for user: " + requestDTO.getUserId());
+
             String userBase64Image = retrieveUserImage(requestDTO.getUserId());
+            LOGGER.info("Retrieved user image for verification");
 
             if (userBase64Image != null && requestDTO.getBase64Image() != null) {
+                LOGGER.info("Sending for external verification");
                 boolean verificationResult = sendForExternalVerification(requestDTO.getBase64Image(), userBase64Image);
+
                 String status = mapVerificationResultToStatus(verificationResult);
+                LOGGER.info("Mapped verification result to status: " + status);
 
                 AccessRequestModel model = createRequestModel(requestDTO, status);
                 accessRequestRepository.save(model);
+                LOGGER.info("Access request model saved");
 
                 return verificationResult;
             } else {
+                LOGGER.warning("User image or request image is null");
                 return false;
             }
         } catch (Exception e) {
+            LOGGER.severe("Exception in processing access request: " + e.getMessage());
             return false;
         }
     }
+
 
     private String retrieveUserImage(Integer userId) {
         AccessRequestModel userRequest = accessRequestRepository.findByUserId(userId);

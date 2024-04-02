@@ -4,7 +4,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
 import java.util.Date;
 
-@DynamoDBTable(tableName = "Requests")
+@DynamoDBTable(tableName = "admin_db")
 public class AccessRequestModel {
 
     private String requestId;
