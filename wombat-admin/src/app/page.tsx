@@ -9,8 +9,8 @@ import ViewImageForAccess from "@/components/view_img_for_access";
 
 export default function Home() {
 
-  const [addUserModal, setAddUserModal] = useState(false);
-  const [viewImageModal, setViewImageModal] = useState(false);
+  const [addUserModal, setAddUserModal] = useState<Boolean>(false);
+  const [viewImageModal, setViewImageModal] = useState<Boolean>(false);
 
 
   const toggleAddUserModal = () => {
@@ -34,10 +34,19 @@ export default function Home() {
     }
   };
 
+  const [activeTab, setActiveTab] = useState<string>('Daily Visits');
+
+  const handleTabClick = (tabName: string) => {
+    setActiveTab(tabName);
+  };
+
+
+
   return (
     <main className="min-h-full">
       <Navbar />
-      <Dashboard toggleAddUserModal={toggleAddUserModal} toggleViewImageModal={toggleViewImageModal} />
+      <Dashboard activeTab={activeTab}
+        handleTabClick={handleTabClick} toggleAddUserModal={toggleAddUserModal} toggleViewImageModal={toggleViewImageModal} />
       {addUserModal && <AddUser handleFileChange={handleFileChange} imageSrc={imageSrc} toggleAddUserModal={toggleAddUserModal} />}
       {viewImageModal && <ViewImageForAccess toggleViewImageModal={toggleViewImageModal} />}
     </main>
