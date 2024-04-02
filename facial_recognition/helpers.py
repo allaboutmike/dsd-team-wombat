@@ -1,17 +1,15 @@
-from typing import Any
+from flask import Response, make_response, jsonify
 
 
-def handle_deepface_response(result: dict[str, Any], key: str) -> dict:
-    response = {"data": {}, "error": ""}
-    keys_to_retrieve = ["verified", "distance", "similarity_metric", "time"]
+def send_error_response(err: str, status_code: int) -> Response:
+    json_response: Response
 
-    if key in result:
-        for key in keys_to_retrieve:
-            response["data"][key] = result[key]
-    else:
-        response["error"] = "Face Verification unsuccessful, please contact admin."
+    res = handle_exceptions(err)
 
-    return response
+    json_response = make_response(jsonify(res))
+    json_response.status_code = status_code
+
+    return json_response
 
 
 def handle_exceptions(err_msg: str) -> dict:
