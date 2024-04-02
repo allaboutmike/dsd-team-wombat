@@ -28,10 +28,10 @@ public class AccessRequestRepository {
         queryObject.setUserId(userId);
 
         DynamoDBQueryExpression<AccessRequestModel> queryExpression = new DynamoDBQueryExpression<AccessRequestModel>()
-                .withIndexName("UserIdIndex")
+                .withIndexName("user_id_index")
                 .withConsistentRead(false)
                 .withKeyConditionExpression("user_id = :userId")
-                .withExpressionAttributeValues(Collections.singletonMap(":userId", new AttributeValue().withN(userId.toString())));
+                .withExpressionAttributeValues(Collections.singletonMap(":userId", new AttributeValue().withS(userId.toString())));
 
         PaginatedQueryList<AccessRequestModel> result = dynamoDBMapper.query(AccessRequestModel.class, queryExpression);
 
