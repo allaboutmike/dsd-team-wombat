@@ -24,17 +24,13 @@ public class AccessRequestRepository {
 
 
     public AccessRequestModel findByUserId(Integer userId) {
-        AccessRequestModel queryObject = new AccessRequestModel();
-        queryObject.setUserId(userId);
-
         DynamoDBQueryExpression<AccessRequestModel> queryExpression = new DynamoDBQueryExpression<AccessRequestModel>()
-                .withIndexName("user_id_index")
+                .withIndexName("user_id")
                 .withConsistentRead(false)
-                .withKeyConditionExpression("user_id = :userId")
-                .withExpressionAttributeValues(Collections.singletonMap(":userId", new AttributeValue().withS(userId.toString())));
+                .withKeyConditionExpression("user_id_index = :userId")
+                .withExpressionAttributeValues(Collections.singletonMap(":userId", new AttributeValue().withN(String.valueOf(userId))));
 
         PaginatedQueryList<AccessRequestModel> result = dynamoDBMapper.query(AccessRequestModel.class, queryExpression);
-
 
         return result.isEmpty() ? null : result.get(0);
     }
