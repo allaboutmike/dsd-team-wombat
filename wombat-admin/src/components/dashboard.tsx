@@ -5,9 +5,10 @@ import Statistics from "./statistics";
 
 type DashboardProps = {
     toggleAddUserModal: () => void;
+    toggleViewImageModal: () => void;
 };
 
-export default function Dashboard({ toggleAddUserModal }: DashboardProps) {
+export default function Dashboard({ toggleAddUserModal, toggleViewImageModal }: DashboardProps) {
 
     return (
         <div>
@@ -24,7 +25,7 @@ export default function Dashboard({ toggleAddUserModal }: DashboardProps) {
             <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-3 gap-4">
                     <div className="col-span-2">
-                        <IncomingRequests />
+                        <IncomingRequests toggleViewImageModal={toggleViewImageModal} />
                     </div>
                     <Statistics />
                 </div>
@@ -43,7 +44,6 @@ export default function Dashboard({ toggleAddUserModal }: DashboardProps) {
                 <div className="hidden sm:block">
                     <div className="">
                         <nav className="-mb-px flex space-x-8" aria-label="Tabs">
-                            {/* <!-- Current: "border-indigo-500 text-indigo-600", Default: "border-transparent text-zinc-500 hover:border-zinc-300 hover:text-zinc-700" --> */}
                             <a href="#" className=" border-teal-500 text-teal-600  hover:border-zinc-300 hover:text-zinc-700 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">Daily Visits</a>
                             <a href="#" className="border-transparent text-zinc-500 hover:border-zinc-300 hover:text-zinc-700 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">User Audit Trail</a>
                         </nav>
