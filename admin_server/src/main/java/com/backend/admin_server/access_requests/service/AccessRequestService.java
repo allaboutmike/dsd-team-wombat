@@ -4,6 +4,9 @@ import com.backend.admin_server.access_requests.dto.AccessRequestDTO;
 import com.backend.admin_server.access_requests.model.AccessRequestModel;
 import com.backend.admin_server.access_requests.repository.AccessRequestRepository;
 import java.util.logging.Logger;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -81,7 +84,6 @@ public class AccessRequestService {
         }
     }
 
-
     private String retrieveUserImage(Integer userId) {
         AccessRequestModel userRequest = accessRequestRepository.findByUserId(userId);
         return userRequest != null ? userRequest.getBase64Image() : null;
@@ -105,9 +107,22 @@ public class AccessRequestService {
                     clientBase64Image, userBase64Image);
 
             HttpEntity<String> request = new HttpEntity<>(jsonBody, headers);
-            ResponseEntity<Boolean> response = restTemplate.postForEntity(externalApiUrl, request, Boolean.class);
-            return response.getBody() != null && response.getBody();
+            ResponseEntity<String> response = restTemplate.postForEntity(externalApiUrl, request, String.class);
+
+            if (response.getStatusCode().is2xxSuccessful()) {
+                String responseBody = response.getBody();
+                if (responseBody != null) {
+                    ObjectMapper mapper = new ObjectMapper();
+                    JsonNode root = mapper.readTree(responseBody);
+                    JsonNode data = root.get("data");
+                    if (data != null) {
+                        return data.get("verified").asBoolean();
+                    }
+                }
+            }
+            return false;
         } catch (Exception e) {
+            LOGGER.severe("Exception while sending request for external verification: " + e.getMessage());
             return false;
         }
     }
