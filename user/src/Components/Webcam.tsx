@@ -27,7 +27,7 @@ const WebcamCapture = () => {
   async function handleSubmit(e: any) {
     e.preventDefault();
 
-    const res = await fetch("", {
+    const res = await fetch("http://localhost:8080/access_request", {
       method: "POST",
       body: JSON.stringify({
         image: imgSrc,
