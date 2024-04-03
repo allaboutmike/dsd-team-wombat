@@ -22,16 +22,4 @@ public class AccessRequestRepository {
         dynamoDBMapper.save(accessRequestModel);
     }
 
-
-    public AccessRequestModel findByUserId(Integer userId) {
-        DynamoDBQueryExpression<AccessRequestModel> queryExpression = new DynamoDBQueryExpression<AccessRequestModel>()
-                .withIndexName("user_id")
-                .withConsistentRead(false)
-                .withKeyConditionExpression("user_id_index = :userId")
-                .withExpressionAttributeValues(Collections.singletonMap(":userId", new AttributeValue().withN(String.valueOf(userId))));
-
-        PaginatedQueryList<AccessRequestModel> result = dynamoDBMapper.query(AccessRequestModel.class, queryExpression);
-
-        return result.isEmpty() ? null : result.get(0);
-    }
 }

@@ -3,6 +3,9 @@ package com.backend.admin_server.access_requests.service;
 import com.backend.admin_server.access_requests.dto.AccessRequestDTO;
 import com.backend.admin_server.access_requests.model.AccessRequestModel;
 import com.backend.admin_server.access_requests.repository.AccessRequestRepository;
+
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Logger;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -23,37 +26,20 @@ public class AccessRequestService {
     private final RestTemplate restTemplate;
     private final AccessRequestRepository accessRequestRepository;
     private final String externalApiUrl;
+    private final UserRepository userRepository;
     private static final Logger LOGGER = Logger.getLogger(AccessRequestService.class.getName());
 
 
     @Autowired
     public AccessRequestService(RestTemplate restTemplate,
                                 AccessRequestRepository accessRequestRepository,
-                                @Value("${external.api.url}") String externalApiUrl) {
+                                @Value("${external.api.url}") String externalApiUrl,
+                                UserRepsository userRepsository) {
         this.restTemplate = restTemplate;
         this.accessRequestRepository = accessRequestRepository;
         this.externalApiUrl = externalApiUrl;
+        this.userRepository = userRepsository;
     }
-
-//    public boolean processAccessRequest(AccessRequestDTO requestDTO) {
-//        try {
-//            String userBase64Image = retrieveUserImage(requestDTO.getUserId());
-//
-//            if (userBase64Image != null && requestDTO.getBase64Image() != null) {
-//                boolean verificationResult = sendForExternalVerification(requestDTO.getBase64Image(), userBase64Image);
-//                String status = mapVerificationResultToStatus(verificationResult);
-//
-//                AccessRequestModel model = createRequestModel(requestDTO, status);
-//                accessRequestRepository.save(model);
-//
-//                return verificationResult;
-//            } else {
-//                return false;
-//            }
-//        } catch (Exception e) {
-//            return false;
-//        }
-//    }
 
     public boolean processAccessRequest(AccessRequestDTO requestDTO) {
         try {
@@ -85,15 +71,18 @@ public class AccessRequestService {
     }
 
     private String retrieveUserImage(Integer userId) {
-        AccessRequestModel userRequest = accessRequestRepository.findByUserId(userId);
-        return userRequest != null ? userRequest.getBase64Image() : null;
+        UserModel user = userRepository.findByUserId(userId);
+        return user != null ? user.getUserImage() : null;
     }
 
     private AccessRequestModel createRequestModel(AccessRequestDTO dto, String status) {
         AccessRequestModel model = new AccessRequestModel();
         model.setUserId(dto.getUserId());
         model.setBase64Image(dto.getBase64Image());
-        model.setDate(new Date());
+
+        String dateString = ZonedDateTime.now().format(DateTimeFormatter.ISO_INSTANT);
+        model.setDate(dateString);
+
         model.setApprovalStatus(status);
         return model;
     }
