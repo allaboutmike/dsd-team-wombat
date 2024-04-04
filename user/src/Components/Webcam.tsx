@@ -27,12 +27,20 @@ const WebcamCapture = () => {
   async function handleSubmit(e: any) {
     e.preventDefault();
 
-    const res = await fetch("", {
+    const headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    };
+
+    const body = JSON.stringify({
+      userId: badgeId,
+      base64Image: imgSrc
+    });
+
+    const res = await fetch("http://localhost:8080/access_request", {
       method: "POST",
-      body: JSON.stringify({
-        image: imgSrc,
-        badgeId: badgeId,
-      }),
+      headers: headers,
+      body: body
     });
 
     const data = await res.json();
@@ -41,7 +49,7 @@ const WebcamCapture = () => {
       return setError(data.error);
     }
 
-    setIsValid(data.access_request);
+    setIsValid(data);
   }
 
   return (
