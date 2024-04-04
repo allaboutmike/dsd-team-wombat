@@ -75,7 +75,7 @@ export default function Dashboard({
             </nav>
           </div>
         </div>
-        <DailyVisits />
+        <DailyVisits toggleViewImageModal={toggleViewImageModal} />
       </div>
     </div>
   );
