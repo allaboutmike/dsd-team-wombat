@@ -5,7 +5,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 @DynamoDBTable(tableName = "users")
-public class User {
+public class UserModel {
 
     private Integer userId;
     private String username;
@@ -13,7 +13,7 @@ public class User {
     private String userImage;
     private String lastActive;
 
-    @DynamoDBHashKey(attributeName = "user_Id")
+    @DynamoDBHashKey(attributeName = "user_id")
     public Integer getUserId() {
         return userId;
     }
@@ -31,7 +31,7 @@ public class User {
         this.username = username;
     }
 
-    @DynamoDBAttribute(attributeName = "user_Image")
+    @DynamoDBAttribute(attributeName = "user_image")
     public String getUserImage() {
         return userImage;
     }
@@ -49,7 +49,7 @@ public class User {
         this.accessLevel = accessLevel;
     }
 
-    @DynamoDBAttribute(attributeName = "last_Active")
+    @DynamoDBAttribute(attributeName = "last_active")
     public String getLastActive() {
         return lastActive;
     }

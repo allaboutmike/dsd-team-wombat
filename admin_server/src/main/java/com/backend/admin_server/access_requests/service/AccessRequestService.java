@@ -8,6 +8,8 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Logger;
 
+import com.backend.admin_server.user_data.model.UserModel;
+import com.backend.admin_server.user_data.repository.UserRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +20,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Date;
 
 @Service
 public class AccessRequestService {
@@ -34,11 +34,11 @@ public class AccessRequestService {
     public AccessRequestService(RestTemplate restTemplate,
                                 AccessRequestRepository accessRequestRepository,
                                 @Value("${external.api.url}") String externalApiUrl,
-                                UserRepsository userRepsository) {
+                                UserRepository userRepository) {
         this.restTemplate = restTemplate;
         this.accessRequestRepository = accessRequestRepository;
         this.externalApiUrl = externalApiUrl;
-        this.userRepository = userRepsository;
+        this.userRepository = userRepository;
     }
 
     public boolean processAccessRequest(AccessRequestDTO requestDTO) {
@@ -72,6 +72,7 @@ public class AccessRequestService {
 
     private String retrieveUserImage(Integer userId) {
         UserModel user = userRepository.findByUserId(userId);
+        LOGGER.info("Retrieved image for user ID " + userId + ": " + (user != null ? "Image found" : "No image found"));
         return user != null ? user.getUserImage() : null;
     }
 
@@ -89,10 +90,12 @@ public class AccessRequestService {
 
     private boolean sendForExternalVerification(String clientBase64Image, String userBase64Image) {
         try {
+            LOGGER.info("Client Base64 Image: " + (clientBase64Image != null ? "Present" : "Null"));
+            LOGGER.info("User Base64 Image: " + (userBase64Image != null ? "Present" : "Null"));
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
 
-            String jsonBody = String.format("{\"clientImage\": \"%s\", \"userImage\": \"%s\"}",
+            String jsonBody = String.format("{\"captured\": \"%s\", \"reference\": \"%s\"}",
                     clientBase64Image, userBase64Image);
 
             HttpEntity<String> request = new HttpEntity<>(jsonBody, headers);

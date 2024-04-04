@@ -1,6 +1,6 @@
 package com.backend.admin_server.user_data.controller;
 
-import com.backend.admin_server.user_data.model.User;
+import com.backend.admin_server.user_data.model.UserModel;
 import com.backend.admin_server.user_data.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +17,7 @@ public class UserDataController {
     private UserService userService;
 
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<UserModel> getAllUsers() {
         return userService.getAllUsers();
     }
 }

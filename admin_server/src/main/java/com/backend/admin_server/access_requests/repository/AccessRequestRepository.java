@@ -1,13 +1,8 @@
 package com.backend.admin_server.access_requests.repository;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
-import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.backend.admin_server.access_requests.model.AccessRequestModel;
 import org.springframework.stereotype.Repository;
-
-import java.util.Collections;
 
 @Repository
 public class AccessRequestRepository {
