@@ -58,7 +58,7 @@ export default function Dashboard({ toggleAddUserModal, toggleViewImageModal, ac
             </nav>
           </div>
         </div>
-        {activeTab === 'Daily Visits' && <DailyVisits />}
+        {activeTab === 'Daily Visits' && <DailyVisits toggleViewImageModal={toggleViewImageModal} />}
         {activeTab === 'User Audit Trail' && <AuditTrail />}
       </div>
 
