@@ -80,7 +80,7 @@ export default function DailyVisits({ toggleViewImageModal }: RequestProps) {
                 <tbody className="divide-y divide-zinc-200 bg-white">
                   {users.map((user, i) => {
                     return (
-                      <tr key={i}>
+                      <tr key={i} className="divide-x divide-zinc-200">
                         <td className="whitespace-nowrap p-4 text-sm text-zinc-500 flex justify-center">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -109,15 +109,13 @@ export default function DailyVisits({ toggleViewImageModal }: RequestProps) {
                         <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">
                           {user.checkIn}
                         </td>
-                        <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">
-                          <button
-                            type="button"
-                            className="text-white bg-teal-600 px-3 py-2 rounded-md hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
-                            onClick={toggleViewImageModal}
-                          >
-                            View Image
-                          </button>
-                        </td>
+                        <td className="whitespace-nowrap p-1 text-sm">  <button
+                          type="button"
+                          className="text-white bg-teal-600 px-2 py-1 rounded-md hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+                          onClick={toggleViewImageModal}
+                        >
+                          View Image
+                        </button></td>
                         <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">
                           {user.status}
                         </td>

@@ -1,4 +1,46 @@
-export default function AuditTrail() {
+type RequestProps = {
+    toggleViewImageModal: () => void;
+};
+
+export default function AuditTrail({ toggleViewImageModal }: RequestProps) {
+
+    const users = [
+        {
+            name: "Aliya Rodriguez",
+            role: "Full Stack Baby",
+            checkIn: "4/5/2024 8:00 AM",
+            status: "Present",
+            checkOut: "4/5/2024 9:30 PM",
+            accessType: "Default",
+            accessGivenBy: "Josh",
+            registeredOnDate: "2/8/2024 12:30 PM",
+            registeredBy: "Noel"
+        },
+
+        {
+            name: "Sabina Rasulova",
+            role: "Front-end Developer",
+            checkIn: "3/6/2024 9:00 AM",
+            status: "Absent",
+            checkOut: "3/7/2024 5:30 PM",
+            accessType: "Default",
+            accessGivenBy: "Josh",
+            registeredOnDate: "2/8/2024 12:30 PM",
+            registeredBy: "Mike"
+        },
+        {
+            name: "Kenneth Blanton",
+            role: "Full Stack Developer",
+            checkIn: "4/5/2024 9:30 AM",
+            status: "Present",
+            checkOut: "4/5/2024 6:30 PM",
+            accessType: "Manual",
+            accessGivenBy: "Amanda",
+            registeredOnDate: "2/8/2024 12:30 PM",
+            registeredBy: "Mike"
+        },
+    ];
+
     return (
         <div>
             <div className="px-2 border rounded-md overflow-scroll ">
@@ -24,64 +66,37 @@ export default function AuditTrail() {
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-zinc-200 bg-white">
-                                    <tr className="divide-x divide-zinc-200">
-                                        <td className="whitespace-nowrap p-4 text-sm text-zinc-500 flex justify-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                                            </svg>
-                                        </td>
-                                        <td className="whitespace-nowrap p-4 text-sm font-medium text-zinc-800">12345</td>
-                                        <td className="whitespace-nowrap p-4 text-sm text-zinc-500">Aliya Rodriguez</td>
-                                        <td className="whitespace-nowrap p-4 text-sm text-zinc-500">Front-end Developer</td>
-                                        <td className="whitespace-nowrap px-3 py-4 text-sm text-zinc-500"><span className="date">3/6/2024</span><span className="time">  5:19</span> <span className="PM/AM">PM</span></td>
-                                        <td className="whitespace-nowrap p-4 text-sm text-zinc-500">Noel</td>
-                                        <td className="whitespace-nowrap p-4 text-sm text-teal-500">Default</td>
-                                        <td className="whitespace-nowrap p-4 text-sm text-zinc-500">img</td>
-                                        <td className="whitespace-nowrap p-4 text-sm text-teal-500">Present</td>
-                                        <td className="whitespace-nowrap p-4 text-sm text-zinc-500"><span className="date">3/6/2024</span><span className="time">  6:30</span> <span className="PM/AM">PM</span></td>
-                                        <td className="whitespace-nowrap p-4 text-sm text-zinc-500"><span className="date">2/8/2024</span><span className="time">  12:30</span> <span className="PM/AM">PM</span></td>
-                                        <td className="whitespace-nowrappy-4 pl-4 pr-4 text-sm text-zinc-500 sm:pr-0">Mike</td>
-                                    </tr>
+                                    {users.map((user, i) => {
+                                        return (
+                                            <tr key={i} className="divide-x divide-zinc-200">
+                                                <td className="whitespace-nowrap p-4 text-sm text-zinc-500 flex justify-center">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                                                    </svg>
+                                                </td>
+                                                <td className="whitespace-nowrap p-4 text-sm font-medium text-zinc-800"> {i + 1}</td>
+                                                <td className="whitespace-nowrap p-4 text-sm text-zinc-500">{user.name}</td>
+                                                <td className="whitespace-nowrap p-4 text-sm text-zinc-500">{user.role}</td>
+                                                <td className="whitespace-nowrap p-4 text-sm text-zinc-500">{user.checkIn}</td>
+                                                <td className={`whitespace-nowrap px-3 py-4 text-sm ${user.accessType === "Default" ? "text-teal-500" : "text-red-400"}`}>{user.accessType}</td>
 
-                                    <tr className="divide-x divide-zinc-200">
-                                        <td className="whitespace-nowrap p-4 text-sm text-zinc-500 flex justify-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                                            </svg>
-                                        </td>
-                                        <td className="whitespace-nowrap p-4 text-sm font-medium text-zinc-800">12345</td>
-                                        <td className="whitespace-nowrap p-4 text-sm text-zinc-500">Aliya Rodriguez</td>
-                                        <td className="whitespace-nowrap p-4 text-sm text-zinc-500">Front-end Developer</td>
-                                        <td className="whitespace-nowrap px-3 py-4 text-sm text-zinc-500"><span className="date">3/5/2024</span><span className="time">  9:02</span> <span className="PM/AM">AM</span></td>
-                                        <td className="whitespace-nowrap p-4 text-sm text-zinc-500">Noel</td>
-                                        <td className="whitespace-nowrap p-4 text-sm text-teal-500">Default</td>
-                                        <td className="whitespace-nowrap p-4 text-sm text-zinc-500">img</td>
-                                        <td className="whitespace-nowrap p-4 text-sm text-red-400">Absent</td>
-                                        <td className="whitespace-nowrap p-4 text-sm text-zinc-500"><span className="date">3/5/2024</span><span className="time">  6:30</span> <span className="PM/AM">PM</span></td>
-                                        <td className="whitespace-nowrap p-4 text-sm text-zinc-500"><span className="date">2/8/2024</span><span className="time">  12:30</span> <span className="PM/AM">PM</span></td>
-                                        <td className="whitespace-nowrappy-4 pl-4 pr-4 text-sm text-zinc-500 sm:pr-0">Mike</td>
-                                    </tr>
+                                                <td className="whitespace-nowrap p-4 text-sm text-zinc-500">{user.accessGivenBy}</td>
+                                                <td className="whitespace-nowrap p-1 text-sm">  <button
+                                                    type="button"
+                                                    className="text-white bg-teal-600 px-2 py-1 rounded-md hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+                                                    onClick={toggleViewImageModal}
+                                                >
+                                                    View Image
+                                                </button></td>
 
-                                    <tr className="divide-x divide-zinc-200">
-                                        <td className="whitespace-nowrap p-4 text-sm  text-zinc-500 flex justify-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                                            </svg>
-                                        </td>
-                                        <td className="whitespace-nowrap p-4 text-sm font-medium text-zinc-800">15675</td>
-                                        <td className="whitespace-nowrap p-4 text-sm text-zinc-500">Kenneth Blanton</td>
-                                        <td className="whitespace-nowrap p-4 text-sm text-zinc-500">Full Stack Developer</td>
-                                        <td className="whitespace-nowrap px-3 py-4 text-sm text-zinc-500"><span className="date">3/6/2024</span><span className="time">  5:19</span> <span className="PM/AM">PM</span></td>
-                                        <td className="whitespace-nowrap p-4 text-sm text-zinc-500">Noel</td>
-                                        <td className="whitespace-nowrap p-4 text-sm text-red-400">Manual</td>
-                                        <td className="whitespace-nowrap p-4 text-sm text-zinc-500">img</td>
-                                        <td className="whitespace-nowrap p-4 text-sm text-red-500">Absent</td>
-                                        <td className="whitespace-nowrap p-4 text-sm text-zinc-500"><span className="date">3/6/2024</span><span className="time">  6:30</span> <span className="PM/AM">PM</span></td>
-                                        <td className="whitespace-nowrap p-4 text-sm text-zinc-500"><span className="date">1/15/2024</span><span className="time">  9:20</span> <span className="PM/AM">AM</span></td>
-                                        <td className="whitespace-nowrappy-4 pl-4 pr-4 text-sm text-zinc-500 sm:pr-0">Mike</td>
-                                    </tr>
+                                                <td className={`whitespace-nowrap px-3 py-4 text-sm ${user.status === "Present" ? "text-teal-500" : "text-red-400"}`}>{user.status}</td>
+                                                <td className="whitespace-nowrap p-4 text-sm text-zinc-500">{user.checkOut}</td>
+                                                <td className="whitespace-nowrap p-4 text-sm text-zinc-500">{user.registeredOnDate}</td>
+                                                <td className="whitespace-nowrappy-4 pl-4 pr-4 text-sm text-zinc-500 sm:pr-0">{user.registeredBy}</td>
+                                            </tr>
+                                        )
+                                    })}
 
-                                    {/* <!-- More people... --> */}
                                 </tbody>
                             </table>
                         </div>
