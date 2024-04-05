@@ -28,19 +28,19 @@ const WebcamCapture = () => {
     e.preventDefault();
 
     const headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
+      "Content-Type": "application/json",
+      Accept: "application/json",
     };
 
     const body = JSON.stringify({
       userId: badgeId,
-      base64Image: imgSrc
+      base64Image: imgSrc,
     });
 
     const res = await fetch("http://localhost:8080/access_request", {
       method: "POST",
       headers: headers,
-      body: body
+      body: body,
     });
 
     const data = await res.json();
@@ -49,6 +49,7 @@ const WebcamCapture = () => {
       return setError(data.error);
     }
 
+    console.log(data);
     setIsValid(data);
   }
 
