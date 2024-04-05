@@ -1,9 +1,18 @@
-from flask import Flask, request
-from werkzeug.exceptions import BadRequest, UnsupportedMediaType
 from deepface import DeepFace
 
-from helpers import *
-from facial_verification import *
+from flask import (Flask,
+                   request,
+                   Response,
+                   make_response,
+                   jsonify)
+
+from werkzeug.exceptions import BadRequest, UnsupportedMediaType
+
+from facial_verification import (handle_deepface_response,
+                                 validate_request_body,
+                                 handle_encoded_images)
+
+from helpers import send_error_response
 from image_handler import get_image_url_for_base64 as get_image_path
 
 app = Flask(__name__)
@@ -48,7 +57,8 @@ def verify_images():
         print(f"Request Body error: {err}, {type(err)=}")
         return send_error_response(str(err), 400)
 
-    # Invoke Deepface's verify method to compare the images and handle exceptions
+    # Invoke Deepface's verify method to compare the
+    # images and handle exceptions
     try:
 
         image1_url = get_image_path(request_body.get("captured"))
