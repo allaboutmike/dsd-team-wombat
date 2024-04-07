@@ -1,30 +1,33 @@
 import "./App.css";
 import WebcamCapture from "./Components/Webcam";
+import Home from "./pages/Home";
 import Nav from "./Components/Nav";
+import { Route, Routes } from "react-router-dom";
+import Success from "./pages/Success";
+import Unsuccessful from "./pages/Unsuccessful";
 
 function App() {
-
   return (
     <>
       <Nav />
-      <h2 className="text-lg font-semibold leading-6 text-zinc-700">
-        Center Yourself | Look into the Camera | Capture Image | Submit
-      </h2>
-        <WebcamCapture />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/Capture" element={<WebcamCapture />} />
+        <Route path="/Success" element={<Success />} />
+        <Route path="/Unsuccessful" element={<Unsuccessful />} />
+        <Route path="/*" element={<Home />} />
+      </Routes>
     </>
   );
 }
 
 export default App;
 
-
-
-
-
 // import VerifyModal from "./Components/Modal";
 // import { openModal } from "./Components/Modal";
 
-{/* <div>
+{
+  /* <div>
 <button
   onClick={() => openModal("verify_modal")}
   className="rounded-md bg-teal-600 px-3 py-2 my-4 text-center text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
@@ -50,4 +53,5 @@ export default App;
     Request Admin Override
   </button>
 </form>
-</VerifyModal> */}
+</VerifyModal> */
+}
