@@ -13,9 +13,8 @@ const WebcamCapture = () => {
   const [isValid, setIsValid] = useState(null);
   const [error, setError] = useState("");
   const [initCam, setInitCam] = useState(false);
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const webcamRef: any = useRef(null);
-
 
   const startCam = useCallback(() => {
     // isLoading(true);
@@ -51,7 +50,7 @@ const WebcamCapture = () => {
     const data = await res.json();
 
     setIsLoading(false);
-  
+
     if (data.error) {
       return setError(data.error);
     }
@@ -62,7 +61,10 @@ const WebcamCapture = () => {
 
   return (
     <>
-      { isLoading ? (
+      <h2 className="text-lg font-semibold leading-6 text-zinc-700">
+        Center Yourself | Look into the Camera | Capture Image | Submit
+      </h2>
+      {isLoading ? (
         <LoadingSpinner />
       ) : (
         <form>
@@ -130,8 +132,7 @@ const WebcamCapture = () => {
             </>
           )}
         </form>
-        )
-      }
+      )}
     </>
   );
 };
