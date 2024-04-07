@@ -2,6 +2,7 @@ import { useRef, useState, useCallback } from "react";
 import Webcam from "react-webcam";
 import placeholderImg from "../assets/images/placeholderImg.png";
 import LoadingSpinner from "./LoadingSpinner";
+import { useNavigate } from "react-router-dom";
 
 // TODO: Make a reusable button component
 // TODO: Make a reusable container component
@@ -15,6 +16,8 @@ const WebcamCapture = () => {
   const [initCam, setInitCam] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const webcamRef: any = useRef(null);
+
+  const navigate = useNavigate();
 
   const startCam = useCallback(() => {
     // isLoading(true);
@@ -53,6 +56,12 @@ const WebcamCapture = () => {
 
     if (data.error) {
       return setError(data.error);
+    }
+
+    if (data) {
+      navigate("/Successful");
+    } else {
+      navigate("/Unsuccessful");
     }
 
     console.log(data);
