@@ -3,34 +3,35 @@ import Webcam from "react-webcam";
 import placeholderImg from "../assets/images/placeholderImg.png";
 import LoadingSpinner from "./LoadingSpinner";
 import { useNavigate } from "react-router-dom";
+import { MouseEvent } from "react";
 
 // TODO: Make a reusable button component
 // TODO: Make a reusable container component
 
 const WebcamCapture = () => {
-  const [imgSrc, setImgSrc] = useState(null);
   const [badgeId, setBadgeId] = useState("");
   const [taken, setIsTaken] = useState(false);
-  const [isValid, setIsValid] = useState(null);
   const [error, setError] = useState("");
   const [initCam, setInitCam] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const webcamRef: any = useRef(null);
 
+  const [imgSrc, setImgSrc] = useState<string | null | undefined>(null);
+
+  const webcamRef = useRef<Webcam>(null);
   const navigate = useNavigate();
 
   const startCam = useCallback(() => {
-    // isLoading(true);
     setInitCam(true);
-  }, [initCam, setInitCam]);
+  }, [setInitCam]);
 
   const capture = useCallback(() => {
-    const imageSrc = webcamRef.current.getScreenshot();
+    const imageSrc = webcamRef.current?.getScreenshot();
     setImgSrc(imageSrc);
+
     setIsTaken(true);
   }, [webcamRef, setImgSrc]);
 
-  async function handleSubmit(e: any) {
+  async function handleSubmit(e: MouseEvent) {
     e.preventDefault();
     setIsLoading(true);
 
@@ -65,7 +66,6 @@ const WebcamCapture = () => {
     }
 
     console.log(data);
-    setIsValid(data);
   }
 
   return (
