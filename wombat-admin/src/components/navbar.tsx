@@ -1,9 +1,13 @@
-import Image from "next/image";
+"use client";
 
+import Image from "next/image";
+import { usePathname } from "next/navigation";
 import wombat from "../../public/david-clode-BSXdD5MawH4-unsplash.jpg";
 import DSD from "../../public/16057621.png";
 
 export default function Navbar() {
+  const pathname = usePathname();
+
   return (
     <div>
       <nav className="bg-teal-600">
@@ -17,32 +21,42 @@ export default function Navbar() {
                 <div className="ml-10 flex items-baseline space-x-4">
                   {/* <!-- Current: "bg-teal-700 text-white", Default: "text-white hover:bg-teal-500 hover:bg-opacity-75" --> */}
                   <a
-                    href="#"
-                    className="bg-teal-700 text-white rounded-md px-3 py-2 text-sm font-medium"
+                    href="/"
+                    className={`link ${
+                      pathname === "/"
+                        ? "bg-teal-700 text-white rounded-md px-3 py-2 text-sm font-medium"
+                        : "text-white hover:bg-teal-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium"
+                    }`}
+                    // className="bg-teal-700 text-white rounded-md px-3 py-2 text-sm font-medium"
                     aria-current="page"
                   >
                     Dashboard
                   </a>
                   <a
-                    href="#"
+                    href="/users"
                     className="text-white hover:bg-teal-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium"
                   >
                     Users
                   </a>
                   <a
-                    href="#"
-                    className="text-white hover:bg-teal-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium"
+                    href="/logs"
+                    className={`link ${
+                      pathname === "/logs"
+                        ? "bg-teal-700 text-white rounded-md px-3 py-2 text-sm font-medium"
+                        : "text-white hover:bg-teal-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium"
+                    }`}
+                    // className="text-white hover:bg-teal-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium"
                   >
                     Logs
                   </a>
                   <a
-                    href="#"
+                    href="/images"
                     className="text-white hover:bg-teal-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium"
                   >
                     Images
                   </a>
                   <a
-                    href="#"
+                    href="/reports"
                     className="text-white hover:bg-teal-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium"
                   >
                     Reports
