@@ -1,6 +1,7 @@
 package com.backend.admin_server.access_requests.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
+import com.backend.admin_server.access_requests.enums.ApprovalStatusEnums;
 import com.backend.admin_server.access_requests.enums.RequestStateEnums;
 
 @DynamoDBTable(tableName = "requests")
@@ -9,10 +10,12 @@ public class AccessRequestModel {
     private String requestId;
     private Integer userId;
     private String date;
-    private String approvalStatus;
+    @DynamoDBTypeConvertedEnum
+    private ApprovalStatusEnums approvalStatus;
     private String base64Image;
     @DynamoDBTypeConvertedEnum
     private RequestStateEnums state;
+
 
     public AccessRequestModel () {
         this.state = RequestStateEnums.AUTOMATED;
@@ -48,11 +51,11 @@ public class AccessRequestModel {
     }
 
     @DynamoDBAttribute(attributeName = "approval_status")
-    public String getApprovalStatus() {
+    public ApprovalStatusEnums getApprovalStatus() {
         return approvalStatus;
     }
 
-    public void setApprovalStatus(String approvalStatus) {
+    public void setApprovalStatus(ApprovalStatusEnums approvalStatus) {
         this.approvalStatus = approvalStatus;
     }
 
