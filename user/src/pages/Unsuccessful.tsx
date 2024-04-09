@@ -48,14 +48,20 @@ const Unsuccessful = () => {
         <LoadingSpinner />
       ) : (
         <>
+          <div className="flex-col justify-center align-middle items-center">
+            <div className=" mx-auto px-4 sm:px-6 lg:px-8 mt-10 sm:flex-none flex justify-center">
+              <h1 className="block rounded-md bg-red-400 px-10 py-10 text-center text-3xl font-semibold text-red-900 shadow-sm">
+                Unable to verify at this time.
+                <br />
+                If you would like to request administrator review, submit
+                information below.
+              </h1>
+            </div>
 
-            <h1 className="text-2xl font-semibold mb-7 text-white">
-              Enter your information
-            </h1>
-            <form className="w-[450px]">
+            <form className="w-[450px] flex-col items-center mx-auto mt-10">
               <div className="mb-5">
                 <input
-                  className="w-full py-2 px-4 rounded bg-[#4b5563] text-white mb-5 focus:outline-none"
+                  className="w-full text-lg text-center py-6 px-8 rounded bg-[#4b5563] text-white mb-5 focus:outline-none"
                   type="text"
                   placeholder="Enter BadgeID"
                   value={badgeId}
@@ -68,12 +74,12 @@ const Unsuccessful = () => {
               <button
                 type="submit"
                 onClick={handleSubmit}
-                className="w-full block rounded-md bg-teal-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+                className="w-full block rounded-md bg-teal-600 px-4 py-3 text-center text-md font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
               >
                 Request Admin Override
               </button>
             </form>
-   
+          </div>
         </>
       )}
       <p>{error}</p>
