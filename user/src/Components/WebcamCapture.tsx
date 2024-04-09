@@ -70,7 +70,7 @@ const WebcamCapture = () => {
 
   return (
     <>
-      <h2 className="text-lg font-semibold leading-6 text-zinc-700">
+      <h2 className="text-lg text-center font-semibold leading-6 text-zinc-700">
         Center Yourself | Look into the Camera | Capture Image | Submit
       </h2>
       {isLoading ? (
