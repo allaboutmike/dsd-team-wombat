@@ -41,7 +41,7 @@ def save_decoded_image(
             print(f"Error while saving the decoded image: {err}, {type(err)=}")
             return False
     else:
-        print(f"Image already exists !")
+        print("Image already exists !")
 
     return True
 
