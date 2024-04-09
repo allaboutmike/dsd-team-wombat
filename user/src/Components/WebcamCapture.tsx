@@ -2,10 +2,10 @@ import { useRef, useState, useCallback } from "react";
 import Webcam from "react-webcam";
 import placeholderImg from "../assets/images/placeholderImg.png";
 import LoadingSpinner from "./LoadingSpinner";
-import { useNavigate } from "react-router-dom";
 import { MouseEvent } from "react";
 import Prompts from "./Prompts";
 import CamPrompts from "./CamPrompts";
+import useSubmitRequest from "../hooks/useSubmitRequest.tsx";
 
 // TODO: Make a reusable button component
 // TODO: Make a reusable container component
@@ -13,16 +13,10 @@ import CamPrompts from "./CamPrompts";
 export default function WebcamCapture() {
   const [badgeId, setBadgeId] = useState("");
   const [taken, setIsTaken] = useState(false);
-  const [error, setError] = useState("");
   const [initCam, setInitCam] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
   const [imgSrc, setImgSrc] = useState<string | null | undefined>(null);
-
   const webcamRef = useRef<Webcam>(null);
-  const navigate = useNavigate();
-  const [requestId, setRequestId] = useState("");
-  const [requestDate, setRequestDate] = useState("");
+  const { handleSubmit, isLoading, error } = useSubmitRequest();
 
   const startCam = useCallback(() => {
     setInitCam(true);
@@ -35,45 +29,17 @@ export default function WebcamCapture() {
     setIsTaken(true);
   }, [webcamRef, setImgSrc]);
 
-  async function handleSubmit(e: MouseEvent) {
+  const handleFormSubmit = (e: MouseEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-
-    const headers = {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    };
-
-    const body = JSON.stringify({
-      userId: badgeId,
-      base64Image: imgSrc,
-    });
-
-    const res = await fetch("http://localhost:8080/access_request", {
-      method: "POST",
-      headers: headers,
-      body: body,
-    });
-
-    const data = await res.json();
-
-    setIsLoading(false);
-
-    if (data.error) {
-      setError(data.error);
-      navigate("/Unsuccessful");
-    } else if (data.requestId && data.date) {
-      setRequestId(data.requestId);
-      setRequestDate(data.date);
-      navigate("/Unsuccessful", {
-        state: { requestId: data.requestId, requestDate: data.date },
-      });
-    } else {
-      navigate("/Successful");
+    const userIdNumber = parseInt(badgeId, 10);
+    if (isNaN(userIdNumber)) {
+      console.error("Badge ID must be a number");
+      return;
     }
 
-    console.log(data);
-  }
+    const imageSrc = imgSrc !== undefined ? imgSrc : null;
+    handleSubmit({ userId: userIdNumber, imgSrc: imageSrc });
+  };
 
   return (
     <>
@@ -110,7 +76,7 @@ export default function WebcamCapture() {
                         <input
                           className="mr-4 ml-8  text-center outline-slate-700 text-slate-700 border-2 border-slate-600 border-opacity-50 rounded-md"
                           placeholder="Enter Badge ID"
-                          type="text"
+                          type="number"
                           value={badgeId}
                           onChange={(e) => {
                             setBadgeId(e.target.value);
@@ -120,7 +86,7 @@ export default function WebcamCapture() {
                         <button
                           type="submit"
                           className="block rounded-md bg-teal-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
-                          onClick={handleSubmit}
+                          onClick={handleFormSubmit}
                         >
                           Submit
                         </button>
