@@ -3,13 +3,6 @@ package com.backend.admin_server.access_requests.service;
 import com.backend.admin_server.access_requests.dto.AccessRequestDTO;
 import com.backend.admin_server.access_requests.model.AccessRequestModel;
 import com.backend.admin_server.access_requests.repository.AccessRequestRepository;
-
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-
 import com.backend.admin_server.user_data.model.UserModel;
 import com.backend.admin_server.user_data.repository.UserRepository;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -22,6 +15,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.logging.Logger;
 
 @Service
 public class AccessRequestValidationService {
