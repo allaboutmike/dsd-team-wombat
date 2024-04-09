@@ -25,4 +25,8 @@ public class AccessRequestRepository {
         return dynamoDBMapper.scan(AccessRequestModel.class, scanExpression);
     }
 
+    public AccessRequestModel findByRequestId(String requestId) {
+        return dynamoDBMapper.load(AccessRequestModel.class, requestId);
+    }
+
 }
