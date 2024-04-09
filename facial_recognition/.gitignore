@@ -133,6 +133,7 @@ celerybeat.pid
 .venvv/
 static/
 env/
+myenv/
 venv/
 ENV/
 env.bak/

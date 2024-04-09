@@ -1,9 +1,9 @@
-export const openModal = (id) => {
+export const openModal = (id: string) => {
   const modal = document.getElementById(id);
   modal.style.display = "block";
 };
 
-export const hideModal = (id) => {
+export const hideModal = (id: string) => {
   const modal = document.getElementById(id);
   modal.style.display = "none";
 };

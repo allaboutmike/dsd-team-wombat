@@ -1,0 +1,9 @@
+services:
+  facial_recognition:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
