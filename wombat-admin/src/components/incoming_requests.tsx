@@ -1,31 +1,22 @@
-import Image from "next/image";
+import React, { useState } from "react";
 
 type RequestProps = {
   toggleViewImageModal: () => void;
+  // requests: any[];
+  currentPage: number;
+  nextPage: () => void;
+  prevPage: () => void;
+  currentRequests: any[];
+  totalPages: number;
 };
 
-const users = [
-  {
-    name: "Sabina Rasulova",
-    role: "Front-end Developer",
-    checkIn: "3/6/2024 5:19 PM",
-  },
-  {
-    name: "Kenneth Blanton",
-    role: "Front-end Developer",
-    checkIn: "3/6/2024 5:19 PM",
-  },
-  { name: "Grace Joh", role: "Software Engineer", checkIn: "3/6/2024 5:19 PM" },
-];
+export default function IncomingRequests({ toggleViewImageModal, currentPage, nextPage, prevPage, currentRequests, totalPages }: RequestProps) {
 
-export default function IncomingRequests({
-  toggleViewImageModal,
-}: RequestProps) {
+
+
   return (
     <div>
-      <h2 className="text-lg font-semibold leading-6 text-zinc-700 mb-8">
-        Requests
-      </h2>
+      <h2 className="text-lg font-semibold leading-6 text-zinc-700 mb-8">Requests</h2>
 
       <div className="px-4 sm:px-6 lg:px-8 border rounded-md py-4">
         <div className="mt-8 flow-root">
@@ -34,73 +25,54 @@ export default function IncomingRequests({
               <table className="min-w-full divide-y divide-zinc-300">
                 <thead>
                   <tr>
-                    <th
-                      scope="col"
-                      className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-zinc-800 sm:pl-0"
-                    >
-                      ID
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-zinc-800"
-                    >
-                      Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-zinc-800"
-                    >
-                      Role
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-zinc-800"
-                    >
-                      Check In
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-zinc-800"
-                    >
-                      Image
-                    </th>
+                    <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-zinc-800 sm:pl-0">ID</th>
+                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-zinc-800">Name</th>
+                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-zinc-800">Status</th>
+                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-zinc-800">Check In</th>
+                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-zinc-800">Image</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-zinc-200">
-                  {users.map((user, i) => {
-                    return (
-                      <tr key={i}>
-                        <td className="pl-4 pr-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">
-                          {i + 1}
-                        </td>
-                        <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">
-                          {user.name}
-                        </td>
-                        <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">
-                          {user.role}
-                        </td>
-                        <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">
-                          {user.checkIn}
-                        </td>
-                        <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">
-                          <button
-                            type="button"
-                            className="text-white bg-teal-600 px-3 py-2 rounded-md hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
-                            onClick={toggleViewImageModal}
-                          >
-                            View Image
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-
-                  {/* <!-- More people... --> */}
+                  {currentRequests.map((request: any) => (
+                    <tr key={request.requestId}>
+                      <td className="pl-4 pr-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">{request.requestId}</td>
+                      <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">{request.userId}</td>
+                      <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">{request.approvalStatus}</td>
+                      <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">{request.date}</td>
+                      <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">
+                        <button
+                          type="button"
+                          className="text-white font-medium bg-teal-600 px-2.5 py-1.5 rounded-md hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+                          onClick={toggleViewImageModal}
+                        >
+                          View Image
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="flex justify-between mt-4">
+        <button
+          onClick={prevPage}
+          disabled={currentPage === 1}
+          className="px-3 py-1.5 text-sm bg-zinc-200 text-zinc-600 rounded-md"
+        >
+          Previous
+        </button>
+        <div className="text-zinc-600">{`Page ${currentPage} of ${totalPages}`}</div>
+        <button
+          onClick={nextPage}
+          disabled={currentPage === totalPages}
+          className="px-3 py-1.5 text-sm bg-zinc-200 text-zinc-600 rounded-md"
+        >
+          Next
+        </button>
       </div>
     </div>
   );
