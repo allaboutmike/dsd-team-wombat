@@ -1,5 +1,4 @@
 import "./App.css";
-import Home from "./pages/Home";
 import Nav from "./Components/Nav";
 import { Route, Routes } from "react-router-dom";
 import Successful from "./pages/Successful";
@@ -11,11 +10,10 @@ function App() {
     <>
       <Nav />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/Capture" element={<Capture />} />
+        <Route path="/" element={<Capture />} />
         <Route path="/Successful" element={<Successful />} />
         <Route path="/Unsuccessful" element={<Unsuccessful />} />
-        <Route path="/*" element={<Home />} />
+        <Route path="/*" element={<Successful />} />
       </Routes>
     </>
   );
