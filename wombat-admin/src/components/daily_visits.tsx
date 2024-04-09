@@ -1,23 +1,25 @@
-type RequestProps = {
+type DailyVisitProps = {
   toggleViewImageModal: () => void;
+  users: any
+
 };
-export default function DailyVisits({ toggleViewImageModal }: RequestProps) {
-  const users = [
-    {
-      name: "Sabina Rasulova",
-      role: "Front-end Developer",
-      checkIn: "3/6/2024 5:19 PM",
-      status: "Present",
-      checkOut: "",
-    },
-    {
-      name: "Kenneth Blanton",
-      role: "Full Stack Developer",
-      checkIn: "3/6/2024 5:19 PM",
-      status: "Absent",
-      checkOut: "3/6/2024 6:30 PM",
-    },
-  ];
+export default function DailyVisits({ toggleViewImageModal, users }: DailyVisitProps) {
+  // const users = [
+  //   {
+  //     name: "Sabina Rasulova",
+  //     role: "Front-end Developer",
+  //     checkIn: "3/6/2024 5:19 PM",
+  //     status: "Present",
+  //     checkOut: "",
+  //   },
+  //   {
+  //     name: "Kenneth Blanton",
+  //     role: "Full Stack Developer",
+  //     checkIn: "3/6/2024 5:19 PM",
+  //     status: "Absent",
+  //     checkOut: "3/6/2024 6:30 PM",
+  //   },
+  // ];
 
   return (
     <div>
@@ -78,7 +80,7 @@ export default function DailyVisits({ toggleViewImageModal }: RequestProps) {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-zinc-200 bg-white">
-                  {users.map((user, i) => {
+                  {users.map((user: any, i: number) => {
                     return (
                       <tr key={i} className="divide-x divide-zinc-200">
                         <td className="whitespace-nowrap p-4 text-sm text-zinc-500 flex justify-center">
@@ -98,10 +100,10 @@ export default function DailyVisits({ toggleViewImageModal }: RequestProps) {
                           </svg>
                         </td>
                         <td className="pl-4 pr-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">
-                          {i + 1}
+                          {user.userId}
                         </td>
                         <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">
-                          {user.name}
+                          {user.username}
                         </td>
                         <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">
                           {user.role}
