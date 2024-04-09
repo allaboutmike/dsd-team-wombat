@@ -1,5 +1,6 @@
 package com.backend.admin_server.access_requests.dto;
 
+import com.backend.admin_server.access_requests.enums.RequestStateEnums;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,5 +13,5 @@ public class AccessRequestDTO {
     private Date date;
     private String approvalStatus;
     private String base64Image;
-
+    private RequestStateEnums state;
 }
