@@ -7,7 +7,10 @@ import { MouseEvent } from "react";
 import Prompts from "./Prompts";
 import CamPrompts from "./CamPrompts";
 
-const WebcamCapture = () => {
+// TODO: Make a reusable button component
+// TODO: Make a reusable container component
+
+export default function WebcamCapture() {
   const [badgeId, setBadgeId] = useState("");
   const [taken, setIsTaken] = useState(false);
   const [error, setError] = useState("");
@@ -18,6 +21,8 @@ const WebcamCapture = () => {
 
   const webcamRef = useRef<Webcam>(null);
   const navigate = useNavigate();
+  const [requestId, setRequestId] = useState("");
+  const [requestDate, setRequestDate] = useState("");
 
   const startCam = useCallback(() => {
     setInitCam(true);
@@ -55,13 +60,16 @@ const WebcamCapture = () => {
     setIsLoading(false);
 
     if (data.error) {
-      return setError(data.error);
-    }
-
-    if (data) {
-      navigate("/Successful");
-    } else {
+      setError(data.error);
       navigate("/Unsuccessful");
+    } else if (data.requestId && data.date) {
+      setRequestId(data.requestId);
+      setRequestDate(data.date);
+      navigate("/Unsuccessful", {
+        state: { requestId: data.requestId, requestDate: data.date },
+      });
+    } else {
+      navigate("/Successful");
     }
 
     console.log(data);
@@ -144,6 +152,4 @@ const WebcamCapture = () => {
       )}
     </>
   );
-};
-
-export default WebcamCapture;
+}

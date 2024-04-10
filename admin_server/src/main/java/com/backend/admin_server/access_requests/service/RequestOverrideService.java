@@ -14,8 +14,8 @@ public class RequestOverrideService {
         this.accessRequestRepository = accessRequestRepository;
     }
 
-    public AccessRequestModel updateRequestState(String requestId, AccessRequestDTO accessRequestDTO) {
-        AccessRequestModel accessRequestModel = accessRequestRepository.findByRequestId(requestId);
+    public AccessRequestModel updateRequestState(String date, String requestId, AccessRequestDTO accessRequestDTO) {
+        AccessRequestModel accessRequestModel = accessRequestRepository.findByRequestId(date, requestId);
 
         accessRequestModel.setApprovalStatus(accessRequestDTO.getApprovalStatus());
         accessRequestModel.setState(accessRequestDTO.getState());

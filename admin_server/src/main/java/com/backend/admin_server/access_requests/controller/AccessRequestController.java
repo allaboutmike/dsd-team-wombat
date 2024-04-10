@@ -27,9 +27,9 @@ public class AccessRequestController {
     }
 
     @PostMapping
-    public ResponseEntity<Boolean> verifyImage(@RequestBody AccessRequestDTO requestDTO) {
-        boolean isVerified = accessRequestValidationService.processAccessRequest(requestDTO);
-        return ResponseEntity.ok(isVerified);
+    public ResponseEntity<AccessRequestDTO> createAccessRequest(@RequestBody AccessRequestDTO requestDTO) {
+        AccessRequestDTO responseDTO = accessRequestValidationService.processAccessRequest(requestDTO);
+        return ResponseEntity.ok(responseDTO);
     }
 
     @GetMapping
@@ -39,8 +39,8 @@ public class AccessRequestController {
 
     @PutMapping("/{requestId}")
     public ResponseEntity<AccessRequestModel> initiateRequestOverride(@PathVariable String requestId,
-                                                                  @RequestBody AccessRequestDTO accessRequestDTO) {
-        AccessRequestModel updatedRequest = requestOverrideService.updateRequestState(requestId, accessRequestDTO);
+                                                                      @RequestBody AccessRequestDTO accessRequestDTO) {
+        AccessRequestModel updatedRequest = requestOverrideService.updateRequestState(accessRequestDTO.getDate(), requestId, accessRequestDTO);
         return ResponseEntity.ok(updatedRequest);
     }
 
