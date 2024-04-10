@@ -90,7 +90,7 @@ public class AccessRequestValidationService {
 
             String jsonBody = String.format("{\"captured\": \"%s\", \"reference\": \"%s\"}",
                     clientBase64Image, userBase64Image);
-
+            
             HttpEntity<String> request = new HttpEntity<>(jsonBody, headers);
             ResponseEntity<String> response = restTemplate.postForEntity(externalApiUrl, request, String.class);
 
