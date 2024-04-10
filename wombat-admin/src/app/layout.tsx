@@ -6,7 +6,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Wombat Admin Page",
-  description: "This is a basic admin page for access control page based on facial recognition service",
+  description:
+    "This is a basic admin page for access control page based on facial recognition service",
 };
 
 export default function RootLayout({

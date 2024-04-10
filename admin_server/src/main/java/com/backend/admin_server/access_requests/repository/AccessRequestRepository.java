@@ -16,8 +16,9 @@ public class AccessRequestRepository {
         this.dynamoDBMapper = dynamoDBMapper;
     }
 
-    public void save(AccessRequestModel accessRequestModel) {
+    public AccessRequestModel save(AccessRequestModel accessRequestModel) {
         dynamoDBMapper.save(accessRequestModel);
+        return accessRequestModel;
     }
 
     public List<AccessRequestModel> findAll() {
@@ -25,8 +26,8 @@ public class AccessRequestRepository {
         return dynamoDBMapper.scan(AccessRequestModel.class, scanExpression);
     }
 
-    public AccessRequestModel findByRequestId(String requestId) {
-        return dynamoDBMapper.load(AccessRequestModel.class, requestId);
+    public AccessRequestModel findByRequestId(String date, String requestId) {
+        return dynamoDBMapper.load(AccessRequestModel.class, date, requestId);
     }
 
 }

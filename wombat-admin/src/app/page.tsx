@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import { useState } from "react";
@@ -8,10 +8,8 @@ import AddUser from "@/components/add_user";
 import ViewImageForAccess from "@/components/view_img_for_access";
 
 export default function Home() {
-
   const [addUserModal, setAddUserModal] = useState<Boolean>(false);
   const [viewImageModal, setViewImageModal] = useState<Boolean>(false);
-
 
   const toggleAddUserModal = () => {
     setAddUserModal((prev) => !prev);
@@ -34,22 +32,31 @@ export default function Home() {
     }
   };
 
-  const [activeTab, setActiveTab] = useState<string>('Daily Visits');
+  const [activeTab, setActiveTab] = useState<string>("Daily Visits");
 
   const handleTabClick = (tabName: string) => {
     setActiveTab(tabName);
   };
 
-
-
   return (
     <main className="min-h-full">
       <Navbar />
-      <Dashboard activeTab={activeTab}
-        handleTabClick={handleTabClick} toggleAddUserModal={toggleAddUserModal} toggleViewImageModal={toggleViewImageModal} />
-      {addUserModal && <AddUser handleFileChange={handleFileChange} imageSrc={imageSrc} toggleAddUserModal={toggleAddUserModal} />}
-      {viewImageModal && <ViewImageForAccess toggleViewImageModal={toggleViewImageModal} />}
+      <Dashboard
+        activeTab={activeTab}
+        handleTabClick={handleTabClick}
+        toggleAddUserModal={toggleAddUserModal}
+        toggleViewImageModal={toggleViewImageModal}
+      />
+      {addUserModal && (
+        <AddUser
+          handleFileChange={handleFileChange}
+          imageSrc={imageSrc}
+          toggleAddUserModal={toggleAddUserModal}
+        />
+      )}
+      {viewImageModal && (
+        <ViewImageForAccess toggleViewImageModal={toggleViewImageModal} />
+      )}
     </main>
-
   );
 }
