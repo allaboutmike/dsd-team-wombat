@@ -12,13 +12,17 @@ export default function RequestOverrideButton({
     useInitiateRequestOverride();
   const [status, setStatus] = useState("");
 
-    const handleClick = async () => {
-        const dto = {approvalStatus: false, date: requestDate, state: 'MANUAL_OVERRIDE_REQUESTED'};
-        const updatedRequest = await initiateRequestOverride(requestId, dto);
-        if (updatedRequest) {
-            setStatus("Request submitted, pending Admin review.");
-        }
+  const handleClick = async () => {
+    const dto = {
+      approvalStatus: false,
+      date: requestDate,
+      state: "MANUAL_OVERRIDE_REQUESTED",
     };
+    const updatedRequest = await initiateRequestOverride(requestId, dto);
+    if (updatedRequest) {
+      setStatus("Request submitted, pending Admin review.");
+    }
+  };
 
   return (
     <div>
