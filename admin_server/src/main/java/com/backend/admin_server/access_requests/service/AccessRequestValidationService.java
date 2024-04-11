@@ -40,32 +40,26 @@ public class AccessRequestValidationService {
         this.userRepository = userRepository;
     }
 
-    public boolean processAccessRequest(AccessRequestDTO requestDTO) {
+    public AccessRequestDTO processAccessRequest(AccessRequestDTO requestDTO) {
         try {
             LOGGER.info("Processing access request for user: " + requestDTO.getUserId());
 
             String userBase64Image = retrieveUserImage(requestDTO.getUserId());
             LOGGER.info("Retrieved user image for verification");
 
-            if (userBase64Image != null && requestDTO.getBase64Image() != null) {
-                LOGGER.info("Sending for external verification");
-                boolean verificationResult = sendForExternalVerification(requestDTO.getBase64Image(), userBase64Image);
+            LOGGER.info("Sending for external verification");
+            boolean verificationResult = sendForExternalVerification(requestDTO.getBase64Image(), userBase64Image);
+            String status = mapVerificationResultToStatus(verificationResult);
 
-                String status = mapVerificationResultToStatus(verificationResult);
-                LOGGER.info("Mapped verification result to status: " + status);
+            AccessRequestModel model = createRequestModel(requestDTO, status);
+            AccessRequestModel savedModel = accessRequestRepository.save(model);
 
-                AccessRequestModel model = createRequestModel(requestDTO, status);
-                accessRequestRepository.save(model);
-                LOGGER.info("Access request model saved");
+            requestDTO.setRequestId(savedModel.getRequestId());
+            return requestDTO;
 
-                return verificationResult;
-            } else {
-                LOGGER.warning("User image or request image is null");
-                return false;
-            }
         } catch (Exception e) {
             LOGGER.severe("Exception in processing access request: " + e.getMessage());
-            return false;
+            throw new RuntimeException("Failed to process access request", e);
         }
     }
 
@@ -98,7 +92,6 @@ public class AccessRequestValidationService {
 
             String jsonBody = String.format("{\"captured\": \"%s\", \"reference\": \"%s\"}",
                     cleanedClientImage, userBase64Image);
-//            LOGGER.info("JSON Payload being sent: " + jsonBody);
 
             HttpEntity<String> request = new HttpEntity<>(jsonBody, headers);
             ResponseEntity<String> response = restTemplate.postForEntity(externalApiUrl, request, String.class);
