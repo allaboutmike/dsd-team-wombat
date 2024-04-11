@@ -4,9 +4,8 @@ import placeholderImg from "../assets/images/placeholderImg.png";
 import LoadingSpinner from "./LoadingSpinner";
 import { useNavigate } from "react-router-dom";
 import { MouseEvent } from "react";
-
-// TODO: Make a reusable button component
-// TODO: Make a reusable container component
+import Prompts from "./Prompts";
+import CamPrompts from "./CamPrompts";
 
 const WebcamCapture = () => {
   const [badgeId, setBadgeId] = useState("");
@@ -70,65 +69,66 @@ const WebcamCapture = () => {
 
   return (
     <>
-      <h2 className="text-lg text-center font-semibold leading-6 text-zinc-700">
-        Center Yourself | Look into the Camera | Capture Image | Submit
-      </h2>
       {isLoading ? (
         <LoadingSpinner />
       ) : (
         <form>
           {initCam ? (
-            <div className="flex mx-auto justify-center my-6 sm:px-6 lg:px-8">
-              <div className="mr-8">
-                <Webcam
-                  audio={false}
-                  ref={webcamRef}
-                  screenshotFormat="image/jpeg"
-                />
-                <div className=" mx-auto px-4 sm:px-6 lg:px-8 mt-4  sm:flex-none flex justify-center">
-                  <button
-                    onClick={capture}
-                    type="button"
-                    className="block rounded-md bg-teal-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
-                  >
-                    Capture photo
-                  </button>
+            <>
+              <Prompts />
+              <div className="flex mx-auto justify-center my-6 sm:px-6 lg:px-8">
+                <div className="mr-8">
+                  <Webcam
+                    audio={false}
+                    ref={webcamRef}
+                    screenshotFormat="image/jpeg"
+                  />
+                  <div className=" mx-auto px-4 sm:px-6 lg:px-8 mt-4  sm:flex-none flex justify-center">
+                    <button
+                      onClick={capture}
+                      type="button"
+                      className="block rounded-md bg-teal-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+                    >
+                      Capture photo
+                    </button>
+                  </div>
+                </div>
+
+                <div className="ml-8">
+                  {imgSrc && <img src={imgSrc} />}
+                  <div className=" mx-auto px-4 sm:px-6 lg:px-8 mt-4  sm:flex-none flex justify-center">
+                    {taken ? (
+                      <>
+                        <input
+                          className="mr-4 ml-8  text-center outline-slate-700 text-slate-700 border-2 border-slate-600 border-opacity-50 rounded-md"
+                          placeholder="Enter Badge ID"
+                          type="text"
+                          value={badgeId}
+                          onChange={(e) => {
+                            setBadgeId(e.target.value);
+                          }}
+                        />
+
+                        <button
+                          type="submit"
+                          className="block rounded-md bg-teal-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+                          onClick={handleSubmit}
+                        >
+                          Submit
+                        </button>
+
+                        <p>{error}</p>
+                      </>
+                    ) : (
+                      <img src={placeholderImg} alt="capture placeholder" />
+                    )}
+                  </div>
                 </div>
               </div>
-
-              <div className="ml-8">
-                {imgSrc && <img src={imgSrc} />}
-                <div className=" mx-auto px-4 sm:px-6 lg:px-8 mt-4  sm:flex-none flex justify-center">
-                  {taken ? (
-                    <>
-                      <input
-                        className="mr-4 ml-8  text-center outline-slate-700 text-slate-700 border-2 border-slate-600 border-opacity-50 rounded-md"
-                        placeholder="Enter Badge ID"
-                        type="text"
-                        value={badgeId}
-                        onChange={(e) => {
-                          setBadgeId(e.target.value);
-                        }}
-                      />
-
-                      <button
-                        type="submit"
-                        className="block rounded-md bg-teal-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
-                        onClick={handleSubmit}
-                      >
-                        Submit
-                      </button>
-
-                      <p>{error}</p>
-                    </>
-                  ) : (
-                    <img src={placeholderImg} alt="capture placeholder" />
-                  )}
-                </div>
-              </div>
-            </div>
+            </>
           ) : (
             <>
+              <CamPrompts />
               <div className="flex justify-center">
                 <button
                   onClick={startCam}
