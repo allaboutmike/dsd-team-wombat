@@ -55,6 +55,9 @@ public class AccessRequestValidationService {
             AccessRequestModel savedModel = accessRequestRepository.save(model);
 
             requestDTO.setRequestId(savedModel.getRequestId());
+            requestDTO.setState(savedModel.getState());
+            requestDTO.setDate(savedModel.getDate());
+            requestDTO.setApprovalStatus(savedModel.getApprovalStatus());
             return requestDTO;
 
         } catch (Exception e) {
