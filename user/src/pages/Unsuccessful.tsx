@@ -20,8 +20,11 @@ export default function Unsuccessful() {
         <LoadingSpinner />
       ) : (
         <>
-          <h1 className="text-2xl font-semibold mb-7 text-white">
-            Enter your information
+          <h1 className="block rounded-md bg-red-400 px-10 py-10 text-center text-3xl font-semibold text-red-900 shadow-sm">
+            Unable to verify at this time.
+            <br />
+            If you would like to request administrator review, submit
+            information below.
           </h1>
           <form className="w-[450px]">
             <div className="mb-5">
