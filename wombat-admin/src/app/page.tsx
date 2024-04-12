@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Dashboard from "@/components/dashboard";
-import Navbar from "@/components/navbar";
 import AddUser from "@/components/add_user";
 import ViewImageForAccess from "@/components/view_img_for_access";
 import useDataFetcher from "@/components/useDataFetcher";
@@ -14,8 +13,6 @@ export default function Home() {
   const [viewImageModal, setViewImageModal] = useState<Boolean>(false);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<string>('Daily Visits');
-  // const [requests, setRequests] = useState([]);
-  // const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
   // Button click to show the "Add User Modal"
@@ -45,12 +42,6 @@ export default function Home() {
   const handleTabClick = (tabName: string) => {
     setActiveTab(tabName);
   };
-
-  // // Custom hook for fetching requests data
-  // const requestsData = useDataFetcher('http://localhost:4040/access_request');
-
-  // // Custom hook for fetching users data
-  // const usersData = useDataFetcher('http://localhost:4040/users');
 
   // Custom hook for fetching requests data
   const requests = useDataFetcher('http://localhost:4040/access_request');
