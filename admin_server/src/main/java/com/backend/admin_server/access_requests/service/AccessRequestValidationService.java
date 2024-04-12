@@ -1,15 +1,9 @@
 package com.backend.admin_server.access_requests.service;
 
 import com.backend.admin_server.access_requests.dto.AccessRequestDTO;
+import com.backend.admin_server.access_requests.enums.ApprovalStatusEnums;
 import com.backend.admin_server.access_requests.model.AccessRequestModel;
 import com.backend.admin_server.access_requests.repository.AccessRequestRepository;
-
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-
 import com.backend.admin_server.user_data.model.UserModel;
 import com.backend.admin_server.user_data.repository.UserRepository;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -22,6 +16,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.logging.Logger;
 
 @Service
 public class AccessRequestValidationService {
@@ -43,32 +41,29 @@ public class AccessRequestValidationService {
         this.userRepository = userRepository;
     }
 
-    public boolean processAccessRequest(AccessRequestDTO requestDTO) {
+    public AccessRequestDTO processAccessRequest(AccessRequestDTO requestDTO) {
         try {
             LOGGER.info("Processing access request for user: " + requestDTO.getUserId());
 
             String userBase64Image = retrieveUserImage(requestDTO.getUserId());
             LOGGER.info("Retrieved user image for verification");
 
-            if (userBase64Image != null && requestDTO.getBase64Image() != null) {
-                LOGGER.info("Sending for external verification");
-                boolean verificationResult = sendForExternalVerification(requestDTO.getBase64Image(), userBase64Image);
+            LOGGER.info("Sending for external verification");
+            boolean verificationResult = sendForExternalVerification(requestDTO.getBase64Image(), userBase64Image);
+            ApprovalStatusEnums status = mapVerificationResultToStatus(verificationResult);
 
-                String status = mapVerificationResultToStatus(verificationResult);
-                LOGGER.info("Mapped verification result to status: " + status);
+            AccessRequestModel model = createRequestModel(requestDTO, status);
+            AccessRequestModel savedModel = accessRequestRepository.save(model);
 
-                AccessRequestModel model = createRequestModel(requestDTO, status);
-                accessRequestRepository.save(model);
-                LOGGER.info("Access request model saved");
+            requestDTO.setRequestId(savedModel.getRequestId());
+            requestDTO.setState(savedModel.getState());
+            requestDTO.setDate(savedModel.getDate());
+            requestDTO.setApprovalStatus(savedModel.getApprovalStatus());
+            return requestDTO;
 
-                return verificationResult;
-            } else {
-                LOGGER.warning("User image or request image is null");
-                return false;
-            }
         } catch (Exception e) {
             LOGGER.severe("Exception in processing access request: " + e.getMessage());
-            return false;
+            throw new RuntimeException("Failed to process access request", e);
         }
     }
 
@@ -78,12 +73,12 @@ public class AccessRequestValidationService {
         return user != null ? user.getUserImage() : null;
     }
 
-    private AccessRequestModel createRequestModel(AccessRequestDTO dto, String status) {
+    private AccessRequestModel createRequestModel(AccessRequestDTO dto, ApprovalStatusEnums status) {
         AccessRequestModel model = new AccessRequestModel();
         model.setUserId(dto.getUserId());
         model.setBase64Image(dto.getBase64Image());
 
-        String dateString = ZonedDateTime.now().format(DateTimeFormatter.ISO_INSTANT);
+        String dateString = ZonedDateTime.now().format(DateTimeFormatter.ISO_DATE);
         model.setDate(dateString);
 
         model.setApprovalStatus(status);
@@ -101,7 +96,6 @@ public class AccessRequestValidationService {
 
             String jsonBody = String.format("{\"captured\": \"%s\", \"reference\": \"%s\"}",
                     cleanedClientImage, userBase64Image);
-//            LOGGER.info("JSON Payload being sent: " + jsonBody);
 
             HttpEntity<String> request = new HttpEntity<>(jsonBody, headers);
             ResponseEntity<String> response = restTemplate.postForEntity(externalApiUrl, request, String.class);
@@ -134,8 +128,8 @@ public class AccessRequestValidationService {
         return base64Image;
     }
 
-    private String mapVerificationResultToStatus(boolean result) {
-        return result ? "Approved" : "Denied";
+    private ApprovalStatusEnums mapVerificationResultToStatus(boolean result) {
+        return result ? ApprovalStatusEnums.APPROVED : ApprovalStatusEnums.DENIED;
     }
 }
 

@@ -23,7 +23,9 @@ export default function Dashboard({ toggleAddUserModal, toggleViewImageModal, ac
     <div>
       <header className="bg-white shadow-sm">
         <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-          <h1 className="text-lg font-semibold leading-6 text-zinc-700">Dashboard</h1>
+          <h1 className="text-lg font-semibold leading-6 text-zinc-700">
+            Dashboard
+          </h1>
         </div>
       </header>
 
@@ -56,7 +58,9 @@ export default function Dashboard({ toggleAddUserModal, toggleViewImageModal, ac
         </h2>
 
         <div className="sm:hidden">
-          <label htmlFor="tabs" className="sr-only">Select a tab</label>
+          <label htmlFor="tabs" className="sr-only">
+            Select a tab
+          </label>
           {/* <!-- Use an "onChange" listener to redirect the user to the selected tab URL. --> */}
           <select id="tabs" name="tabs" className="block w-full rounded-md border-zinc-300 py-2 pl-3 pr-10 text-base focus:border-teal-500 focus:outline-none focus:ring-teal-500 sm:text-sm" value={activeTab} onChange={(e) => handleTabClick(e.target.value)}>
             <option defaultValue="" value="Daily Visits">Daily Visits</option>
@@ -66,8 +70,26 @@ export default function Dashboard({ toggleAddUserModal, toggleViewImageModal, ac
         <div className="hidden sm:block">
           <div className="">
             <nav className="-mb-px flex space-x-8" aria-label="Tabs">
-              <a href="#" className={`whitespace-nowrap py-4 px-1 text-sm font-medium ${activeTab === 'Daily Visits' ? 'border-b-2 border-teal-500 text-teal-600' : 'border-transparent text-zinc-500'}`} onClick={() => handleTabClick('Daily Visits')}>Daily Visits</a>
-              <a href="#" className={` whitespace-nowrap py-4 px-1 text-sm font-medium ${activeTab === 'User Audit Trail' ? 'border-b-2 border-teal-500 text-teal-600' : 'border-transparent text-zinc-500'}`} onClick={() => handleTabClick('User Audit Trail')}>User Audit Trail</a>
+              <a
+                href="#"
+                className={`whitespace-nowrap py-4 px-1 text-sm font-medium ${activeTab === "Daily Visits"
+                    ? "border-b-2 border-teal-500 text-teal-600"
+                    : "border-transparent text-zinc-500"
+                  }`}
+                onClick={() => handleTabClick("Daily Visits")}
+              >
+                Daily Visits
+              </a>
+              <a
+                href="#"
+                className={` whitespace-nowrap py-4 px-1 text-sm font-medium ${activeTab === "User Audit Trail"
+                    ? "border-b-2 border-teal-500 text-teal-600"
+                    : "border-transparent text-zinc-500"
+                  }`}
+                onClick={() => handleTabClick("User Audit Trail")}
+              >
+                User Audit Trail
+              </a>
             </nav>
           </div>
         </div>
