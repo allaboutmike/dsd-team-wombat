@@ -12,7 +12,10 @@ type RequestProps = {
 
 export default function IncomingRequests({ toggleViewImageModal, currentPage, nextPage, prevPage, currentRequests, totalPages }: RequestProps) {
 
-
+  const formattedDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleString(); // Returns a localized string representation of the date and time
+  };
 
   return (
     <div>
@@ -38,7 +41,7 @@ export default function IncomingRequests({ toggleViewImageModal, currentPage, ne
                       <td className="pl-4 pr-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">{request.requestId}</td>
                       <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">{request.userId}</td>
                       <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">{request.approvalStatus}</td>
-                      <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">{request.date}</td>
+                      <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">{formattedDate(request.date)}</td>
                       <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">
                         <button
                           type="button"
