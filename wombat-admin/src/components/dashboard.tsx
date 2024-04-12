@@ -26,9 +26,6 @@ export default function Dashboard({ toggleAddUserModal, toggleViewImageModal, ac
           <h1 className="text-lg font-semibold leading-6 text-zinc-700">
             Dashboard
           </h1>
-          <h1 className="text-lg font-semibold leading-6 text-zinc-700">
-            Dashboard
-          </h1>
         </div>
       </header>
 
@@ -61,9 +58,6 @@ export default function Dashboard({ toggleAddUserModal, toggleViewImageModal, ac
         </h2>
 
         <div className="sm:hidden">
-          <label htmlFor="tabs" className="sr-only">
-            Select a tab
-          </label>
           <label htmlFor="tabs" className="sr-only">
             Select a tab
           </label>
