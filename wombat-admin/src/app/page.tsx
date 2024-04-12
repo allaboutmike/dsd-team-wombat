@@ -1,4 +1,5 @@
 "use client";
+"use client";
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -73,19 +74,21 @@ export default function Home() {
   const prevPage = () => setCurrentPage(currentPage - 1);
 
   return (
-    <main className="min-h-full">
-      <Navbar />
-      <Dashboard activeTab={activeTab} requests={requests} users={users} currentPage={currentPage}
-        nextPage={nextPage}
-        prevPage={prevPage}
-        currentRequests={currentRequests}
-        totalPages={totalPages}
-        handleTabClick={handleTabClick}
-        toggleAddUserModal={toggleAddUserModal}
-        toggleViewImageModal={toggleViewImageModal} />
-      {addUserModal && <AddUser handleFileChange={handleFileChange} imageSrc={imageSrc} toggleAddUserModal={toggleAddUserModal} />}
-      {viewImageModal && <ViewImageForAccess toggleViewImageModal={toggleViewImageModal} />}
-    </main>
+    <>
+      <Dashboard
+        <main className="min-h-full">
+        <Navbar />
+        <Dashboard activeTab={activeTab} requests={requests} users={users} currentPage={currentPage}
+          nextPage={nextPage}
+          prevPage={prevPage}
+          currentRequests={currentRequests}
+          totalPages={totalPages}
+          handleTabClick={handleTabClick}
+          toggleAddUserModal={toggleAddUserModal}
+          toggleViewImageModal={toggleViewImageModal} />
+        {addUserModal && <AddUser handleFileChange={handleFileChange} imageSrc={imageSrc} toggleAddUserModal={toggleAddUserModal} />}
+        {viewImageModal && <ViewImageForAccess toggleViewImageModal={toggleViewImageModal} />}
+      </main>
 
-  );
+      );
 }

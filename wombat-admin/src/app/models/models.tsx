@@ -22,8 +22,21 @@ type UserVisit = {
   status: boolean; // present or absent
   accessGivenBy: string; // admin username
 };
+id: number;
+checkInDay: string;
+checkInHour: string;
+checkOutDay: string;
+access: null | boolean;
+accessType: string; // default or manual
+status: boolean; // present or absent
+accessGivenBy: string; // admin username
+};
 
 type Admin = {
   id: number;
   username: string;
+};
+
+id: number;
+username: string;
 };
