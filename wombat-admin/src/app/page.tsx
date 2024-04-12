@@ -1,7 +1,5 @@
 "use client";
-"use client";
 
-import Image from "next/image";
 import { useState, useEffect } from "react";
 import Dashboard from "@/components/dashboard";
 import Navbar from "@/components/navbar";
@@ -16,8 +14,8 @@ export default function Home() {
   const [viewImageModal, setViewImageModal] = useState<Boolean>(false);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<string>('Daily Visits');
-  const [requests, setRequests] = useState([]);
-  const [users, setUsers] = useState([]);
+  // const [requests, setRequests] = useState([]);
+  // const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
   // Button click to show the "Add User Modal"
@@ -48,20 +46,16 @@ export default function Home() {
     setActiveTab(tabName);
   };
 
+  // // Custom hook for fetching requests data
+  // const requestsData = useDataFetcher('http://localhost:4040/access_request');
+
+  // // Custom hook for fetching users data
+  // const usersData = useDataFetcher('http://localhost:4040/users');
+
   // Custom hook for fetching requests data
-  const requestsData = useDataFetcher('http://localhost:4040/access_request');
-
+  const requests = useDataFetcher('http://localhost:4040/access_request');
   // Custom hook for fetching users data
-  const usersData = useDataFetcher('http://localhost:4040/users');
-
-  // Update state based on fetched data
-  useEffect(() => {
-    setRequests(requestsData);
-  }, [requestsData]);
-
-  useEffect(() => {
-    setUsers(usersData);
-  }, [usersData]);
+  const users = useDataFetcher('http://localhost:4040/users');
 
 
   // This function is responsible for pagination of the incoming requests 
@@ -75,7 +69,6 @@ export default function Home() {
 
   return (
     <main className="min-h-full">
-      <Navbar />
       <Dashboard activeTab={activeTab} requests={requests} users={users} currentPage={currentPage}
         nextPage={nextPage}
         prevPage={prevPage}
