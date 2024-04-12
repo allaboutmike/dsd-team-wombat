@@ -78,7 +78,7 @@ public class AccessRequestValidationService {
         model.setUserId(dto.getUserId());
         model.setBase64Image(dto.getBase64Image());
 
-        String dateString = ZonedDateTime.now().format(DateTimeFormatter.ISO_INSTANT);
+        String dateString = ZonedDateTime.now().format(DateTimeFormatter.ISO_DATE);
         model.setDate(dateString);
 
         model.setApprovalStatus(status);

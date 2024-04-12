@@ -37,6 +37,12 @@ public class AccessRequestController {
         return accessRequestService.getAllSortedByDate();
     }
 
+    @GetMapping("/{requestDate}/{requestId}")
+    public ResponseEntity<AccessRequestModel> getRequestStatus(@PathVariable String requestDate, @PathVariable String requestId) {
+        AccessRequestModel response = accessRequestService.get(requestDate, requestId);
+                return ResponseEntity.ok(response);
+    }
+
     @PutMapping("/{requestId}")
     public ResponseEntity<AccessRequestModel> initiateRequestOverride(@PathVariable String requestId,
                                                                       @RequestBody AccessRequestDTO accessRequestDTO) {
