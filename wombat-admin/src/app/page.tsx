@@ -10,8 +10,6 @@ import ViewImageForAccess from "@/components/view_img_for_access";
 export default function Home() {
   const [addUserModal, setAddUserModal] = useState(false);
   const [viewImageModal, setViewImageModal] = useState(false);
-  const [addUserModal, setAddUserModal] = useState<Boolean>(false);
-  const [viewImageModal, setViewImageModal] = useState<Boolean>(false);
 
   const toggleAddUserModal = () => {
     setAddUserModal((prev) => !prev);
@@ -42,25 +40,23 @@ export default function Home() {
 
   return (
     <>
-      <Dashboard
-    <main className="min-h-full">
-      <Navbar />
-      <Dashboard
-        activeTab={activeTab}
-        handleTabClick={handleTabClick}
-        toggleAddUserModal={toggleAddUserModal}
-        toggleViewImageModal={toggleViewImageModal}
-      />
-      {addUserModal && (
-        <AddUser
-          handleFileChange={handleFileChange}
-          imageSrc={imageSrc}
+      <main className="min-h-full">
+        <Dashboard
+          activeTab={activeTab}
+          handleTabClick={handleTabClick}
           toggleAddUserModal={toggleAddUserModal}
+          toggleViewImageModal={toggleViewImageModal}
         />
-      )}
-      {viewImageModal && (
-        <ViewImageForAccess toggleViewImageModal={toggleViewImageModal} />
-      )}
+        {addUserModal && (
+          <AddUser
+            handleFileChange={handleFileChange}
+            imageSrc={imageSrc}
+            toggleAddUserModal={toggleAddUserModal}
+          />
+        )}
+        {viewImageModal && (
+          <ViewImageForAccess toggleViewImageModal={toggleViewImageModal} />
+        )}
       </main>
     </>
   );

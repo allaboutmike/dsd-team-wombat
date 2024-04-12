@@ -1,9 +1,9 @@
 "use client";
-
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import wombat from "../../public/david-clode-BSXdD5MawH4-unsplash.jpg";
 import DSD from "../../public/16057621.png";
+import Link from "next/link";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -20,7 +20,7 @@ export default function Navbar() {
               <div className="hidden md:block">
                 <div className="ml-10 flex items-baseline space-x-4">
                   {/* <!-- Current: "bg-teal-700 text-white", Default: "text-white hover:bg-teal-500 hover:bg-opacity-75" --> */}
-                  <a
+                  <Link
                     href="/"
                     className={`link ${
                       pathname === "/"
@@ -31,14 +31,18 @@ export default function Navbar() {
                     aria-current="page"
                   >
                     Dashboard
-                  </a>
-                  <a
+                  </Link>
+                  <Link
                     href="/users"
-                    className="text-white hover:bg-teal-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium"
+                    className={`link ${
+                      pathname === "/users"
+                        ? "bg-teal-700 text-white rounded-md px-3 py-2 text-sm font-medium"
+                        : "text-white hover:bg-teal-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium"
+                    }`}
                   >
                     Users
-                  </a>
-                  <a
+                  </Link>
+                  <Link
                     href="/logs"
                     className={`link ${
                       pathname === "/logs"
@@ -48,19 +52,27 @@ export default function Navbar() {
                     // className="text-white hover:bg-teal-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium"
                   >
                     Logs
-                  </a>
-                  <a
+                  </Link>
+                  <Link
                     href="/images"
-                    className="text-white hover:bg-teal-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium"
+                    className={`link ${
+                      pathname === "/images"
+                        ? "bg-teal-700 text-white rounded-md px-3 py-2 text-sm font-medium"
+                        : "text-white hover:bg-teal-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium"
+                    }`}
                   >
                     Images
-                  </a>
-                  <a
+                  </Link>
+                  <Link
                     href="/reports"
-                    className="text-white hover:bg-teal-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium"
+                    className={`link ${
+                      pathname === "/reports"
+                        ? "bg-teal-700 text-white rounded-md px-3 py-2 text-sm font-medium"
+                        : "text-white hover:bg-teal-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium"
+                    }`}
                   >
                     Reports
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
