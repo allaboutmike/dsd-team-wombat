@@ -22,13 +22,7 @@ public class UserRepository {
     }
 
     public UserModel findByUserId(Integer userId) {
-        UserModel userModel = new UserModel();
-        userModel.setUserId(userId);
-        DynamoDBQueryExpression<UserModel> queryExpression = new DynamoDBQueryExpression<UserModel>()
-                .withHashKeyValues(userModel);
-
-        return dynamoDBMapper.query(UserModel.class, queryExpression).stream()
-                .findFirst()
-                .orElse(null);
+        return dynamoDBMapper.load(UserModel.class, userId);
     }
+
 }
