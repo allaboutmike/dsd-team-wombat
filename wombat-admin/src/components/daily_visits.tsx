@@ -4,22 +4,6 @@ type DailyVisitProps = {
 
 };
 export default function DailyVisits({ toggleViewImageModal, users }: DailyVisitProps) {
-  // const users = [
-  //   {
-  //     name: "Sabina Rasulova",
-  //     role: "Front-end Developer",
-  //     checkIn: "3/6/2024 5:19 PM",
-  //     status: "Present",
-  //     checkOut: "",
-  //   },
-  //   {
-  //     name: "Kenneth Blanton",
-  //     role: "Full Stack Developer",
-  //     checkIn: "3/6/2024 5:19 PM",
-  //     status: "Absent",
-  //     checkOut: "3/6/2024 6:30 PM",
-  //   },
-  // ];
 
   return (
     <div>
@@ -127,8 +111,6 @@ export default function DailyVisits({ toggleViewImageModal, users }: DailyVisitP
                       </tr>
                     );
                   })}
-
-                  {/* <!-- More people... --> */}
                 </tbody>
               </table>
             </div>

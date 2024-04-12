@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 type RequestProps = {
   toggleViewImageModal: () => void;
-  // requests: any[];
   currentPage: number;
   nextPage: () => void;
   prevPage: () => void;

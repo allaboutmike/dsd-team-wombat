@@ -19,8 +19,6 @@ type DashboardProps = {
 
 export default function Dashboard({ toggleAddUserModal, toggleViewImageModal, activeTab, handleTabClick, requests, users, currentPage,
   nextPage, prevPage, currentRequests, totalPages, }: DashboardProps) {
-  // console.log('Active Tab:', activeTab);
-
   return (
     <div>
       <header className="bg-white shadow-sm">
@@ -76,9 +74,6 @@ export default function Dashboard({ toggleAddUserModal, toggleViewImageModal, ac
         {activeTab === 'Daily Visits' && <DailyVisits toggleViewImageModal={toggleViewImageModal} users={users} />}
         {activeTab === 'User Audit Trail' && <AuditTrail toggleViewImageModal={toggleViewImageModal} />}
       </div>
-
     </div>
-
-
   )
 }
