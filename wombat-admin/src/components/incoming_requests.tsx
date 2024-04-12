@@ -85,7 +85,7 @@ export default function IncomingRequests({
                         <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">
                           <button
                             type="button"
-                            className="text-white bg-teal-600 px-3 py-2 rounded-md hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+                            className="text-white bg-teal-600 px-3 py-2 rounded-md hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
                             onClick={toggleViewImageModal}
                           >
                             View Image

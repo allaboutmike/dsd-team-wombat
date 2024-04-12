@@ -73,7 +73,7 @@ export default function DailyVisits({ toggleViewImageModal }: RequestProps) {
                       scope="col"
                       className="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-zinc-800 sm:pr-0"
                     >
-                      Check Out
+                      Last Active
                     </th>
                   </tr>
                 </thead>
@@ -113,7 +113,7 @@ export default function DailyVisits({ toggleViewImageModal }: RequestProps) {
                           {" "}
                           <button
                             type="button"
-                            className="text-white bg-teal-600 px-2 py-1 rounded-md hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+                            className="text-white bg-teal-600 px-3 py-2 rounded-md hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
                             onClick={toggleViewImageModal}
                           >
                             View Image

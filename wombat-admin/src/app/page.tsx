@@ -8,6 +8,8 @@ import AddUser from "@/components/add_user";
 import ViewImageForAccess from "@/components/view_img_for_access";
 
 export default function Home() {
+  const [addUserModal, setAddUserModal] = useState(false);
+  const [viewImageModal, setViewImageModal] = useState(false);
   const [addUserModal, setAddUserModal] = useState<Boolean>(false);
   const [viewImageModal, setViewImageModal] = useState<Boolean>(false);
 
@@ -39,6 +41,8 @@ export default function Home() {
   };
 
   return (
+    <>
+      <Dashboard
     <main className="min-h-full">
       <Navbar />
       <Dashboard
@@ -57,6 +61,7 @@ export default function Home() {
       {viewImageModal && (
         <ViewImageForAccess toggleViewImageModal={toggleViewImageModal} />
       )}
-    </main>
+      </main>
+    </>
   );
 }
