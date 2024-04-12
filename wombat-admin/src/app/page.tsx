@@ -6,23 +6,31 @@ import Dashboard from "@/components/dashboard";
 import Navbar from "@/components/navbar";
 import AddUser from "@/components/add_user";
 import ViewImageForAccess from "@/components/view_img_for_access";
+import useDataFetcher from "@/components/useDataFetcher";
 
 export default function Home() {
 
+  // State variables declaration
   const [addUserModal, setAddUserModal] = useState<Boolean>(false);
   const [viewImageModal, setViewImageModal] = useState<Boolean>(false);
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<string>('Daily Visits');
+  const [requests, setRequests] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
-
+  // Button click to show the "Add User Modal"
   const toggleAddUserModal = () => {
     setAddUserModal((prev) => !prev);
   };
 
+  // Button click to show "View User Image Modal"
   const toggleViewImageModal = () => {
     setViewImageModal((prev) => !prev);
   };
 
-  const [imageSrc, setImageSrc] = useState<string | null>(null);
 
+  //  This function allows admin to upload a new image for the user from their computer
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -34,51 +42,29 @@ export default function Home() {
     }
   };
 
-  const [activeTab, setActiveTab] = useState<string>('Daily Visits');
 
+  // This function allows to navigate between Daily Visits and User Audit Trail tabs
   const handleTabClick = (tabName: string) => {
     setActiveTab(tabName);
   };
 
+  // Custom hook for fetching requests data
+  const requestsData = useDataFetcher('http://localhost:4040/access_request');
 
-  const [requests, setRequests] = useState([]);
+  // Custom hook for fetching users data
+  const usersData = useDataFetcher('http://localhost:4040/users');
+
+  // Update state based on fetched data
+  useEffect(() => {
+    setRequests(requestsData);
+  }, [requestsData]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`http://localhost:4040/access_request`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        const data = await response.json();
-        setRequests(data); // Assuming API returns an array of requests
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchData();
-  }, []);
+    setUsers(usersData);
+  }, [usersData]);
 
 
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`http://localhost:4040/users`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        const data = await response.json();
-        setUsers(data); // Assuming API returns an array of users
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchData();
-  }, []);
-
-  const [currentPage, setCurrentPage] = useState(1);
+  // This function is responsible for pagination of the incoming requests 
   const itemsPerPage = 3;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
