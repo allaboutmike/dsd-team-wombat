@@ -1,4 +1,11 @@
 export default function Users() {
+
+  const users = [
+    { id: 1, name: 'Lindsay Walton', role: 'Front End Developer', dateCreated: '2021-08-25' },
+    { id: 2, name: 'Stephanie Curry', role: 'Back End Developer', dateCreated: '2021-10-17' },
+    { id: 3, name: 'John Doe', role: 'UI/UX Designer', dateCreated: '2021-11-11' }
+  ];
+  
   return (
     <div>
       <header className="bg-white shadow-sm">
@@ -48,76 +55,33 @@ export default function Users() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
-                  <tr>
-                    <td className="whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
-                      1
+                  {users.map((user) => (
+                    <tr key={user.id}>
+                     <td className="whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
+                      {user.id}
+                     </td>
+                     <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
+                     <div className="font-medium text-gray-900">
+                     {user.name} 
+                     </div>
                     </td>
                     <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      <div className="font-medium text-gray-900">
-                        Lindsay Walton
-                      </div>
+                    {user.role}
                     </td>
                     <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      Front End Developer
+                    {user.dateCreated}
                     </td>
                     <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      2021-08-25
+                    <button
+                    type="button"
+                    className="text-white hover:bg-teal-500 bg-teal-600 px-2 py-1 text-xs font-medium rounded-md"
+                    >
+                    View
+                    </button>
                     </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      <button
-                        type="button"
-                        className="text-white  hover:bg-teal-500 bg-teal-600 px-2 py-1 text-xs font-medium rounded-md"
-                      >
-                        View
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
-                      2
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      <div className="font-medium text-gray-900">
-                        Stephanie Curry
-                      </div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      Back End Developer
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      2021-10-17
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      <button
-                        type="button"
-                        className="text-white  hover:bg-teal-500 bg-teal-600 px-2 py-1 text-xs font-medium rounded-md"
-                      >
-                        View
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
-                      3
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      <div className="font-medium text-gray-900">John Doe</div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      UI/UX Designer
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      2021-11-11
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      <button
-                        type="button"
-                        className="text-white  hover:bg-teal-500 bg-teal-600 px-2 py-1 text-xs font-medium rounded-md"
-                      >
-                        View
-                      </button>
-                    </td>
-                  </tr>
+                    </tr>
+                  ))}
+
                 </tbody>
               </table>
             </div>
