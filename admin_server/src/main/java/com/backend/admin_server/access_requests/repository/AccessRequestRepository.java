@@ -27,13 +27,7 @@ public class AccessRequestRepository {
     }
 
     public AccessRequestModel findByRequestId(String date, String requestId) {
-        System.out.println("Attempting to load with Date: " + date + " and RequestID: " + requestId);
-        AccessRequestModel model = dynamoDBMapper.load(AccessRequestModel.class, date, requestId);
-        if (model == null) {
-            System.out.println("No item found with Date: " + date + " and RequestID: " + requestId);
-        }
-        return model;
+        return dynamoDBMapper.load(AccessRequestModel.class, date, requestId);
     }
-
 
 }
