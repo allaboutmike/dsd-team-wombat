@@ -25,8 +25,6 @@ public class RequestOverrideService {
         accessRequestModel.setApprovalStatus(accessRequestDTO.getApprovalStatus());
         accessRequestModel.setState(accessRequestDTO.getState());
 
-        System.out.println("Current state before switch: " + accessRequestModel.getState());
-
         switch (accessRequestModel.getState()) {
             case MANUAL_OVERRIDE_REQUESTED:
                 initializeTtl(accessRequestModel);
