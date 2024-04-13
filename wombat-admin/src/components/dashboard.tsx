@@ -8,15 +8,17 @@ type DashboardProps = {
   toggleViewImageModal: () => void;
   activeTab: string;
   handleTabClick: (tabName: string) => void;
+  requests: any;
+  users: any;
+  currentPage: number;
+  nextPage: () => void;
+  prevPage: () => void;
+  currentRequests: any[];
+  totalPages: number;
 };
 
-export default function Dashboard({
-  toggleAddUserModal,
-  toggleViewImageModal,
-  activeTab,
-  handleTabClick,
-}: DashboardProps) {
-  // console.log('Active Tab:', activeTab);
+export default function Dashboard({ toggleAddUserModal, toggleViewImageModal, activeTab, handleTabClick, requests, users, currentPage,
+  nextPage, prevPage, currentRequests, totalPages, }: DashboardProps) {
   return (
     <div>
       <header className="bg-white shadow-sm">
@@ -40,7 +42,13 @@ export default function Dashboard({
       <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
         <div className="grid grid-cols-3 gap-4">
           <div className="col-span-2">
-            <IncomingRequests toggleViewImageModal={toggleViewImageModal} />
+            <IncomingRequests
+              currentRequests={currentRequests}
+              totalPages={totalPages}
+              toggleViewImageModal={toggleViewImageModal}
+              currentPage={currentPage}
+              nextPage={nextPage}
+              prevPage={prevPage} />
           </div>
           <Statistics />
         </div>
@@ -54,16 +62,8 @@ export default function Dashboard({
             Select a tab
           </label>
           {/* <!-- Use an "onChange" listener to redirect the user to the selected tab URL. --> */}
-          <select
-            id="tabs"
-            name="tabs"
-            className="block w-full rounded-md border-zinc-300 py-2 pl-3 pr-10 text-base focus:border-teal-500 focus:outline-none focus:ring-teal-500 sm:text-sm"
-            value={activeTab}
-            onChange={(e) => handleTabClick(e.target.value)}
-          >
-            <option selected value="Daily Visits">
-              Daily Visits
-            </option>
+          <select id="tabs" name="tabs" className="block w-full rounded-md border-zinc-300 py-2 pl-3 pr-10 text-base focus:border-teal-500 focus:outline-none focus:ring-teal-500 sm:text-sm" value={activeTab} onChange={(e) => handleTabClick(e.target.value)}>
+            <option defaultValue="" value="Daily Visits">Daily Visits</option>
             <option value="User Audit Trail">User Audit Trail</option>
           </select>
         </div>
@@ -72,22 +72,20 @@ export default function Dashboard({
             <nav className="-mb-px flex space-x-8" aria-label="Tabs">
               <a
                 href="#"
-                className={`whitespace-nowrap py-4 px-1 text-sm font-medium ${
-                  activeTab === "Daily Visits"
-                    ? "border-b-2 border-teal-500 text-teal-600"
-                    : "border-transparent text-zinc-500"
-                }`}
+                className={`whitespace-nowrap py-4 px-1 text-sm font-medium ${activeTab === "Daily Visits"
+                  ? "border-b-2 border-teal-500 text-teal-600"
+                  : "border-transparent text-zinc-500"
+                  }`}
                 onClick={() => handleTabClick("Daily Visits")}
               >
                 Daily Visits
               </a>
               <a
                 href="#"
-                className={` whitespace-nowrap py-4 px-1 text-sm font-medium ${
-                  activeTab === "User Audit Trail"
-                    ? "border-b-2 border-teal-500 text-teal-600"
-                    : "border-transparent text-zinc-500"
-                }`}
+                className={` whitespace-nowrap py-4 px-1 text-sm font-medium ${activeTab === "User Audit Trail"
+                  ? "border-b-2 border-teal-500 text-teal-600"
+                  : "border-transparent text-zinc-500"
+                  }`}
                 onClick={() => handleTabClick("User Audit Trail")}
               >
                 User Audit Trail
@@ -95,13 +93,9 @@ export default function Dashboard({
             </nav>
           </div>
         </div>
-        {activeTab === "Daily Visits" && (
-          <DailyVisits toggleViewImageModal={toggleViewImageModal} />
-        )}
-        {activeTab === "User Audit Trail" && (
-          <AuditTrail toggleViewImageModal={toggleViewImageModal} />
-        )}
+        {activeTab === 'Daily Visits' && <DailyVisits toggleViewImageModal={toggleViewImageModal} users={users} />}
+        {activeTab === 'User Audit Trail' && <AuditTrail toggleViewImageModal={toggleViewImageModal} />}
       </div>
     </div>
-  );
+  )
 }

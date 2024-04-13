@@ -1,6 +1,7 @@
 package com.backend.admin_server.access_requests.service;
 
 import com.backend.admin_server.access_requests.dto.AccessRequestDTO;
+import com.backend.admin_server.access_requests.enums.ApprovalStatusEnums;
 import com.backend.admin_server.access_requests.model.AccessRequestModel;
 import com.backend.admin_server.access_requests.repository.AccessRequestRepository;
 import com.backend.admin_server.user_data.model.UserModel;
@@ -49,7 +50,7 @@ public class AccessRequestValidationService {
 
             LOGGER.info("Sending for external verification");
             boolean verificationResult = sendForExternalVerification(requestDTO.getBase64Image(), userBase64Image);
-            String status = mapVerificationResultToStatus(verificationResult);
+            ApprovalStatusEnums status = mapVerificationResultToStatus(verificationResult);
 
             AccessRequestModel model = createRequestModel(requestDTO, status);
             AccessRequestModel savedModel = accessRequestRepository.save(model);
@@ -72,12 +73,12 @@ public class AccessRequestValidationService {
         return user != null ? user.getUserImage() : null;
     }
 
-    private AccessRequestModel createRequestModel(AccessRequestDTO dto, String status) {
+    private AccessRequestModel createRequestModel(AccessRequestDTO dto, ApprovalStatusEnums status) {
         AccessRequestModel model = new AccessRequestModel();
         model.setUserId(dto.getUserId());
         model.setBase64Image(dto.getBase64Image());
 
-        String dateString = ZonedDateTime.now().format(DateTimeFormatter.ISO_INSTANT);
+        String dateString = ZonedDateTime.now().format(DateTimeFormatter.ISO_DATE);
         model.setDate(dateString);
 
         model.setApprovalStatus(status);
@@ -127,8 +128,8 @@ public class AccessRequestValidationService {
         return base64Image;
     }
 
-    private String mapVerificationResultToStatus(boolean result) {
-        return result ? "Approved" : "Denied";
+    private ApprovalStatusEnums mapVerificationResultToStatus(boolean result) {
+        return result ? ApprovalStatusEnums.APPROVED : ApprovalStatusEnums.DENIED;
     }
 }
 
