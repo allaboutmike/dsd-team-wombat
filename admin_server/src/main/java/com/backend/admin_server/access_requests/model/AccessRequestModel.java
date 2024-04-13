@@ -4,7 +4,6 @@ import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.backend.admin_server.access_requests.enums.ApprovalStatusEnums;
 import com.backend.admin_server.access_requests.enums.RequestStateEnums;
 
-import java.util.Calendar;
 import java.util.Date;
 
 @DynamoDBTable(tableName = "requests")
@@ -90,15 +89,4 @@ public class AccessRequestModel {
     public void setTtl(Date ttl) {
         this.ttl = ttl;
     }
-
-    public void initializeTtl() {
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.SECOND, 120);
-        this.ttl = cal.getTime();
-    }
-
-    public boolean isTtlValid() {
-        return new Date().before(this.ttl);
-    }
-
 }

@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Calendar;
+import java.util.Date;
+
 @Service
 public class RequestOverrideService {
 
@@ -22,12 +25,14 @@ public class RequestOverrideService {
         accessRequestModel.setApprovalStatus(accessRequestDTO.getApprovalStatus());
         accessRequestModel.setState(accessRequestDTO.getState());
 
+        System.out.println("Current state before switch: " + accessRequestModel.getState());
+
         switch (accessRequestModel.getState()) {
             case MANUAL_OVERRIDE_REQUESTED:
-                accessRequestModel.initializeTtl();
+                initializeTtl(accessRequestModel);
                 break;
             case MANUAL_OVERRIDE_ACTIONED:
-                if (accessRequestModel.getTtl() == null || !accessRequestModel.isTtlValid()) {
+                if (accessRequestModel.getTtl() == null || ! isTtlValid(accessRequestModel.getTtl())) {
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Request has expired.");
                 }
                 break;
@@ -35,5 +40,15 @@ public class RequestOverrideService {
 
         accessRequestRepository.save(accessRequestModel);
         return accessRequestModel;
+    }
+
+    private void initializeTtl(AccessRequestModel model) {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.SECOND, 120);
+        model.setTtl(cal.getTime());
+    }
+
+    private boolean isTtlValid(Date ttl) {
+        return new Date().before(ttl);
     }
 }
