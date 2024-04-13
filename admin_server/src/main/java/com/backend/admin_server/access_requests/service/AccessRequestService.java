@@ -22,4 +22,7 @@ public class AccessRequestService {
         return requests;
     }
 
+    public AccessRequestModel get(String requestDate, String requestId) {
+        return accessRequestRepository.findByRequestId(requestDate, requestId);
+    }
 }
