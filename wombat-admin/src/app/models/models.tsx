@@ -1,21 +1,16 @@
 type User = {
-  id: number;
-  firstName: string;
-  lastName: string;
-  username: string;
-  image: {
-    img1: string;
-    img2: string;
-    img3: string;
-    img4: string;
-    img5: string;
-  };
-  role: string;
-  department: string;
-  registeredByAdmin: string; //admin username
-  registerDay: string;
-  registerTime: string;
-};
+  id: number,
+  firstName: string,
+  lastName: string,
+  username: string,
+  image: string,
+  role: string,
+  department: string,
+  registeredByAdmin: string, //admin username
+  registerDay: string,
+  registerTime: string,
+
+}
 
 type UserVisit = {
   id: number;
@@ -27,6 +22,7 @@ type UserVisit = {
   status: boolean; // present or absent
   accessGivenBy: string; // admin username
 };
+
 
 type Admin = {
   id: number;

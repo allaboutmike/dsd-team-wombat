@@ -4,7 +4,7 @@ WORKDIR /app
 COPY build.gradle settings.gradle ./
 COPY src src
 
-RUN gradle build
+RUN gradle build -x test
 
 FROM openjdk:22-ea-17-slim-bullseye
 

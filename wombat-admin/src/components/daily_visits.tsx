@@ -1,23 +1,9 @@
-type RequestProps = {
+type DailyVisitProps = {
   toggleViewImageModal: () => void;
+  users: any
+
 };
-export default function DailyVisits({ toggleViewImageModal }: RequestProps) {
-  const users = [
-    {
-      name: "Sabina Rasulova",
-      role: "Front-end Developer",
-      checkIn: "3/6/2024 5:19 PM",
-      status: "Present",
-      checkOut: "",
-    },
-    {
-      name: "Kenneth Blanton",
-      role: "Full Stack Developer",
-      checkIn: "3/6/2024 5:19 PM",
-      status: "Absent",
-      checkOut: "3/6/2024 6:30 PM",
-    },
-  ];
+export default function DailyVisits({ toggleViewImageModal, users }: DailyVisitProps) {
 
   return (
     <div>
@@ -73,12 +59,12 @@ export default function DailyVisits({ toggleViewImageModal }: RequestProps) {
                       scope="col"
                       className="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-zinc-800 sm:pr-0"
                     >
-                      Check Out
+                      Last Active
                     </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-zinc-200 bg-white">
-                  {users.map((user, i) => {
+                  {users.map((user: any, i: number) => {
                     return (
                       <tr key={i} className="divide-x divide-zinc-200">
                         <td className="whitespace-nowrap p-4 text-sm text-zinc-500 flex justify-center">
@@ -98,10 +84,10 @@ export default function DailyVisits({ toggleViewImageModal }: RequestProps) {
                           </svg>
                         </td>
                         <td className="pl-4 pr-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">
-                          {i + 1}
+                          {user.userId}
                         </td>
                         <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">
-                          {user.name}
+                          {user.username}
                         </td>
                         <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">
                           {user.role}
@@ -113,7 +99,7 @@ export default function DailyVisits({ toggleViewImageModal }: RequestProps) {
                           {" "}
                           <button
                             type="button"
-                            className="text-white bg-teal-600 px-2 py-1 rounded-md hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+                            className="text-white bg-teal-600 px-3 py-2 rounded-md hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
                             onClick={toggleViewImageModal}
                           >
                             View Image
@@ -128,8 +114,6 @@ export default function DailyVisits({ toggleViewImageModal }: RequestProps) {
                       </tr>
                     );
                   })}
-
-                  {/* <!-- More people... --> */}
                 </tbody>
               </table>
             </div>
