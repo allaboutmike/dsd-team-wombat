@@ -1,6 +1,7 @@
 package com.backend.admin_server.access_requests.service;
 
 import com.backend.admin_server.access_requests.dto.AccessRequestDTO;
+import com.backend.admin_server.access_requests.enums.RequestStateEnums;
 import com.backend.admin_server.access_requests.model.AccessRequestModel;
 import com.backend.admin_server.access_requests.repository.AccessRequestRepository;
 import org.slf4j.Logger;
@@ -39,6 +40,8 @@ public class RequestOverrideService {
                 logger.info("State is MANUAL_OVERRIDE_ACTIONED, checking if TTL is valid");
                 if (accessRequestModel.getTtl() == null || ! isTtlValid(accessRequestModel.getTtl())) {
                     logger.warn("TTL check failed for requestId: {}, TTL: {}", requestId, accessRequestModel.getTtl());
+                    accessRequestModel.setState(RequestStateEnums.MANUAL_OVERRIDE_TIMEOUT);
+                    logger.info("State set to TIMEOUT due to expired TTL");
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Request has expired.");
                 }
                 break;
