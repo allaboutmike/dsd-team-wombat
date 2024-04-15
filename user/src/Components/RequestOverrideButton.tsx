@@ -14,7 +14,7 @@ export default function RequestOverrideButton({
 
   const handleClick = async () => {
     const dto = {
-      approvalStatus: false,
+      approvalStatus: "DENIED",
       date: requestDate,
       state: "MANUAL_OVERRIDE_REQUESTED",
     };

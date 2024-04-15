@@ -15,6 +15,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<string>('Daily Visits');
   const [currentPage, setCurrentPage] = useState(1);
 
+
   // Button click to show the "Add User Modal"
   const toggleAddUserModal = () => {
     setAddUserModal((prev) => !prev);
@@ -59,6 +60,7 @@ export default function Home() {
   const prevPage = () => setCurrentPage(currentPage - 1);
 
   return (
+
     <main className="min-h-full">
       <Dashboard activeTab={activeTab} requests={requests} users={users} currentPage={currentPage}
         nextPage={nextPage}
@@ -71,6 +73,5 @@ export default function Home() {
       {addUserModal && <AddUser handleFileChange={handleFileChange} imageSrc={imageSrc} toggleAddUserModal={toggleAddUserModal} />}
       {viewImageModal && <ViewImageForAccess toggleViewImageModal={toggleViewImageModal} />}
     </main>
-
   );
 }

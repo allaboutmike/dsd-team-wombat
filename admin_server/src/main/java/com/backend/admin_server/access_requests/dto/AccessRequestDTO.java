@@ -5,6 +5,8 @@ import com.backend.admin_server.access_requests.enums.RequestStateEnums;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 public class AccessRequestDTO {
@@ -14,4 +16,5 @@ public class AccessRequestDTO {
     private ApprovalStatusEnums approvalStatus;
     private String base64Image;
     private RequestStateEnums state;
+    private Date ttl;
 }

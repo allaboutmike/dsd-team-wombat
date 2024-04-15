@@ -6,7 +6,6 @@ import com.backend.admin_server.access_requests.service.AccessRequestService;
 import com.backend.admin_server.access_requests.service.AccessRequestValidationService;
 import com.backend.admin_server.access_requests.service.RequestOverrideService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,9 +26,8 @@ public class AccessRequestController {
     }
 
     @PostMapping
-    public ResponseEntity<AccessRequestDTO> createAccessRequest(@RequestBody AccessRequestDTO requestDTO) {
-        AccessRequestDTO responseDTO = accessRequestValidationService.processAccessRequest(requestDTO);
-        return ResponseEntity.ok(responseDTO);
+    public AccessRequestDTO createAccessRequest(@RequestBody AccessRequestDTO requestDTO) {
+        return accessRequestValidationService.processAccessRequest(requestDTO);
     }
 
     @GetMapping
@@ -38,16 +36,14 @@ public class AccessRequestController {
     }
 
     @GetMapping("/{requestDate}/{requestId}")
-    public ResponseEntity<AccessRequestModel> getRequestStatus(@PathVariable String requestDate, @PathVariable String requestId) {
-        AccessRequestModel response = accessRequestService.get(requestDate, requestId);
-        return ResponseEntity.ok(response);
+    public AccessRequestModel getRequestStatus(@PathVariable String requestDate, @PathVariable String requestId) {
+        return accessRequestService.get(requestDate, requestId);
     }
 
     @PutMapping("/{requestId}")
-    public ResponseEntity<AccessRequestModel> initiateRequestOverride(@PathVariable String requestId,
-                                                                      @RequestBody AccessRequestDTO accessRequestDTO) {
-        AccessRequestModel updatedRequest = requestOverrideService.updateRequestState(accessRequestDTO.getDate(), requestId, accessRequestDTO);
-        return ResponseEntity.ok(updatedRequest);
+    public AccessRequestModel initiateRequestOverride(@PathVariable String requestId,
+                                                      @RequestBody AccessRequestDTO accessRequestDTO) {
+        return requestOverrideService.updateRequestState(accessRequestDTO.getDate(), requestId, accessRequestDTO);
     }
 
 }
