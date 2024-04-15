@@ -55,6 +55,7 @@ public class AccessRequestValidationService {
             AccessRequestModel model = createRequestModel(requestDTO, status);
             AccessRequestModel savedModel = accessRequestRepository.save(model);
 
+            requestDTO.setTtl(savedModel.getTtl());
             requestDTO.setRequestId(savedModel.getRequestId());
             requestDTO.setState(savedModel.getState());
             requestDTO.setDate(savedModel.getDate());
