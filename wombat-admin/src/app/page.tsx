@@ -5,6 +5,7 @@ import Dashboard from "@/components/dashboard";
 import AddUser from "@/components/add_user";
 import ViewImageForAccess from "@/components/view_img_for_access";
 import useDataFetcher from "@/components/useDataFetcher";
+import { IncomingRequest } from "@/app/models/models";
 
 export default function Home() {
 
@@ -45,7 +46,8 @@ export default function Home() {
   };
 
   // Custom hook for fetching requests data
-  const requests = useDataFetcher('http://localhost:4040/access_request');
+  const filterDeniedRequests = (requests: IncomingRequest[]) => requests.filter(request => request.state === "MANUAL_OVERRIDE_REQUESTED")
+  const deniedRequests = useDataFetcher('http://localhost:4040/access_request', filterDeniedRequests);
   // Custom hook for fetching users data
   const users = useDataFetcher('http://localhost:4040/users');
 
@@ -54,15 +56,14 @@ export default function Home() {
   const itemsPerPage = 3;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentRequests = requests.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(requests.length / itemsPerPage);
+  const currentRequests = deniedRequests.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(deniedRequests.length / itemsPerPage);
   const nextPage = () => setCurrentPage(currentPage + 1);
   const prevPage = () => setCurrentPage(currentPage - 1);
 
   return (
-
     <main className="min-h-full">
-      <Dashboard activeTab={activeTab} requests={requests} users={users} currentPage={currentPage}
+      <Dashboard activeTab={activeTab} requests={deniedRequests} users={users} currentPage={currentPage}
         nextPage={nextPage}
         prevPage={prevPage}
         currentRequests={currentRequests}
@@ -73,5 +74,6 @@ export default function Home() {
       {addUserModal && <AddUser handleFileChange={handleFileChange} imageSrc={imageSrc} toggleAddUserModal={toggleAddUserModal} />}
       {viewImageModal && <ViewImageForAccess toggleViewImageModal={toggleViewImageModal} />}
     </main>
+
   );
 }
