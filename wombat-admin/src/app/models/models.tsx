@@ -28,3 +28,12 @@ type Admin = {
   id: number;
   username: string;
 };
+
+export type IncomingRequest = {
+  requestId: string,
+  userId: number,
+  date: string,
+  approvalStatus: string,
+  base64Image: string,
+  state: string
+}
