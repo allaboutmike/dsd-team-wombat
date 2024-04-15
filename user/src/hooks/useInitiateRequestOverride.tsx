@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 interface AccessRequestDTO {
-  approvalStatus: boolean;
+  approvalStatus: string;
   state: string;
 }
 
@@ -12,7 +12,7 @@ export default function useInitiateRequestOverride() {
 
   const initiateRequestOverride = async (
     requestId: string,
-    dto: AccessRequestDTO,
+    dto: AccessRequestDTO
   ) => {
     setLoading(true);
     setError(null);
@@ -27,7 +27,7 @@ export default function useInitiateRequestOverride() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(dto),
-        },
+        }
       );
 
       setIsSuccess(true);

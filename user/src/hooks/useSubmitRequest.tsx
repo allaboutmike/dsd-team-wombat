@@ -19,7 +19,7 @@ export default function useSubmitRequest() {
   const navigate = useNavigate();
 
   const handleSubmit = async (
-    params: requestParams,
+    params: requestParams
   ): Promise<response | null> => {
     try {
       const response = await fetch("http://localhost:8080/access_request", {
@@ -33,9 +33,9 @@ export default function useSubmitRequest() {
 
       const data: response = await response.json();
 
-      if (data.approvalStatus === "Approved") {
+      if (data.approvalStatus === "APPROVED") {
         navigate("/Success");
-      } else if (data.approvalStatus === "Denied") {
+      } else if (data.approvalStatus === "DENIED") {
         navigate("/Unsuccessful", {
           state: { requestId: data.requestId, requestDate: data.date },
         });
