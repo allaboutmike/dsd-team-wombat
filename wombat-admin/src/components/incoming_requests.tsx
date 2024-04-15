@@ -11,10 +11,10 @@ type RequestProps = {
 
 export default function IncomingRequests({ toggleViewImageModal, currentPage, nextPage, prevPage, currentRequests, totalPages }: RequestProps) {
 
-  const formattedDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleString(); // Returns a localized string representation of the date and time
-  };
+  // const formattedDate = (dateString: string) => {
+  //   const date = new Date(dateString);
+  //   return date.toLocaleString(); // Returns a localized string representation of the date and time
+  // };
 
   return (
     <div>
@@ -27,7 +27,8 @@ export default function IncomingRequests({ toggleViewImageModal, currentPage, ne
               <table className="min-w-full divide-y divide-zinc-300">
                 <thead>
                   <tr>
-                    <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-zinc-800 sm:pl-0">ID</th>
+                    <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-zinc-800 sm:pl-0">Request ID</th>
+                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-zinc-800">User ID</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-zinc-800">Name</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-zinc-800">Status</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-zinc-800">Check In</th>
@@ -37,10 +38,11 @@ export default function IncomingRequests({ toggleViewImageModal, currentPage, ne
                 <tbody className="divide-y divide-zinc-200">
                   {currentRequests.map((request: any) => (
                     <tr key={request.requestId}>
-                      <td className="pl-4 pr-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">{request.requestId}</td>
+                      <td className="py-3.5 whitespace-nowrap text-sm text-zinc-800">{request.requestId.substring(0, 3)}</td>
                       <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">{request.userId}</td>
+                      <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">{request.username}</td>
                       <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">{request.approvalStatus}</td>
-                      <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">{formattedDate(request.date)}</td>
+                      <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">{request.date}</td>
                       <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">
                         <button
                           type="button"
