@@ -4,6 +4,7 @@ import com.backend.admin_server.access_requests.dto.AccessRequestDTO;
 import com.backend.admin_server.access_requests.enums.RequestStateEnums;
 import com.backend.admin_server.access_requests.model.AccessRequestModel;
 import com.backend.admin_server.access_requests.repository.AccessRequestRepository;
+import com.backend.admin_server.access_requests.utils.AccessRequestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -38,7 +39,7 @@ public class RequestOverrideService {
                 break;
             case MANUAL_OVERRIDE_ACTIONED:
                 logger.info("State is MANUAL_OVERRIDE_ACTIONED, checking if TTL is valid");
-                if (accessRequestModel.getTtl() == null || ! isTtlValid(accessRequestModel.getTtl())) {
+                if (accessRequestModel.getTtl() == null || ! AccessRequestUtils.isTtlValid(accessRequestModel.getTtl())) {
                     logger.warn("TTL check failed for requestId: {}, TTL: {}", requestId, accessRequestModel.getTtl());
                     accessRequestModel.setState(RequestStateEnums.MANUAL_OVERRIDE_TIMEOUT);
                     logger.info("State set to TIMEOUT due to expired TTL");
@@ -58,9 +59,5 @@ public class RequestOverrideService {
         model.setTtl(cal.getTime());
         logger.info("TTL initialized");
         logger.info("TTL set to: {}", model.getTtl());
-    }
-
-    private boolean isTtlValid(Date ttl) {
-        return new Date().before(ttl);
     }
 }
