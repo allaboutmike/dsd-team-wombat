@@ -36,5 +36,8 @@ export type IncomingRequest = {
   date: string,
   approvalStatus: string,
   base64Image: string,
-  state: string
+  state: string,
+  username: string,
+  role: string,
+  department: string
 }
