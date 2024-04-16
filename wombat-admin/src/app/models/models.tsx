@@ -30,6 +30,7 @@ type Admin = {
 };
 
 export type IncomingRequest = {
+  id: string,
   requestId: string,
   userId: number,
   date: string,
