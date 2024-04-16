@@ -10,9 +10,9 @@ export default function RequestOverrideButton({
 }) {
   const { initiateRequestOverride, loading, error } =
     useInitiateRequestOverride();
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState<string>("");
 
-  const handleClick = async () => {
+  async function handleClick() {
     const dto = {
       approvalStatus: "DENIED",
       date: requestDate,
@@ -22,7 +22,7 @@ export default function RequestOverrideButton({
     if (updatedRequest) {
       setStatus("Request submitted, pending Admin review.");
     }
-  };
+  }
 
   return (
     <div>

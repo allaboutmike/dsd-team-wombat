@@ -1,6 +1,6 @@
 import { ReactTyped } from "react-typed";
 
-const Prompts = () => {
+export default function Prompts() {
   return (
     <div className="flex justify-center items-center">
       <ReactTyped
@@ -17,6 +17,4 @@ const Prompts = () => {
       />
     </div>
   );
-};
-
-export default Prompts;
+}

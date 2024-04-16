@@ -1,4 +1,4 @@
-const LoadingSpinner = () => {
+export default function LoadingSpinner() {
   return (
     <div className="flex justify-center mt-14" role="status">
       <svg
@@ -20,6 +20,4 @@ const LoadingSpinner = () => {
       <span className="sr-only">Loading...</span>
     </div>
   );
-};
-
-export default LoadingSpinner;
+}

@@ -1,11 +1,10 @@
-// import "./App.css";
-import Nav from "./Components/Nav";
 import { Route, Routes } from "react-router-dom";
-import Successful from "./pages/Successful";
 import Unsuccessful from "./pages/Unsuccessful";
+import Successful from "./pages/Successful";
 import Capture from "./pages/Capture";
+import Nav from "./Components/Nav";
 
-function App() {
+export default function App() {
   return (
     <>
       <Nav />
@@ -18,5 +17,3 @@ function App() {
     </>
   );
 }
-
-export default App;

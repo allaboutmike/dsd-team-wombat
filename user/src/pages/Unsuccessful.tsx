@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import useInitiateRequestOverride from "../hooks/useInitiateRequestOverride.tsx";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 export default function Unsuccessful() {
   const [approvalStatus, setApprovalStatus] = useState<string>("DENIED");
@@ -18,7 +18,7 @@ export default function Unsuccessful() {
   const { initiateRequestOverride, loading, error } =
     useInitiateRequestOverride();
 
-  const handleClick = async () => {
+  async function handleClick() {
     const dto = {
       approvalStatus: "DENIED",
       date: requestDate,
@@ -29,12 +29,14 @@ export default function Unsuccessful() {
       setStatus("Request submitted, pending Admin review.");
       setRequestSent(true);
     }
-  };
+  }
 
   async function checkStatus() {
     try {
       const res = await fetch(
-        `http://localhost:8080/access_request/${requestDate}/${requestId}`,
+        `${
+          import.meta.env.VITE_BACKEND_URL_SERVER
+        }/${requestDate}/${requestId}`,
         {
           method: "GET",
           headers: {
@@ -52,28 +54,31 @@ export default function Unsuccessful() {
     }
   }
 
-  useEffect(() => {
-    if (requestSent) {
-      const intervalGet = setInterval(function () {
-        checkStatus();
-        if (
-          checkState === "MANUAL_OVERRIDE_ACTIONED" ||
-          checkState === "MANUAL_OVERRIDE_TIMEOUT"
-        ) {
-          clearInterval(intervalGet);
+  useEffect(
+    function () {
+      if (requestSent) {
+        const intervalGet = setInterval(function () {
+          checkStatus();
+          if (
+            checkState === "MANUAL_OVERRIDE_ACTIONED" ||
+            checkState === "MANUAL_OVERRIDE_TIMEOUT"
+          ) {
+            clearInterval(intervalGet);
 
-          if (approvalStatus === "APPROVED") {
-            navigate("/Successful");
-          } else {
-            alert("Please connect with Admin. Login has failed");
-            setTimeout(function () {
-              navigate("/");
-            }, 3000);
+            if (approvalStatus === "APPROVED") {
+              navigate("/Successful");
+            } else {
+              alert("Please connect with Admin. Login has failed");
+              setTimeout(function () {
+                navigate("/");
+              }, 3000);
+            }
           }
-        }
-      }, 15000);
-    }
-  }, [requestSent]);
+        }, 15000);
+      }
+    },
+    [requestSent]
+  );
 
   return (
     <>

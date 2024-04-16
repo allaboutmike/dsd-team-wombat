@@ -6,21 +6,21 @@ interface AccessRequestDTO {
 }
 
 export default function useInitiateRequestOverride() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
-  const initiateRequestOverride = async (
+  async function initiateRequestOverride(
     requestId: string,
     dto: AccessRequestDTO
-  ) => {
+  ) {
     setLoading(true);
     setError(null);
     setIsSuccess(false);
 
     try {
       const response = await fetch(
-        `http://localhost:8080/access_request/${requestId}`,
+        `${import.meta.env.VITE_BACKEND_URL_SERVER}/${requestId}`,
         {
           method: "PUT",
           headers: {
@@ -42,7 +42,7 @@ export default function useInitiateRequestOverride() {
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   return { initiateRequestOverride, loading, error, isSuccess };
 }
