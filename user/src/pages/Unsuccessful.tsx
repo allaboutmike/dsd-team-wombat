@@ -34,7 +34,9 @@ export default function Unsuccessful() {
   async function checkStatus() {
     try {
       const res = await fetch(
-        `http://localhost:8080/access_request/${requestDate}/${requestId}`,
+        `${
+          import.meta.env.VITE_BACKEND_URL_SERVER
+        }/${requestDate}/${requestId}`,
         {
           method: "GET",
           headers: {

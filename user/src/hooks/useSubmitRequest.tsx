@@ -22,14 +22,17 @@ export default function useSubmitRequest() {
     params: requestParams
   ): Promise<response | null> => {
     try {
-      const response = await fetch("http://localhost:8080/access_request", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(params),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL_SERVER}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(params),
+        }
+      );
 
       const data: response = await response.json();
 

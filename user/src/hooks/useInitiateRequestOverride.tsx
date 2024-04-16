@@ -20,7 +20,7 @@ export default function useInitiateRequestOverride() {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/access_request/${requestId}`,
+        `${import.meta.env.VITE_BACKEND_URL_SERVER}/${requestId}`,
         {
           method: "PUT",
           headers: {

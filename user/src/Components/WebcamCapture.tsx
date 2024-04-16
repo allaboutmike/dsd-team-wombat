@@ -7,9 +7,6 @@ import Prompts from "./Prompts";
 import CamPrompts from "./CamPrompts";
 import useSubmitRequest from "../hooks/useSubmitRequest.tsx";
 
-// TODO: Make a reusable button component
-// TODO: Make a reusable container component
-
 export default function WebcamCapture() {
   const [badgeId, setBadgeId] = useState("");
   const [taken, setIsTaken] = useState(false);
