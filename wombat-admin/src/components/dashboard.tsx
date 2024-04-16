@@ -2,10 +2,11 @@ import AuditTrail from "./audit_trail";
 import DailyVisits from "./daily_visits";
 import IncomingRequests from "./incoming_requests";
 import Statistics from "./statistics";
+import { IncomingRequest } from "@/app/models/models";
 
 type DashboardProps = {
   toggleAddUserModal: () => void;
-  toggleViewImageModal: () => void;
+  // toggleViewImageModal: () => void;
   activeTab: string;
   handleTabClick: (tabName: string) => void;
   requests: any;
@@ -15,9 +16,11 @@ type DashboardProps = {
   prevPage: () => void;
   currentRequests: any[];
   totalPages: number;
+  onOpenViewImageModal: (requestId: string) => void;
+  selectedRequest: IncomingRequest | null;
 };
 
-export default function Dashboard({ toggleAddUserModal, toggleViewImageModal, activeTab, handleTabClick, requests, users, currentPage,
+export default function Dashboard({ toggleAddUserModal, onOpenViewImageModal, activeTab, handleTabClick, selectedRequest, users, currentPage,
   nextPage, prevPage, currentRequests, totalPages, }: DashboardProps) {
   return (
     <div>
@@ -45,7 +48,7 @@ export default function Dashboard({ toggleAddUserModal, toggleViewImageModal, ac
             <IncomingRequests
               currentRequests={currentRequests}
               totalPages={totalPages}
-              toggleViewImageModal={toggleViewImageModal}
+              onOpenViewImageModal={onOpenViewImageModal}
               currentPage={currentPage}
               nextPage={nextPage}
               prevPage={prevPage} />
@@ -93,8 +96,8 @@ export default function Dashboard({ toggleAddUserModal, toggleViewImageModal, ac
             </nav>
           </div>
         </div>
-        {activeTab === 'Daily Visits' && <DailyVisits toggleViewImageModal={toggleViewImageModal} users={users} />}
-        {activeTab === 'User Audit Trail' && <AuditTrail toggleViewImageModal={toggleViewImageModal} />}
+        {activeTab === 'Daily Visits' && <DailyVisits onOpenViewImageModal={onOpenViewImageModal} users={users} selectedRequest={selectedRequest} />}
+        {activeTab === 'User Audit Trail' && <AuditTrail onOpenViewImageModal={onOpenViewImageModal} selectedRequest={selectedRequest} />}
       </div>
     </div>
   )

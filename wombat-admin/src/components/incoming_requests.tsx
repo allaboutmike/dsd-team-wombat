@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 
 type RequestProps = {
-  toggleViewImageModal: () => void;
+  // toggleViewImageModal: () => void;
+  onOpenViewImageModal: (requestId: string) => void;
   currentPage: number;
   nextPage: () => void;
   prevPage: () => void;
   currentRequests: any[];
   totalPages: number;
+
 };
 
-export default function IncomingRequests({ toggleViewImageModal, currentPage, nextPage, prevPage, currentRequests, totalPages }: RequestProps) {
+export default function IncomingRequests({ currentPage, nextPage, prevPage, currentRequests, totalPages, onOpenViewImageModal }: RequestProps) {
 
   // const formattedDate = (dateString: string) => {
   //   const date = new Date(dateString);
@@ -47,7 +49,7 @@ export default function IncomingRequests({ toggleViewImageModal, currentPage, ne
                         <button
                           type="button"
                           className="text-white font-medium bg-teal-600 px-2.5 py-1.5 rounded-md hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
-                          onClick={toggleViewImageModal}
+                          onClick={() => onOpenViewImageModal(request.requestId)}
                         >
                           View Image
                         </button>
