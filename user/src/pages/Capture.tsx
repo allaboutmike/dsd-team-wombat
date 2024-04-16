@@ -1,11 +1,9 @@
 import WebcamCapture from "../Components/WebcamCapture";
 
-const Capture = () => {
+export default function Capture() {
   return (
     <>
       <WebcamCapture />
     </>
   );
-};
-
-export default Capture;
+}

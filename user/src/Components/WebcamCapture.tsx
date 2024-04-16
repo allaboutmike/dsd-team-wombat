@@ -1,42 +1,48 @@
-import { useRef, useState, useCallback } from "react";
-import Webcam from "react-webcam";
 import placeholderImg from "../assets/images/placeholderImg.png";
-import LoadingSpinner from "./LoadingSpinner";
-import { MouseEvent } from "react";
-import Prompts from "./Prompts";
-import CamPrompts from "./CamPrompts";
 import useSubmitRequest from "../hooks/useSubmitRequest.tsx";
+import { useRef, useState, useCallback } from "react";
+import LoadingSpinner from "./LoadingSpinner";
+import CamPrompts from "./CamPrompts";
+import { MouseEvent } from "react";
+import Webcam from "react-webcam";
+import Prompts from "./Prompts";
 
 export default function WebcamCapture() {
-  const [badgeId, setBadgeId] = useState("");
-  const [taken, setIsTaken] = useState(false);
-  const [initCam, setInitCam] = useState(false);
+  const [badgeId, setBadgeId] = useState<number>(0);
+  const [taken, setIsTaken] = useState<boolean>(false);
+  const [initCam, setInitCam] = useState<boolean>(false);
   const [imgSrc, setImgSrc] = useState<string | null | undefined>(null);
+
   const webcamRef = useRef<Webcam>(null);
   const { handleSubmit, isLoading, error } = useSubmitRequest();
 
-  const startCam = useCallback(() => {
-    setInitCam(true);
-  }, [setInitCam]);
+  const startCam = useCallback(
+    function () {
+      setInitCam(true);
+    },
+    [setInitCam]
+  );
 
-  const capture = useCallback(() => {
-    const imageSrc = webcamRef.current?.getScreenshot();
-    setImgSrc(imageSrc);
+  const capture = useCallback(
+    function () {
+      const imageSrc = webcamRef.current?.getScreenshot();
+      setImgSrc(imageSrc);
 
-    setIsTaken(true);
-  }, [webcamRef, setImgSrc]);
+      setIsTaken(true);
+    },
+    [webcamRef, setImgSrc]
+  );
 
-  const handleFormSubmit = (e: MouseEvent) => {
+  function handleFormSubmit(e: MouseEvent) {
     e.preventDefault();
-    const userIdNumber = parseInt(badgeId, 10);
-    if (isNaN(userIdNumber)) {
+    if (isNaN(badgeId)) {
       console.error("Badge ID must be a number");
       return;
     }
 
     const imageSrc = imgSrc !== undefined ? imgSrc : null;
-    handleSubmit({ userId: userIdNumber, imgSrc: imageSrc });
-  };
+    handleSubmit({ userId: badgeId, imgSrc: imageSrc });
+  }
 
   return (
     <>
@@ -75,8 +81,8 @@ export default function WebcamCapture() {
                           placeholder="Enter Badge ID"
                           type="number"
                           value={badgeId}
-                          onChange={(e) => {
-                            setBadgeId(e.target.value);
+                          onChange={function (e) {
+                            setBadgeId(parseInt(e.target.value, 10));
                           }}
                         />
 

@@ -1,6 +1,6 @@
 import logo_light from "../assets/images/WOMBAT_L.png";
 
-const Nav = () => {
+export default function Nav() {
   return (
     <>
       <header className="bg-white shadow-sm">
@@ -8,6 +8,4 @@ const Nav = () => {
       </header>
     </>
   );
-};
-
-export default Nav;
+}

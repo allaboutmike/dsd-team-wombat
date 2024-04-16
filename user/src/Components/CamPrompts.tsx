@@ -1,6 +1,6 @@
 import { ReactTyped } from "react-typed";
 
-const CamPrompts = () => {
+export default function CamPrompts() {
   return (
     <div className="flex justify-center items-center">
       <ReactTyped
@@ -13,6 +13,4 @@ const CamPrompts = () => {
       />
     </div>
   );
-};
-
-export default CamPrompts;
+}

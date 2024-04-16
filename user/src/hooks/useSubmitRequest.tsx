@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 interface response {
   requestId?: string;
@@ -14,13 +14,11 @@ interface requestParams {
 }
 
 export default function useSubmitRequest() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (
-    params: requestParams
-  ): Promise<response | null> => {
+  async function handleSubmit(params: requestParams): Promise<response | null> {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL_SERVER}`,
@@ -55,7 +53,7 @@ export default function useSubmitRequest() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }
 
   return { handleSubmit, isLoading, error };
 }

@@ -1,6 +1,6 @@
 import doge from "../assets/images/doge.png";
 
-const Successful = () => {
+export default function Successful() {
   return (
     <>
       <div className="mx-auto flex-col items-center">
@@ -17,6 +17,4 @@ const Successful = () => {
       </div>
     </>
   );
-};
-
-export default Successful;
+}
