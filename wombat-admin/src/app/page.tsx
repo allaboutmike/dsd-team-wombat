@@ -11,7 +11,7 @@ export default function Home() {
 
   // State variables declaration
   const [addUserModal, setAddUserModal] = useState<Boolean>(false);
-  const [incomingRequests, setIncomingRequests] = useState<IncomingRequest[]>([]);
+  const [incomingDeniedRequests, setIncomingDeniedRequests] = useState<IncomingRequest[]>([]);
   const [selectedRequest, setSelectedRequest] = useState<IncomingRequest | null>(null);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<string>('Daily Visits');
@@ -45,14 +45,15 @@ export default function Home() {
   // Custom hook for fetching requests data
   const filterDeniedRequests = (requests: IncomingRequest[]) => requests.filter(request => request.state === "MANUAL_OVERRIDE_REQUESTED")
   const deniedRequests: IncomingRequest[] | null = useDataFetcher('http://localhost:4040/access_request', filterDeniedRequests);
+
   // Custom hook for fetching users data
   const users = useDataFetcher('http://localhost:4040/users');
 
   // This function displays the view image modal for each request/visit
   const showViewImageModal = (requestId: string): void => {
-    for (let request of deniedRequests) {
+    for (let request of deniedRequests!) {
       if (request.requestId = requestId) {
-        console.log(requestId)
+        console.log(request.requestId, request.approvalStatus, request.state)
         setSelectedRequest(request)
         break;
       }
@@ -61,15 +62,61 @@ export default function Home() {
 
   const closeViewImageModal = (): void => setSelectedRequest(null)
 
-  const approveRequest = (requestId: string) => {
-    setIncomingRequests((prevRequests) =>
-      prevRequests.map((request) =>
-        request.requestId === requestId
-          ? { ...request, state: "MANUAL_OVERRIDE_ACTIONED", approvalStatus: "APPROVED" }
-          : request
-      )
-    );
+
+  const updateRequest = async (request: IncomingRequest): Promise<void> => {
+    try {
+      await fetch(`http://localhost:4040/access_request/${request.requestId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(request),
+      });
+
+      if (selectedRequest) {
+        setSelectedRequest(request);
+      }
+    } catch (error) {
+      console.error('Error updating request:', error);
+      // Handle the error, e.g., display an error message or retry updating
+    }
   };
+
+  const approveRequest = async (requestId: string): Promise<void> => {
+    const request = deniedRequests.find((req) => req.requestId === requestId);
+
+    if (!request) {
+      console.error('Request not found');
+      return;
+    }
+
+    // Update the request state
+    request.state = "MANUAL_OVERRIDE_ACTIONED";
+
+    try {
+      // Create a PUT request to update the request in the database
+      const response = await fetch(`http://localhost:4040/access_request/${requestId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(request),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update request in the database');
+      }
+
+      console.log('Request state updated successfully');
+      // Optionally, update the local state or perform other actions if needed
+    } catch (error) {
+      console.error('Error updating request:', error);
+      // Handle the error, e.g., display an error message or retry updating
+    }
+  };
+
+
+
 
   // This function is responsible for pagination of the incoming requests
   const itemsPerPage = 3;
