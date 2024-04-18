@@ -15,7 +15,7 @@ export default function App() {
       localStorage.setItem("displayMode", savedMode);
     }
     setDarkMode(savedMode === "dark" ? true : false);
-  }, []);
+  }, [setDarkMode]);
 
   const toggleDisplayMode = () => {
     setDarkMode(!darkMode);
@@ -24,18 +24,20 @@ export default function App() {
   return (
     <div className={`${darkMode ? "dark" : ""}`}>
       <div className="dark:bg-slate-800 h-screen">
-        <Nav />
-        <Routes>
-          <Route path="/" element={<Capture />} />
-          <Route path="/Successful" element={<Successful />} />
-          <Route path="/Unsuccessful" element={<Unsuccessful />} />
-          <Route path="/*" element={<Successful />} />
-        </Routes>
+        <div className="h-[60rem]">
+          <Nav />
+          <Routes>
+            <Route path="/" element={<Capture />} />
+            <Route path="/Successful" element={<Successful />} />
+            <Route path="/Unsuccessful" element={<Unsuccessful />} />
+            <Route path="/*" element={<Successful />} />
+          </Routes>
+        </div>
         <button
           onClick={toggleDisplayMode}
-          className="transition duration-400 dark:bg-gray-100 dark:text-gray-700 bg-slate-800 text-gray-100 border font-bold p-3 rounded-lg"
+          className="transition duration-400 ml-10 dark:bg-gray-100 dark:text-slate-700 bg-slate-800 text-slate-100 border font-bold p-3 rounded-[50px]"
         >
-          mode
+          [theme]
         </button>
       </div>
     </div>
