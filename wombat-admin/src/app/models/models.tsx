@@ -6,7 +6,7 @@ export type User = {
   userImage: string,
   role: string,
   department: string,
-  registeredByAdmin: string, //admin username
+  registeredByAdmin: number, //admin id
   registerDay: string,
   registerTime: string,
   accessLevel: string,
@@ -30,19 +30,16 @@ type Admin = {
   username: string;
 };
 
-// type requestState = "AUTOMATED" | "MANUAL_OVERRIDE_REQUESTED" | "MANUAL_OVERRIDE_ACTIONED" | "MANUAL_OVERRIDE_TIMEOUT"
-// enum accessType = DEFAULT | MANUAL
-// type approvalStatus =  "APPROVED" | "DENIED"
+type requestState = "AUTOMATED" | "MANUAL_OVERRIDE_REQUESTED" | "MANUAL_OVERRIDE_ACTIONED" | "MANUAL_OVERRIDE_TIMEOUT"
+type accessType = "DEFAULT" | "MANUAL"
+type approvalStatus = "APPROVED" | "DENIED"
 
 export type IncomingRequest = {
   id: string,
   requestId: string,
   userId: number,
   date: string,
-  approvalStatus: string,
+  approvalStatus: approvalStatus,
   base64Image: string,
-  state: string,
-  // username: string,
-  // role: string,
-  // department: string
+  state: requestState,
 }
