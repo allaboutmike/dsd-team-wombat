@@ -14,7 +14,7 @@ type DashboardProps = {
   currentPage: number;
   nextPage: () => void;
   prevPage: () => void;
-  currentRequests: any[];
+  currentRequests: IncomingRequest[];
   totalPages: number;
   onOpenViewImageModal: (requestId: string) => void;
   selectedRequest: IncomingRequest | null;
