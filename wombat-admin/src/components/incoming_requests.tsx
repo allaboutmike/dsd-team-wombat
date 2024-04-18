@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import { IncomingRequest } from "@/app/models/models";
+import React from "react";
 
 type RequestProps = {
-  // toggleViewImageModal: () => void;
   onOpenViewImageModal: (requestId: string) => void;
   currentPage: number;
   nextPage: () => void;
   prevPage: () => void;
-  currentRequests: any[];
+  currentRequests: IncomingRequest[];
   totalPages: number;
-
 };
 
 export default function IncomingRequests({ currentPage, nextPage, prevPage, currentRequests, totalPages, onOpenViewImageModal }: RequestProps) {
@@ -31,31 +30,31 @@ export default function IncomingRequests({ currentPage, nextPage, prevPage, curr
                   <tr>
                     <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-zinc-800 sm:pl-0">Request ID</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-zinc-800">User ID</th>
-                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-zinc-800">Name</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-zinc-800">Status</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-zinc-800">Check In</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-zinc-800">Image</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-zinc-200">
-                  {currentRequests.map((request: any) => (
-                    <tr key={request.requestId}>
-                      <td className="py-3.5 whitespace-nowrap text-sm text-zinc-800">{request.requestId.substring(0, 3)}</td>
-                      <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">{request.userId}</td>
-                      <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">{request.username}</td>
-                      <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">{request.approvalStatus}</td>
-                      <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">{request.date}</td>
-                      <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">
-                        <button
-                          type="button"
-                          className="text-white font-medium bg-teal-600 px-2.5 py-1.5 rounded-md hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
-                          onClick={() => onOpenViewImageModal(request.requestId)}
-                        >
-                          View Image
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                  {currentRequests.map((request: IncomingRequest) => {
+                    return (
+                      <tr key={request.requestId}>
+                        <td className="py-3.5 whitespace-nowrap text-sm text-zinc-800">{request.requestId.substring(0, 3)}</td>
+                        <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">{request.userId}</td>
+                        <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">{request.approvalStatus}</td>
+                        <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">{request.date}</td>
+                        <td className="px-3 py-3.5 whitespace-nowrap text-sm text-zinc-800">
+                          <button
+                            type="button"
+                            className="text-white font-medium bg-teal-600 px-2.5 py-1.5 rounded-md hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+                            onClick={() => onOpenViewImageModal(request.requestId)}
+                          >
+                            View Image
+                          </button>
+                        </td>
+                      </tr>
+                    )
+                  })}
                 </tbody>
               </table>
             </div>
