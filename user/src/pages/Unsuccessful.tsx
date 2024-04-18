@@ -82,36 +82,42 @@ export default function Unsuccessful() {
 
   return (
     <>
-      <h1 className="block rounded-md bg-red-400 px-10 py-10 text-center text-3xl font-semibold text-red-900 shadow-sm">
-        Unable to verify at this time.
-        <br />
-        If you would like to request administrator review, submit information
-        below.
-      </h1>
-      <form className="w-[450px]">
-        <div className="mb-5">
-          <input
-            className="w-full py-2 px-4 rounded bg-[#4b5563] text-white mb-5 focus:outline-none"
-            type="number"
-            placeholder="Enter BadgeID"
-            value={badgeId}
-            onChange={(e) => {
-              setBadgeId(parseInt(e.target.value));
-            }}
-          />
-        </div>
-
-        {requestId && requestDate && (
-          <div>
-            <button onClick={handleClick} disabled={loading}>
-              Request Admin Override
-            </button>
-            {loading && <p>Loading...</p>}
-            {error && <p>Error: {error}</p>}
-            {status && <p>{status}</p>}
+      <div className="mt-20">
+        <h1 className="block dark:shadow-lg dark:shadow-slate-900 shadow-lg rounded-md bg-red-400 px-10 py-10 text-center text-3xl font-semibold text-red-900 w-[75%] mx-auto">
+          Unable to verify at this time.
+          <br />
+          <br />
+          If you would like to request administrator review, submit information
+          below.
+        </h1>
+      </div>
+      <div className="flex flex-col items-center mt-20">
+        <form className="w-[450px]">
+          <div className="mb-5 ">
+            <input
+              className="w-full dark:shadow-lg dark:shadow-slate-900 shadow-lg py-2 px-4 rounded bg-[#4b5563] text-white mb-5 focus:outline-none"
+              type="number"
+              placeholder="Enter BadgeID"
+              value={badgeId}
+              onChange={(e) => {
+                setBadgeId(parseInt(e.target.value));
+              }}
+            />
           </div>
-        )}
-      </form>
+          <div className=" dark:shadow-lg dark:shadow-slate-950 h-40 bg-slate-200 border-slate-700 shadow-lg rounded mx-auto">
+            {requestId && requestDate && (
+              <div>
+                <button onClick={handleClick} disabled={loading}>
+                  Request Admin Override
+                </button>
+                {loading && <p>Loading...</p>}
+                {error && <p>Error: {error}</p>}
+                {status && <p>{status}</p>}
+              </div>
+            )}
+          </div>
+        </form>
+      </div>
     </>
   );
 }

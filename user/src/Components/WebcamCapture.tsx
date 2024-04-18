@@ -105,8 +105,8 @@ export default function WebcamCapture() {
                     ) : (
                       <img
                         src={placeholderImg}
-                        alt="capture placeholder"
-                        className="rounded-[50px]"
+                        alt="capture placeholder wombat logo"
+                        className="mt-[-1rem] rounded-[50px] dark:shadow-lg dark:shadow-slate-900 shadow-lg h-[30rem]"
                       />
                     )}
                   </div>
