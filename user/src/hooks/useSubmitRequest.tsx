@@ -10,7 +10,7 @@ interface response {
 
 interface requestParams {
   userId: number;
-  imgSrc: string | null;
+  base64Image: string | null;
 }
 
 export default function useSubmitRequest() {
