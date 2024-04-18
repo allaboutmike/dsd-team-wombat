@@ -78,32 +78,51 @@ export default function Home() {
   const closeViewImageModal = (): void => setSelectedRequest(null)
 
 
+
+  // const approveRequest = async (requestId: string) => {
+  //   const request = manualOverridenRequests.find((req) => req.requestId === requestId);
+
+  //   const reqsBody = { state: 'MANUAL_OVERRIDE_ACTIONED', date: request!.date }
+
+  //   await fetch(`${URL}/${accessPath}/${requestId}`, {
+  //     method: "PUT",
+  //     headers: {
+  //       "Content-type": "application/json"
+  //     },
+  //     body: JSON.stringify(reqsBody)
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => console.log(data))
+  //     .catch((error) => console.error(error));
+  // }
+
   const approveRequest = async (requestId: string) => {
     const request = manualOverridenRequests.find((req) => req.requestId === requestId);
 
     if (!request) {
-      console.error('Request not found');
+      console.error(`Request with ID ${requestId} not found.`);
       return;
     }
 
-    const requestOptions = {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ state: 'MANUAL_OVERRIDE_ACTIONED', date: "2024-04-17-05:00" }),
-    };
+    const reqsBody = { state: 'MANUAL_OVERRIDE_ACTIONED', approvalStatus: "DENIED", date: request.date };
 
     try {
-      const response = await fetch(`http://localhost:4040/access_request/${requestId}`, requestOptions);
+      const response = await fetch(`${URL}/${accessPath}/${requestId}`, {
+        method: "PUT",
+        headers: {
+          "Content-type": "application/json"
+        },
+        body: JSON.stringify(reqsBody)
+      });
 
       if (!response.ok) {
-        throw new Error('Failed to update request in the database');
+        throw new Error(`Failed to update request with ID ${requestId}`);
       }
 
-      console.log('Request state updated successfully');
+      const data = await response.json();
+      console.log(data);
     } catch (error) {
-      console.error('Error updating request:', error);
+      console.error(error);
     }
   };
 
