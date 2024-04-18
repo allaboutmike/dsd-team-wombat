@@ -104,15 +104,23 @@ export default function Unsuccessful() {
               }}
             />
           </div>
-          <div className=" dark:shadow-lg dark:shadow-slate-950 h-40 bg-slate-200 border-slate-700 shadow-lg rounded mx-auto">
+          <div className=" dark:shadow-lg dark:shadow-slate-950 h-40 bg-slate-200 border-slate-800 shadow-lg shadow-slate-700  rounded-[20px] mx-auto">
             {requestId && requestDate && (
-              <div>
-                <button onClick={handleClick} disabled={loading}>
-                  Request Admin Override
-                </button>
-                {loading && <p>Loading...</p>}
-                {error && <p>Error: {error}</p>}
-                {status && <p>{status}</p>}
+              <div className="flex-col">
+                <div className="mx-auto">
+                  <button
+                    className="ml-[15%] mt-[-5px] py-3 px-8 bg-sky-800 border-slate-900 shadow-lg shadow-slate-950 text-slate-300 text-2xl rounded-[10px]"
+                    onClick={handleClick}
+                    disabled={loading}
+                  >
+                    Request Admin Override
+                  </button>
+                </div>
+                <div className="mt-4 text-xl font-mono font-bold text-center px-4 py-2">
+                  {loading && <p>Loading...</p>}
+                  {error && <p>Error: {error}</p>}
+                  {status && <p>{status}</p>}
+                </div>
               </div>
             )}
           </div>
