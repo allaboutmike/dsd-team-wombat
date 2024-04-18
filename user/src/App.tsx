@@ -23,7 +23,7 @@ export default function App() {
 
   return (
     <div className={`${darkMode ? "dark" : ""}`}>
-      <div className="dark:bg-[#18214A] h-screen">
+      <div className="dark:bg-slate-800 h-screen">
         <Nav />
         <Routes>
           <Route path="/" element={<Capture />} />
@@ -33,7 +33,7 @@ export default function App() {
         </Routes>
         <button
           onClick={toggleDisplayMode}
-          className="transition duration-400 dark:bg-gray-100 dark:text-gray-700 bg-gray-700 text-gray-100 border font-bold p-3 rounded-lg"
+          className="transition duration-400 dark:bg-gray-100 dark:text-gray-700 bg-slate-800 text-gray-100 border font-bold p-3 rounded-lg"
         >
           mode
         </button>

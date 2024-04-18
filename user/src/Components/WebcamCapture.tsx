@@ -56,7 +56,7 @@ export default function WebcamCapture() {
               <div className="flex mx-auto justify-center my-6 sm:px-6 lg:px-8">
                 <div className="mr-8">
                   <Webcam
-                    className="rounded-[50px]"
+                    className="rounded-[50px] dark:shadow-slate-900 dark:shadow-lg shadow-lg"
                     audio={false}
                     ref={webcamRef}
                     screenshotFormat="image/jpeg"
@@ -73,7 +73,12 @@ export default function WebcamCapture() {
                 </div>
 
                 <div className="ml-8">
-                  {imgSrc && <img src={imgSrc} className="rounded-[50px]" />}
+                  {imgSrc && (
+                    <img
+                      src={imgSrc}
+                      className="rounded-[50px] dark:shadow-slate-900 dark:shadow-lg shadow-lg"
+                    />
+                  )}
                   <div className=" mx-auto px-4 sm:px-6 lg:px-8 mt-4  sm:flex-none flex justify-center">
                     {taken ? (
                       <>
