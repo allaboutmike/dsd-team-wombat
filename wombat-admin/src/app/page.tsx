@@ -135,7 +135,7 @@ export default function Home() {
         selectedRequest={selectedRequest} />
 
       {addUserModal && <AddUser handleFileChange={handleFileChange} imageSrc={imageSrc} toggleAddUserModal={toggleAddUserModal} />}
-      {selectedRequest && <ViewImageForAccess onCloseViewImageModal={closeViewImageModal} onApproveRequest={approveRequest} selectedRequest={selectedRequest} user={users} />}
+      {selectedRequest && <ViewImageForAccess onCloseViewImageModal={closeViewImageModal} onApproveRequest={approveRequest} selectedRequest={selectedRequest} />}
     </main>
 
   );
