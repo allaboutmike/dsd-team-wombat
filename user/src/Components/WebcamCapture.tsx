@@ -11,7 +11,9 @@ export default function WebcamCapture() {
   const [badgeId, setBadgeId] = useState<number>(0);
   const [taken, setIsTaken] = useState<boolean>(false);
   const [initCam, setInitCam] = useState<boolean>(false);
-  const [base64Image, setBase64Image] = useState<string | null | undefined>(null);
+  const [base64Image, setBase64Image] = useState<string | null | undefined>(
+    null
+  );
 
   const webcamRef = useRef<Webcam>(null);
   const { handleSubmit, isLoading, error } = useSubmitRequest();
@@ -73,7 +75,7 @@ export default function WebcamCapture() {
                 </div>
 
                 <div className="ml-8">
-                  {base64Image && <img src={base64Image} />}
+                  {/* {base64Image && <img src={base64Image} />} */}
                   {base64Image && (
                     <img
                       src={base64Image}
