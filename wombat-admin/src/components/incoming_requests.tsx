@@ -12,11 +12,6 @@ type RequestProps = {
 
 export default function IncomingRequests({ currentPage, nextPage, prevPage, currentRequests, totalPages, onOpenViewImageModal }: RequestProps) {
 
-  // const formattedDate = (dateString: string) => {
-  //   const date = new Date(dateString);
-  //   return date.toLocaleString(); // Returns a localized string representation of the date and time
-  // };
-
   return (
     <div>
       <h2 className="text-lg font-semibold leading-6 text-zinc-700 mb-8">Requests</h2>
