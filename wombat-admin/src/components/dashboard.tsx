@@ -6,10 +6,9 @@ import { IncomingRequest } from "@/app/models/models";
 
 type DashboardProps = {
   toggleAddUserModal: () => void;
-  // toggleViewImageModal: () => void;
   activeTab: string;
   handleTabClick: (tabName: string) => void;
-  requests: any;
+  requests: IncomingRequest[];
   users: any;
   currentPage: number;
   nextPage: () => void;
