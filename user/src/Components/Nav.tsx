@@ -1,10 +1,10 @@
-import logo_light from "../assets/images/WOMBAT_L.png";
+import logo from "../assets/images/WB_LOGO.png";
 
 export default function Nav() {
   return (
     <>
-      <header className="bg-white shadow-sm">
-        <img src={logo_light} height={150} width={150} className="ml-6" />
+      <header className="transition duration-400 dark:bg-slate-800 dark:text-gray-100 dark:shadow-slate-900 dark:shadow-lg bg-white shadow-lg flex">
+        <img src={logo} height={150} width={150} className="ml-1/10" />
       </header>
     </>
   );
