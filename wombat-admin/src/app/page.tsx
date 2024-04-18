@@ -4,7 +4,6 @@ import { useEffect, useState, useCallback } from "react";
 import Dashboard from "@/components/dashboard";
 import AddUser from "@/components/add_user";
 import ViewImageForAccess from "@/components/view_img_for_access";
-import useDataFetcher from "@/app/util/useDataFetcher";
 import { IncomingRequest, User } from "@/app/models/models";
 
 // TODO: move to env
