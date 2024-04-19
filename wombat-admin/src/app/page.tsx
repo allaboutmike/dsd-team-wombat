@@ -78,24 +78,6 @@ export default function Home() {
   const closeViewImageModal = (): void => setSelectedRequest(null)
 
 
-
-  // const approveRequest = async (requestId: string) => {
-  //   const request = manualOverridenRequests.find((req) => req.requestId === requestId);
-
-  //   const reqsBody = { state: 'MANUAL_OVERRIDE_ACTIONED', date: request!.date }
-
-  //   await fetch(`${URL}/${accessPath}/${requestId}`, {
-  //     method: "PUT",
-  //     headers: {
-  //       "Content-type": "application/json"
-  //     },
-  //     body: JSON.stringify(reqsBody)
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => console.log(data))
-  //     .catch((error) => console.error(error));
-  // }
-
   const approveRequest = async (requestId: string) => {
     const request = manualOverridenRequests.find((req) => req.requestId === requestId);
 
