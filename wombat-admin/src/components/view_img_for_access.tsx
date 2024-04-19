@@ -1,12 +1,15 @@
 import Image from "next/image";
+import { IncomingRequest } from "@/app/models/models";
 
 import wombat from "../../public/david-clode-BSXdD5MawH4-unsplash.jpg";
 
 type ViewImgProps = {
-  toggleViewImageModal: () => void;
+  onCloseViewImageModal: () => void;
+  onApproveRequest: (requestId: string) => void;
+  selectedRequest: IncomingRequest | null;
 };
 
-export default function ViewImageForAccess({ toggleViewImageModal }: ViewImgProps) {
+export default function ViewImageForAccess({ onCloseViewImageModal, onApproveRequest, selectedRequest }: ViewImgProps) {
   return (
     <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
       <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
@@ -162,20 +165,21 @@ export default function ViewImageForAccess({ toggleViewImageModal }: ViewImgProp
               <button
                 type="button"
                 className="rounded-md bg-red-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400"
-                onClick={toggleViewImageModal}
+
               >
                 Deny Access
               </button>
               <button
-                type="submit"
+                type="button"
                 className="rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+                onClick={() => onApproveRequest((selectedRequest!.requestId))}
               >
                 Give Access
               </button>
               <button
                 type="button"
                 className="rounded-md bg-zinc-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-zinc-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-400"
-                onClick={toggleViewImageModal}
+                onClick={() => onCloseViewImageModal()}
               >
                 Cancel
               </button>
@@ -186,3 +190,6 @@ export default function ViewImageForAccess({ toggleViewImageModal }: ViewImgProp
     </div>
   );
 }
+
+
+

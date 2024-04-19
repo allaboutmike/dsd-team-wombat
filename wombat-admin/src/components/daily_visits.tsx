@@ -1,9 +1,12 @@
-type DailyVisitProps = {
-  toggleViewImageModal: () => void;
-  users: any
+import { IncomingRequest } from "@/app/models/models";
 
+type DailyVisitProps = {
+  // toggleViewImageModal: () => void;
+  onOpenViewImageModal: (requestId: string) => void;
+  users: any
+  selectedRequest: IncomingRequest | null;
 };
-export default function DailyVisits({ toggleViewImageModal, users }: DailyVisitProps) {
+export default function DailyVisits({ onOpenViewImageModal, users, selectedRequest }: DailyVisitProps) {
 
   return (
     <div>
@@ -100,7 +103,7 @@ export default function DailyVisits({ toggleViewImageModal, users }: DailyVisitP
                           <button
                             type="button"
                             className="text-white bg-teal-600 px-3 py-2 rounded-md hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
-                            onClick={toggleViewImageModal}
+                            onClick={() => onOpenViewImageModal(selectedRequest!.requestId)}
                           >
                             View Image
                           </button>

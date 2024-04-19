@@ -1,8 +1,6 @@
 "use client";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import wombat from "../../public/david-clode-BSXdD5MawH4-unsplash.jpg";
-import DSD from "../../public/16057621.png";
 import Link from "next/link";
 
 export default function Navbar() {
@@ -15,17 +13,26 @@ export default function Navbar() {
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <Image className="h-20 w-auto" src={DSD} alt="Your Company" />
+                <Link href="/">
+                  <Image
+                    className="h-20 w-auto"
+                    src="/16057621.png"
+                    alt="Your Company"
+                    width={50}
+                    height={50}
+                  />
+                </Link>
               </div>
               <div className="hidden md:block">
                 <div className="ml-10 flex items-baseline space-x-4">
                   {/* <!-- Current: "bg-teal-700 text-white", Default: "text-white hover:bg-teal-500 hover:bg-opacity-75" --> */}
                   <Link
                     href="/"
-                    className={`link ${pathname === "/"
-                      ? "bg-teal-700 text-white rounded-md px-3 py-2 text-sm font-medium"
-                      : "text-white hover:bg-teal-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium"
-                      }`}
+                    className={`link ${
+                      pathname === "/"
+                        ? "bg-teal-700 text-white rounded-md px-3 py-2 text-sm font-medium"
+                        : "text-white hover:bg-teal-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium"
+                    }`}
                     aria-current="page"
                   >
                     Dashboard
@@ -42,10 +49,11 @@ export default function Navbar() {
                   </Link>
                   <Link
                     href="/logs"
-                    className={`link ${pathname === "/logs"
-                      ? "bg-teal-700 text-white rounded-md px-3 py-2 text-sm font-medium"
-                      : "text-white hover:bg-teal-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium"
-                      }`}
+                    className={`link ${
+                      pathname === "/logs"
+                        ? "bg-teal-700 text-white rounded-md px-3 py-2 text-sm font-medium"
+                        : "text-white hover:bg-teal-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium"
+                    }`}
                   >
                     Logs
                   </Link>
@@ -110,8 +118,10 @@ export default function Navbar() {
                       <span className="sr-only">Open user menu</span>
                       <Image
                         className="h-8 w-8 rounded-full"
-                        src={wombat}
+                        src="/david-clode-BSXdD5MawH4-unsplash.jpg"
                         alt=""
+                        width={50}
+                        height={50}
                       />
                     </button>
                   </div>
@@ -248,7 +258,13 @@ export default function Navbar() {
           <div className="border-t border-teal-700 pb-3 pt-4">
             <div className="flex items-center px-5">
               <div className="flex-shrink-0">
-                <Image className="h-10 w-10 rounded-full" src={wombat} alt="" />
+                <Image
+                  className="h-10 w-10 rounded-full"
+                  src="/david-clode-BSXdD5MawH4-unsplash.jpg"
+                  alt=""
+                  width={50}
+                  height={50}
+                />
               </div>
               <div className="ml-3">
                 <div className="text-base font-medium text-white">Mike</div>

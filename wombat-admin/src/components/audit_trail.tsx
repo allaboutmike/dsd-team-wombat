@@ -1,8 +1,11 @@
+import { IncomingRequest } from "@/app/models/models";
+
 type RequestProps = {
-  toggleViewImageModal: () => void;
+  onOpenViewImageModal: (requestId: string) => void;
+  selectedRequest: IncomingRequest | null;
 };
 
-export default function AuditTrail({ toggleViewImageModal }: RequestProps) {
+export default function AuditTrail({ onOpenViewImageModal, selectedRequest }: RequestProps) {
   const users = [
     {
       name: "Aliya Rodriguez",
@@ -156,11 +159,10 @@ export default function AuditTrail({ toggleViewImageModal }: RequestProps) {
                           {user.checkIn}
                         </td>
                         <td
-                          className={`whitespace-nowrap px-3 py-4 text-sm ${
-                            user.accessType === "Default"
-                              ? "text-teal-500"
-                              : "text-red-400"
-                          }`}
+                          className={`whitespace-nowrap px-3 py-4 text-sm ${user.accessType === "Default"
+                            ? "text-teal-500"
+                            : "text-red-400"
+                            }`}
                         >
                           {user.accessType}
                         </td>
@@ -173,18 +175,17 @@ export default function AuditTrail({ toggleViewImageModal }: RequestProps) {
                           <button
                             type="button"
                             className="text-white bg-teal-600 px-2 py-1 rounded-md hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
-                            onClick={toggleViewImageModal}
+                            onClick={() => onOpenViewImageModal(selectedRequest!.requestId)}
                           >
                             View Image
                           </button>
                         </td>
 
                         <td
-                          className={`whitespace-nowrap px-3 py-4 text-sm ${
-                            user.status === "Present"
-                              ? "text-teal-500"
-                              : "text-red-400"
-                          }`}
+                          className={`whitespace-nowrap px-3 py-4 text-sm ${user.status === "Present"
+                            ? "text-teal-500"
+                            : "text-red-400"
+                            }`}
                         >
                           {user.status}
                         </td>
