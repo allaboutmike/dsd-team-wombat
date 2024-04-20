@@ -1,4 +1,25 @@
-export default function Statistics() {
+import { IncomingRequest, User } from "@/app/models/models";
+
+type StatisticsProps = {
+  incomingRequests: IncomingRequest[]
+}
+
+export default function Statistics({ incomingRequests }: StatisticsProps) {
+
+  const totalRequests = incomingRequests.length;
+
+  const automatedRequests = incomingRequests.filter(
+    (request) => request.state === "AUTOMATED"
+  ).length;
+
+  const adminAccessRequiredRequests = incomingRequests.filter(
+    (request) => request.state === "MANUAL_OVERRIDE_REQUESTED"
+  ).length;
+
+  const adminDeniedRequests = incomingRequests.filter(
+    (request) => request.approvalStatus === "DENIED"
+  ).length;
+
   return (
     <div>
       <h2 className="text-lg font-semibold leading-6 text-zinc-700 mb-8">
@@ -12,7 +33,7 @@ export default function Statistics() {
               Total Visitors
             </dt>
             <dd className="mt-1 text-2xl font-semibold tracking-tight text-red-400">
-              128
+              {totalRequests}
             </dd>
           </div>
 
@@ -21,7 +42,7 @@ export default function Statistics() {
               Default Accesses
             </dt>
             <dd className="mt-1 text-2xl font-semibold tracking-tight text-red-400">
-              110
+              {automatedRequests}
             </dd>
           </div>
 
@@ -30,11 +51,11 @@ export default function Statistics() {
               Admin Accesses
             </dt>
             <dd className="mt-1 text-2xl font-semibold tracking-tight text-red-400">
-              18
+              {adminAccessRequiredRequests}
             </dd>
           </div>
 
-          <div className="overflow-hidden rounded-lg bg-white shadow-md  p-3">
+          {/* <div className="overflow-hidden rounded-lg bg-white shadow-md  p-3">
             <dt className="truncate text-sm font-medium text-zinc-500">
               Present Users
             </dt>
@@ -49,14 +70,14 @@ export default function Statistics() {
             <dd className="mt-1 text-2xl font-semibold tracking-tight text-red-400">
               70
             </dd>
-          </div>
+          </div> */}
 
           <div className="overflow-hidden rounded-lg bg-white shadow-md  p-3">
             <dt className="truncate text-sm font-medium text-zinc-500">
               Denied Accesses
             </dt>
             <dd className="mt-1 text-2xl font-semibold tracking-tight text-red-400">
-              4
+              {adminDeniedRequests}
             </dd>
           </div>
         </dl>

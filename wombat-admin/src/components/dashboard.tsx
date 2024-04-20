@@ -2,14 +2,14 @@ import AuditTrail from "./audit_trail";
 import DailyVisits from "./daily_visits";
 import IncomingRequests from "./incoming_requests";
 import Statistics from "./statistics";
-import { IncomingRequest } from "@/app/models/models";
+import { IncomingRequest, User } from "@/app/models/models";
 
 type DashboardProps = {
   toggleAddUserModal: () => void;
   activeTab: string;
   handleTabClick: (tabName: string) => void;
   requests: IncomingRequest[];
-  users: any;
+  users: User[];
   currentPage: number;
   nextPage: () => void;
   prevPage: () => void;
@@ -17,10 +17,11 @@ type DashboardProps = {
   totalPages: number;
   onOpenViewImageModal: (requestId: string) => void;
   selectedRequest: IncomingRequest | null;
+  incomingRequests: IncomingRequest[]
 };
 
 export default function Dashboard({ toggleAddUserModal, onOpenViewImageModal, activeTab, handleTabClick, selectedRequest, users, currentPage,
-  nextPage, prevPage, currentRequests, totalPages, }: DashboardProps) {
+  nextPage, prevPage, currentRequests, totalPages, incomingRequests }: DashboardProps) {
   return (
     <div>
       <header className="bg-white shadow-sm">
@@ -52,7 +53,7 @@ export default function Dashboard({ toggleAddUserModal, onOpenViewImageModal, ac
               nextPage={nextPage}
               prevPage={prevPage} />
           </div>
-          <Statistics />
+          <Statistics incomingRequests={incomingRequests} />
         </div>
 
         <h2 className="text-lg font-semibold leading-6 text-zinc-800 mt-10 mb-4">

@@ -42,4 +42,5 @@ export type IncomingRequest = {
   approvalStatus: approvalStatus,
   base64Image: string,
   state: requestState,
+  ttl: string
 }
