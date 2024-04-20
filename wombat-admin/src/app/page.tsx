@@ -17,7 +17,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<string>('Daily Visits');
   const [currentPage, setCurrentPage] = useState(1);
   const [users, setUsers] = useState<User[]>([]);
-  const [incomingDeniedRequests, setIncomingDeniedRequests] = useState<IncomingRequest[]>([]);
+  const [incomingRequests, setIncomingRequests] = useState<IncomingRequest[]>([]);
 
   const URL = "http://localhost:4040";
   const accessPath = "access_request";
@@ -25,12 +25,12 @@ export default function Home() {
 
   // Get the list of the incoming request with state 
   const updateIncomingDeniedRequests = useCallback((jsonData: IncomingRequest[]) => {
-    setIncomingDeniedRequests(jsonData);
-  }, [setIncomingDeniedRequests]);
+    setIncomingRequests(jsonData);
+  }, [setIncomingRequests]);
 
   useFetchData(URL, accessPath, updateIncomingDeniedRequests)
 
-  const manualOverridenRequests: IncomingRequest[] = incomingDeniedRequests.filter(r => r.state === "MANUAL_OVERRIDE_REQUESTED");
+  const manualOverridenRequests: IncomingRequest[] = incomingRequests.filter(r => r.state === "MANUAL_OVERRIDE_REQUESTED");
 
 
   // Memoize setUsers using useCallback
@@ -86,7 +86,7 @@ export default function Home() {
       return;
     }
 
-    const reqsBody = { state: 'MANUAL_OVERRIDE_ACTIONED', approvalStatus: "DENIED", date: request.date };
+    const reqsBody = { state: 'MANUAL_OVERRIDE_ACTIONED', approvalStatus: "APPROVED", date: request.date };
 
     try {
       const response = await fetch(`${URL}/${accessPath}/${requestId}`, {
@@ -128,10 +128,11 @@ export default function Home() {
         handleTabClick={handleTabClick}
         toggleAddUserModal={toggleAddUserModal}
         onOpenViewImageModal={showViewImageModal}
-        selectedRequest={selectedRequest} />
+        selectedRequest={selectedRequest}
+        incomingRequests={incomingRequests} />
 
       {addUserModal && <AddUser handleFileChange={handleFileChange} imageSrc={imageSrc} toggleAddUserModal={toggleAddUserModal} />}
-      {selectedRequest && <ViewImageForAccess onCloseViewImageModal={closeViewImageModal} onApproveRequest={approveRequest} selectedRequest={selectedRequest} />}
+      {selectedRequest && <ViewImageForAccess onCloseViewImageModal={closeViewImageModal} onApproveRequest={approveRequest} selectedRequest={selectedRequest} users={users} />}
     </main>
 
   );
