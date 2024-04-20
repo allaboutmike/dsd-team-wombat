@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { IncomingRequest } from "@/app/models/models";
+import { IncomingRequest, User } from "@/app/models/models";
 
 import wombat from "../../public/david-clode-BSXdD5MawH4-unsplash.jpg";
 
@@ -7,9 +7,16 @@ type ViewImgProps = {
   onCloseViewImageModal: () => void;
   onApproveRequest: (requestId: string) => void;
   selectedRequest: IncomingRequest | null;
+  users: User[];
 };
 
-export default function ViewImageForAccess({ onCloseViewImageModal, onApproveRequest, selectedRequest }: ViewImgProps) {
+export default function ViewImageForAccess({ onCloseViewImageModal, onApproveRequest, selectedRequest, users }: ViewImgProps) {
+
+  const user = users.find((user) => user.userId === selectedRequest?.userId);
+  console.log('Selected Request:', selectedRequest);
+  console.log('User ID:', user?.userId);
+  console.log('User Image:', user?.userImage);
+
   return (
     <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
       <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
@@ -27,7 +34,7 @@ export default function ViewImageForAccess({ onCloseViewImageModal, onApproveReq
                     Uploaded Photo
                   </label>
                   <div className="mt-2 flex-grow">
-                    <Image src={wombat} alt="wombat picture" className="rounded-lg h-auto w-full" />
+                    <Image src={selectedRequest && selectedRequest.base64Image ? selectedRequest.base64Image : wombat} alt="wombat picture" className="rounded-lg h-auto w-full" width={200} height={200} />
                   </div>
                 </div>
 
@@ -41,9 +48,10 @@ export default function ViewImageForAccess({ onCloseViewImageModal, onApproveReq
                   </label>
                   <div className="mt-2 flex-grow">
                     <Image
-                      src={wombat}
+                      src={user!.userImage}
                       alt="wombat picture"
                       className="rounded-lg h-auto w-full"
+                      width={200} height={200}
                     />
                   </div>
                 </div>
