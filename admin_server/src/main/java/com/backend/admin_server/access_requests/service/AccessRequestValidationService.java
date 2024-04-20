@@ -142,8 +142,17 @@ public class AccessRequestValidationService {
         if (base64 == null || base64.isEmpty()) {
             return false;
         }
+
+        String prefix = "data:image/jpeg;base64,";
+
+        if (!base64.startsWith(prefix)) {
+            return false;
+        }
+
+        String actualBase64 = base64.substring(prefix.length());
+
         try {
-            Base64.getDecoder().decode(base64);
+            Base64.getDecoder().decode(actualBase64);
             return true;
         } catch (IllegalArgumentException e) {
             return false;
