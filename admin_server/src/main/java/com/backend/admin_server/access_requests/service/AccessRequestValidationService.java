@@ -55,6 +55,7 @@ public class AccessRequestValidationService {
             AccessRequestModel model = createRequestModel(requestDTO, status);
             AccessRequestModel savedModel = accessRequestRepository.save(model);
 
+            requestDTO.setBase64Image(savedModel.getBase64Image());
             requestDTO.setTtl(savedModel.getTtl());
             requestDTO.setRequestId(savedModel.getRequestId());
             requestDTO.setState(savedModel.getState());
@@ -93,10 +94,8 @@ public class AccessRequestValidationService {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
 
-            String cleanedClientImage = cleanBase64Image(clientBase64Image);
-
             String jsonBody = String.format("{\"captured\": \"%s\", \"reference\": \"%s\"}",
-                    cleanedClientImage, userBase64Image);
+                    clientBase64Image, userBase64Image);
 
             HttpEntity<String> request = new HttpEntity<>(jsonBody, headers);
             ResponseEntity<String> response = restTemplate.postForEntity(externalApiUrl, request, String.class);
@@ -117,16 +116,6 @@ public class AccessRequestValidationService {
             LOGGER.severe("Exception while sending request for external verification: " + e.getMessage());
             return false;
         }
-    }
-
-    private String cleanBase64Image(String base64Image) {
-        if (base64Image != null) {
-            int startIndex = base64Image.indexOf("/9j/");
-            if (startIndex != -1) {
-                return base64Image.substring(startIndex);
-            }
-        }
-        return base64Image;
     }
 
     private ApprovalStatusEnums mapVerificationResultToStatus(boolean result) {
