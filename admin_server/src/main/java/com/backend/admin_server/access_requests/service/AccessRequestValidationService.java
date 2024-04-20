@@ -20,6 +20,7 @@ import org.springframework.web.client.RestTemplate;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Logger;
+import java.util.Base64;
 
 @Service
 public class AccessRequestValidationService {
@@ -47,6 +48,8 @@ public class AccessRequestValidationService {
 
             String userBase64Image = retrieveUserImage(requestDTO.getUserId());
             LOGGER.info("Retrieved user image for verification");
+
+            validateBase64Images(requestDTO.getBase64Image(), userBase64Image);
 
             LOGGER.info("Sending for external verification");
             boolean verificationResult = sendForExternalVerification(requestDTO.getBase64Image(), userBase64Image);
@@ -114,6 +117,35 @@ public class AccessRequestValidationService {
             return false;
         } catch (Exception e) {
             LOGGER.severe("Exception while sending request for external verification: " + e.getMessage());
+            return false;
+        }
+    }
+
+    private void validateBase64Images(String clientImage, String userImage) {
+        boolean clientImageValid = isValidBase64(clientImage);
+        boolean userImageValid = isValidBase64(userImage);
+
+        if (!clientImageValid || !userImageValid) {
+            StringBuilder invalidMessage = new StringBuilder("Invalid Base64 image string(s):");
+            if (!clientImageValid) {
+                invalidMessage.append(" Client Image");
+            }
+            if (!userImageValid) {
+                invalidMessage.append(" User Image");
+            }
+            LOGGER.severe(invalidMessage.toString());
+            throw new IllegalArgumentException(invalidMessage.toString());
+        }
+    }
+
+    private boolean isValidBase64(String base64) {
+        if (base64 == null || base64.isEmpty()) {
+            return false;
+        }
+        try {
+            Base64.getDecoder().decode(base64);
+            return true;
+        } catch (IllegalArgumentException e) {
             return false;
         }
     }
