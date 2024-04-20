@@ -77,8 +77,7 @@ export default function Home() {
 
   const closeViewImageModal = (): void => setSelectedRequest(null)
 
-
-  const approveRequest = async (requestId: string) => {
+  const updateRequestStatus = async (requestId: string, approvalStatus: 'APPROVED' | 'DENIED') => {
     const request = manualOverridenRequests.find((req) => req.requestId === requestId);
 
     if (!request) {
@@ -86,7 +85,7 @@ export default function Home() {
       return;
     }
 
-    const reqsBody = { state: 'MANUAL_OVERRIDE_ACTIONED', approvalStatus: "APPROVED", date: request.date };
+    const reqsBody = { state: 'MANUAL_OVERRIDE_ACTIONED', approvalStatus, date: request.date };
 
     try {
       const response = await fetch(`${URL}/${accessPath}/${requestId}`, {
@@ -107,6 +106,7 @@ export default function Home() {
       console.error(error);
     }
   };
+
 
 
   // This function is responsible for pagination of the incoming requests
@@ -132,7 +132,7 @@ export default function Home() {
         incomingRequests={incomingRequests} />
 
       {addUserModal && <AddUser handleFileChange={handleFileChange} imageSrc={imageSrc} toggleAddUserModal={toggleAddUserModal} />}
-      {selectedRequest && <ViewImageForAccess onCloseViewImageModal={closeViewImageModal} onApproveRequest={approveRequest} selectedRequest={selectedRequest} users={users} />}
+      {selectedRequest && <ViewImageForAccess onCloseViewImageModal={closeViewImageModal} onUpdateRequestRequest={updateRequestStatus} selectedRequest={selectedRequest} users={users} />}
     </main>
 
   );
