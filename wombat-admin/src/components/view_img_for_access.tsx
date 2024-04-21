@@ -5,12 +5,12 @@ import wombat from "../../public/david-clode-BSXdD5MawH4-unsplash.jpg";
 
 type ViewImgProps = {
   onCloseViewImageModal: () => void;
-  onApproveRequest: (requestId: string) => void;
+  onUpdateRequestRequest: (requestId: string, approvalStatus: 'APPROVED' | 'DENIED') => void;
   selectedRequest: IncomingRequest | null;
   users: User[];
 };
 
-export default function ViewImageForAccess({ onCloseViewImageModal, onApproveRequest, selectedRequest, users }: ViewImgProps) {
+export default function ViewImageForAccess({ onCloseViewImageModal, onUpdateRequestRequest, selectedRequest, users }: ViewImgProps) {
 
   const user = users.find((user) => user.userId === selectedRequest?.userId);
   console.log('Selected Request:', selectedRequest);
@@ -173,14 +173,14 @@ export default function ViewImageForAccess({ onCloseViewImageModal, onApproveReq
               <button
                 type="button"
                 className="rounded-md bg-red-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400"
-
+                onClick={() => onUpdateRequestRequest(selectedRequest!.requestId, 'DENIED')}
               >
                 Deny Access
               </button>
               <button
                 type="button"
                 className="rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
-                onClick={() => onApproveRequest((selectedRequest!.requestId))}
+                onClick={() => onUpdateRequestRequest(selectedRequest!.requestId, 'APPROVED')}
               >
                 Give Access
               </button>
