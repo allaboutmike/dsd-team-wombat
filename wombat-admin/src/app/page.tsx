@@ -4,6 +4,7 @@ import { useState, useCallback } from "react";
 import Dashboard from "@/components/dashboard";
 import AddUser from "@/components/add_user";
 import ViewImageForAccess from "@/components/view_img_for_access";
+import UpdatedStatusMessage from "@/components/updateStatusMessage";
 import { IncomingRequest, User } from "@/app/models/models";
 import useFetchData from "./util/useFetchData";
 
@@ -133,6 +134,8 @@ export default function Home() {
 
       {addUserModal && <AddUser handleFileChange={handleFileChange} imageSrc={imageSrc} toggleAddUserModal={toggleAddUserModal} />}
       {selectedRequest && <ViewImageForAccess onCloseViewImageModal={closeViewImageModal} onUpdateRequestRequest={updateRequestStatus} selectedRequest={selectedRequest} users={users} />}
+
+      {/* <UpdatedStatusMessage /> */}
     </main>
 
   );
