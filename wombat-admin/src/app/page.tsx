@@ -19,6 +19,8 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const [users, setUsers] = useState<User[]>([]);
   const [incomingRequests, setIncomingRequests] = useState<IncomingRequest[]>([]);
+  const [statusMessage, setStatusMessage] = useState<boolean>(false);
+  const [approvalStatus, setApprovalStatus] = useState<string>('')
 
   const URL = "http://localhost:4040";
   const accessPath = "access_request";
@@ -78,6 +80,14 @@ export default function Home() {
 
   const closeViewImageModal = (): void => setSelectedRequest(null)
 
+  // Function to show the status message modal and set a timer to hide it after 5 seconds
+  const showStatusMessage = () => {
+    setStatusMessage(true);
+    setTimeout(() => {
+      setStatusMessage(false);
+    }, 2000);
+  };
+
   const updateRequestStatus = async (requestId: string, approvalStatus: 'APPROVED' | 'DENIED') => {
     const request = manualOverridenRequests.find((req) => req.requestId === requestId);
 
@@ -100,6 +110,10 @@ export default function Home() {
       if (!response.ok) {
         throw new Error(`Failed to update request with ID ${requestId}`);
       }
+
+      setApprovalStatus(approvalStatus)
+      closeViewImageModal();
+      showStatusMessage();
 
       const data = await response.json();
       console.log(data);
@@ -135,7 +149,9 @@ export default function Home() {
       {addUserModal && <AddUser handleFileChange={handleFileChange} imageSrc={imageSrc} toggleAddUserModal={toggleAddUserModal} />}
       {selectedRequest && <ViewImageForAccess onCloseViewImageModal={closeViewImageModal} onUpdateRequestRequest={updateRequestStatus} selectedRequest={selectedRequest} users={users} />}
 
-      {/* <UpdatedStatusMessage /> */}
+      {statusMessage && <UpdatedStatusMessage approvalStatus={approvalStatus} />}
+
+
     </main>
 
   );
