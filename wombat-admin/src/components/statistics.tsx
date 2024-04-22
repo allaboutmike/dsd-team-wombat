@@ -13,7 +13,7 @@ export default function Statistics({ incomingRequests }: StatisticsProps) {
   ).length;
 
   const adminAccessRequiredRequests = incomingRequests.filter(
-    (request) => request.state === "MANUAL_OVERRIDE_REQUESTED"
+    (request) => request.state === "MANUAL_OVERRIDE_ACTIONED"
   ).length;
 
   const adminDeniedRequests = incomingRequests.filter(
