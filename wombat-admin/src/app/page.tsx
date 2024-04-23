@@ -4,6 +4,7 @@ import { useState, useCallback } from "react";
 import Dashboard from "@/components/dashboard";
 import AddUser from "@/components/add_user";
 import ViewImageForAccess from "@/components/view_img_for_access";
+import UpdatedStatusMessage from "@/components/updateStatusMessage";
 import { IncomingRequest, User } from "@/app/models/models";
 import useFetchData from "./util/useFetchData";
 
@@ -18,6 +19,8 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const [users, setUsers] = useState<User[]>([]);
   const [incomingRequests, setIncomingRequests] = useState<IncomingRequest[]>([]);
+  const [statusMessage, setStatusMessage] = useState<boolean>(false);
+  const [approvalStatus, setApprovalStatus] = useState<string>('')
 
   const URL = "http://localhost:4040";
   const accessPath = "access_request";
@@ -77,6 +80,16 @@ export default function Home() {
 
   const closeViewImageModal = (): void => setSelectedRequest(null)
 
+  // Function to show the status message modal and set a timer to hide it after 5 seconds
+  const showStatusMessage = () => {
+    setStatusMessage(true);
+    setTimeout(() => {
+      setStatusMessage(false);
+    }, 2000);
+  };
+
+
+
   const updateRequestStatus = async (requestId: string, approvalStatus: 'APPROVED' | 'DENIED') => {
     const request = manualOverridenRequests.find((req) => req.requestId === requestId);
 
@@ -99,6 +112,24 @@ export default function Home() {
       if (!response.ok) {
         throw new Error(`Failed to update request with ID ${requestId}`);
       }
+
+      // Update the approval status and close the modal
+      setApprovalStatus(approvalStatus);
+      closeViewImageModal();
+      showStatusMessage();
+
+      // Fetch the updated list of requests
+      const updatedRequestsResponse = await fetch(`${URL}/${accessPath}`);
+      if (!updatedRequestsResponse.ok) {
+        throw new Error("Failed to fetch updated requests.");
+      }
+      const updatedRequestsData = await updatedRequestsResponse.json();
+
+      // Filter the updated requests based on state
+      const updatedManualOverridenRequests = updatedRequestsData.filter((r: IncomingRequest) => r.state === "MANUAL_OVERRIDE_REQUESTED");
+
+      // Update the state with the filtered requests
+      setIncomingRequests(updatedManualOverridenRequests);
 
       const data = await response.json();
       console.log(data);
@@ -133,6 +164,10 @@ export default function Home() {
 
       {addUserModal && <AddUser handleFileChange={handleFileChange} imageSrc={imageSrc} toggleAddUserModal={toggleAddUserModal} />}
       {selectedRequest && <ViewImageForAccess onCloseViewImageModal={closeViewImageModal} onUpdateRequestRequest={updateRequestStatus} selectedRequest={selectedRequest} users={users} />}
+
+      {statusMessage && <UpdatedStatusMessage approvalStatus={approvalStatus} />}
+
+
     </main>
 
   );
