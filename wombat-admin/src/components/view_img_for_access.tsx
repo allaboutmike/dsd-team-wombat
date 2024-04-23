@@ -72,69 +72,6 @@ export default function ViewImageForAccess({ onCloseViewImageModal, onUpdateRequ
                   </div>
                 </div>
 
-                {/* <div className="col-span-2 flex flex-col">
-                  <label htmlFor="username" className="block text-sm font-medium leading-6 text-zinc-800">
-                    Username
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      type="text"
-                      name="username"
-                      id="username"
-                      autoComplete="username"
-                      className="block w-full rounded-md border-0 py-1.5 text-zinc-800 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
-                      disabled
-                    />
-                  </div>
-                </div> */}
-
-                {/* <div className="col-span-1 flex flex-col">
-                  <label htmlFor="requestTime" className="block text-sm font-medium leading-6 text-zinc-800">
-                    Request Received at
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      type="text"
-                      name="requestTime"
-                      id="requestTime"
-                      autoComplete="requestTime"
-                      className="block w-full rounded-md border-0 py-1.5 text-zinc-800 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
-                      disabled
-                    />
-                  </div>
-                </div> */}
-
-                {/* <div className="col-span-2 flex flex-col">
-                  <label htmlFor="userRole" className="block text-sm font-medium leading-6 text-zinc-800">
-                    Role
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      type="text"
-                      name="userRole"
-                      id="userRole"
-                      autoComplete="userRole"
-                      className="block w-full rounded-md border-0 py-1.5 text-zinc-800 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
-                      disabled
-                    />
-                  </div>
-                </div> */}
-
-                {/* <div className="col-span-2 flex flex-col">
-                  <label htmlFor="userDepartment" className="block text-sm font-medium leading-6 text-zinc-800">
-                    Department
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      type="text"
-                      name="userDepartment"
-                      id="userDepartment"
-                      autoComplete="userDepartment"
-                      className="block w-full rounded-md border-0 py-1.5 text-zinc-800 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
-                      disabled
-                    />
-                  </div>
-                </div> */}
 
                 <div className="col-span-full flex flex-col mt-2">
                   <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-zinc-800">

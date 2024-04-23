@@ -88,39 +88,6 @@ export default function Home() {
     }, 2000);
   };
 
-  // const updateRequestStatus = async (requestId: string, approvalStatus: 'APPROVED' | 'DENIED') => {
-  //   const request = manualOverridenRequests.find((req) => req.requestId === requestId);
-
-  //   if (!request) {
-  //     console.error(`Request with ID ${requestId} not found.`);
-  //     return;
-  //   }
-
-  //   const reqsBody = { state: 'MANUAL_OVERRIDE_ACTIONED', approvalStatus, date: request.date };
-
-  //   try {
-  //     const response = await fetch(`${URL}/${accessPath}/${requestId}`, {
-  //       method: "PUT",
-  //       headers: {
-  //         "Content-type": "application/json"
-  //       },
-  //       body: JSON.stringify(reqsBody)
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error(`Failed to update request with ID ${requestId}`);
-  //     }
-
-  //     setApprovalStatus(approvalStatus)
-  //     closeViewImageModal();
-  //     showStatusMessage();
-
-  //     const data = await response.json();
-  //     console.log(data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
 
 
   const updateRequestStatus = async (requestId: string, approvalStatus: 'APPROVED' | 'DENIED') => {
