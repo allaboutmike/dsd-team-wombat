@@ -58,7 +58,7 @@ export default function ViewImageForAccess({ onCloseViewImageModal, onUpdateRequ
 
                 <div className="col-span-1 flex flex-col">
                   <label htmlFor="userID" className="block text-sm font-medium leading-6 text-zinc-800">
-                    User ID
+                    {user!.userId}
                   </label>
                   <div className="mt-2">
                     <input
@@ -72,7 +72,7 @@ export default function ViewImageForAccess({ onCloseViewImageModal, onUpdateRequ
                   </div>
                 </div>
 
-                <div className="col-span-2 flex flex-col">
+                {/* <div className="col-span-2 flex flex-col">
                   <label htmlFor="username" className="block text-sm font-medium leading-6 text-zinc-800">
                     Username
                   </label>
@@ -86,9 +86,9 @@ export default function ViewImageForAccess({ onCloseViewImageModal, onUpdateRequ
                       disabled
                     />
                   </div>
-                </div>
+                </div> */}
 
-                <div className="col-span-1 flex flex-col">
+                {/* <div className="col-span-1 flex flex-col">
                   <label htmlFor="requestTime" className="block text-sm font-medium leading-6 text-zinc-800">
                     Request Received at
                   </label>
@@ -102,9 +102,9 @@ export default function ViewImageForAccess({ onCloseViewImageModal, onUpdateRequ
                       disabled
                     />
                   </div>
-                </div>
+                </div> */}
 
-                <div className="col-span-2 flex flex-col">
+                {/* <div className="col-span-2 flex flex-col">
                   <label htmlFor="userRole" className="block text-sm font-medium leading-6 text-zinc-800">
                     Role
                   </label>
@@ -118,9 +118,9 @@ export default function ViewImageForAccess({ onCloseViewImageModal, onUpdateRequ
                       disabled
                     />
                   </div>
-                </div>
+                </div> */}
 
-                <div className="col-span-2 flex flex-col">
+                {/* <div className="col-span-2 flex flex-col">
                   <label htmlFor="userDepartment" className="block text-sm font-medium leading-6 text-zinc-800">
                     Department
                   </label>
@@ -134,7 +134,7 @@ export default function ViewImageForAccess({ onCloseViewImageModal, onUpdateRequ
                       disabled
                     />
                   </div>
-                </div>
+                </div> */}
 
                 <div className="col-span-full flex flex-col mt-2">
                   <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-zinc-800">
